@@ -13,7 +13,7 @@ import { CabecalhoSecao, Reveal } from "./ui";
  */
 export default function Metodo() {
   return (
-    <section id="metodo" className="relative overflow-hidden bg-areia-100 py-14 sm:py-20">
+    <section id="metodo" className="relative overflow-hidden bg-areia-100 py-11 sm:py-20">
       <span
         aria-hidden="true"
         className="display contorno pointer-events-none absolute -top-8 -right-6 hidden text-[16rem] leading-none select-none lg:block"
@@ -41,24 +41,30 @@ export default function Metodo() {
         />
 
         {/* placar */}
-        <div className="fio mt-16 border-t">
+        <div className="fio mt-9 border-t sm:mt-16">
           {capacidades.map((pilar, i) => (
             <Reveal key={pilar.n} atraso={i * 55}>
-              <article className="group fio grid grid-cols-[auto_1fr] items-start gap-x-5 border-b py-7 sm:grid-cols-[auto_minmax(0,17rem)_1fr] sm:gap-x-8 sm:py-8">
+              <article className="group fio grid grid-cols-[auto_1fr] items-start gap-x-4 border-b py-5 sm:grid-cols-[auto_minmax(0,17rem)_1fr] sm:gap-x-8 sm:py-8">
                 <span className="placa" aria-hidden="true">
                   {pilar.n}
                 </span>
 
-                <div className="min-w-0 self-center">
-                  <h3 className="display text-[1.5rem] text-tinta sm:text-[1.75rem]">
+                <div className="min-w-0 sm:self-center">
+                  <h3 className="display text-[1.15rem] leading-[1.12] text-tinta sm:text-[1.75rem]">
                     {pilar.titulo}
                   </h3>
-                  <p className="mt-1 text-[0.76rem] font-semibold tracking-wide text-noite-600">
+                  <p className="mt-1.5 text-[0.72rem] font-semibold tracking-wide text-noite-600 sm:mt-1 sm:text-[0.76rem]">
                     {pilar.resumo}
+                  </p>
+
+                  {/* No celular o texto fica dentro do bloco, alinhado ao título.
+                      No desktop ele sai para a terceira coluna. */}
+                  <p className="mt-2.5 text-[0.92rem] leading-[1.55] text-tinta/75 sm:hidden">
+                    {pilar.texto}
                   </p>
                 </div>
 
-                <p className="col-span-2 mt-4 max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/70 sm:col-span-1 sm:mt-0 sm:self-center">
+                <p className="hidden max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/70 sm:block sm:self-center">
                   {pilar.texto}
                 </p>
               </article>
