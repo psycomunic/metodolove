@@ -141,7 +141,7 @@ export function Botao({
       target="_blank"
       rel="noopener noreferrer"
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-bold tracking-[0.08em] text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-campo-500 active:translate-y-0 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-bold tracking-[0.08em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-campo-500 active:translate-y-0 ${medidas} ${className}`}
     >
       <span>{children}</span>
       <svg

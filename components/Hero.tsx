@@ -1,6 +1,6 @@
 import { hero, marca, oferta, provas } from "@/lib/content";
 import { Contador, LinhasReveal } from "./movimento";
-import { Botao, Destaque, Pilula, Reveal, Rotulo } from "./ui";
+import { Botao, Destaque, Reveal, Rotulo } from "./ui";
 
 /**
  * Hero de dobra única, conduzido pelas artes FUNDO-HERO-*.jpg.
@@ -98,19 +98,17 @@ export default function Hero() {
                 <Botao href={marca.checkout} className="w-full sm:w-auto">
                   {hero.cta}
                 </Botao>
-                {/* Pílula vazada: parcelamento é dado de apoio, não segundo CTA.
-                    Sai no celular para o texto não subir em cima dos rostos da
-                    arte — e não se perde nada: o mesmo dado aparece na barra
-                    fixa que sobe na rolagem e na seção de oferta. */}
-                <span className="hidden sm:block">
-                  <Pilula className="text-bruma-200">
-                    <span className="text-white">
-                      {oferta.parcelasQtd} de {oferta.parcelasValor}
-                    </span>
-                    <span className="h-4 w-px bg-current opacity-40" />
-                    <span>{oferta.garantiaDias} dias de garantia</span>
-                  </Pilula>
-                </span>
+                {/* Dado de apoio em texto puro, sem contêiner. A pílula
+                    arredondada ao lado de um botão de canto vivo colocava duas
+                    gramáticas de forma lado a lado, na mesma altura, e as duas
+                    brigavam. Aqui só o botão tem forma — que é o que deve ter. */}
+                <p className="hidden text-[0.8rem] leading-snug text-bruma-200 sm:block">
+                  <span className="font-bold text-white">
+                    {oferta.parcelasQtd} de {oferta.parcelasValor}
+                  </span>
+                  <br />
+                  {oferta.garantiaDias} dias de garantia
+                </p>
               </div>
             </Reveal>
           </div>
