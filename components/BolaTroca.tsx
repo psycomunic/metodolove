@@ -18,8 +18,14 @@ import { useMovimentoReduzido } from "./movimento";
  *
  * Esse 1% de desvio é o que produzia uma meia-lua branca no topo quando eu só
  * escalava: escalar a partir do centro amplia o desvio junto. Por isso o
- * transform desloca ANTES de escalar. Depois de centrada, 0,5 / 0,389 = 1,285
- * é a escala mínima para a bola encostar na borda; 1,30 dá a folga.
+ * transform desloca ANTES de escalar.
+ *
+ * A escala saiu do perfil radial de luminância, não do contorno. O contorno
+ * dá raio 0,389, mas ali já é HALO: a bola é sólida até 0,380 e de 0,385 em
+ * diante a luminância salta para 208-237, que é o fundo desbotando. Foi esse
+ * anel de meio ponto percentual que sobrou como borda clara na primeira
+ * correção. Com 0,5 / 0,376 = 1,33 a borda do disco cai dentro da parte
+ * sólida e o halo fica todo fora.
  *
  * Não tente remover o branco por blend mode: multiply escurece a bola azul e
  * darken come a de dinheiro.
@@ -154,7 +160,7 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
  * para a esquerda: desloca primeiro, em coordenadas não escaladas, e só então
  * amplia em torno do centro.
  */
-const ENQUADRA = { transform: "scale(1.3) translate(0.5%, -1%)" } as const;
+const ENQUADRA = { transform: "scale(1.33) translate(0.5%, -1%)" } as const;
 
 /** Facho fechado: círculo de raio zero, longe da tela. */
 const FECHADO = "radial-gradient(circle 0px at -999px -999px, #fff, transparent)";

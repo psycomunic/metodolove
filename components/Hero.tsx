@@ -64,7 +64,7 @@ export default function Hero() {
 
       {/* ---------------- copy ---------------- */}
       <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
-        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10 lg:gap-16">
+        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-6 lg:gap-8">
           <div className="max-w-[45rem]">
             <Reveal>
               <Rotulo tom="claro">{hero.olho}</Rotulo>
@@ -112,7 +112,7 @@ export default function Hero() {
               empurraria o botão de compra para fora da primeira dobra e hover
               não existe em toque. */}
           <Reveal atraso={260} className="hidden md:block">
-            <BolaTroca className="w-[14rem] lg:w-[20rem] xl:w-[25rem]" />
+            <BolaTroca className="w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
           </Reveal>
         </div>
       </div>
