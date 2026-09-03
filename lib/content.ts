@@ -40,21 +40,21 @@ export const oferta = {
 /* ------------------------------------------------------------------ */
 export const hero = {
   olho: "Formação de professor de futevôlei",
-  linha1: "Você já joga.",
-  linha2: "Agora aprenda",
+  linha1: "Você já dá aula.",
+  linha2: "Agora faça disso",
   // A única frase da página sobre bloco de cor chapada.
-  linha3Destaque: "a viver disso",
+  linha3Destaque: "uma profissão",
   // O texto anterior descrevia um curso que não existe: falava em refazer o
   // fundamento e preparar o físico do próprio aluno. O produto forma
   // PROFESSOR. Não devolva o foco para a técnica de quem compra.
   subtitulo:
-    "Para quem já joga, ou já dá aula, e quer fazer isso do jeito certo: conduzir a aula, atender turma desnivelada, se posicionar como professor e sustentar o futevôlei como profissão.",
+    "Para professor e profissional da área: conduzir a aula com método, atender turma desnivelada, criar vínculo que faz o aluno voltar e sustentar o futevôlei como profissão — não como bico de fim de semana.",
   assinaturaSub:
     "O professor bom ensina. O professor malandro muda de vida com o esporte.",
   cta: "Quero entrar no Método",
   notas: [
     "Aulas gravadas, no seu ritmo",
-    "Para quem joga e quer ensinar",
+    "Para quem já ensina, ou vai começar",
     "Feito por quem vive de dar aula",
   ],
   fotoArte: "Charllove em quadra, sol baixo, areia visível",
@@ -83,30 +83,30 @@ export const provas = [
 /*  O PROBLEMA                                                         */
 /* ------------------------------------------------------------------ */
 export const problema = {
-  olho: "Onde o jogo trava",
-  titulo: ["Ninguém trava por", "falta de vontade.", "Trava por falta", "de caminho."],
+  olho: "Onde o professor trava",
+  titulo: ["Ninguém trava por", "falta de bola.", "Trava por falta", "de método."],
   texto:
-    "Dá pra jogar cinco anos e continuar errando o mesmo toque. Não é falta de talento. É que ninguém nunca parou pra te mostrar o porquê.",
+    "Dá pra jogar muito bem e dar uma aula ruim. São duas habilidades diferentes, e a segunda quase nunca foi ensinada a você.",
   itens: [
     {
-      titulo: "Você aprendeu copiando",
+      titulo: "Você ensina como aprendeu",
       texto:
-        "Repetiu o toque de quem jogava do lado. Funciona até o adversário subir de nível — aí o erro aparece e ninguém sabe te dizer qual é.",
+        "Repete o que fizeram com você, sem saber por que funcionou. Vai bem até chegar o aluno que não pega daquele jeito — e aí não há plano B.",
     },
     {
-      titulo: "A perna some no segundo set",
+      titulo: "Cada aula começa do zero",
       texto:
-        "Começa bem. Aí o salto encurta, a defesa atrasa e o jogo escapa. Areia cobra preparo específico, e treino de academia não resolve.",
+        "Sem sequência planejada, o aluno não enxerga a própria evolução. E o que ele não enxerga, ele não renova na semana seguinte.",
     },
     {
-      titulo: "Ganha o racha, some no torneio",
+      titulo: "A turma desnivelada te trava",
       texto:
-        "Domingo você vence todo mundo na praia. Segunda, continua sem dupla, sem categoria definida e sem ninguém pra te chamar.",
+        "Iniciante e veterano no mesmo horário. Você atende um e deixa o outro parado esperando — os dois saem achando que a aula não era pra eles.",
     },
     {
-      titulo: "Treina três vezes por semana e empaca",
+      titulo: "O aluno elogia, paga e some",
       texto:
-        "Sem progressão e sem alguém apontando o detalhe, repetição não vira evolução. Vira cansaço acumulado.",
+        "Sem vínculo, aula vira commodity: qualquer professor mais perto ou mais barato leva. Ninguém te ensinou a construir essa relação.",
     },
   ],
 };
@@ -214,16 +214,18 @@ export const capacidades = [
 /* ------------------------------------------------------------------ */
 export const publico = {
   eh: [
-    "Joga por diversão e cansou de estacionar no mesmo nível",
-    "Está começando agora e não quer aprender torto",
-    "Já compete e sente que falta detalhe fino pra subir de chave",
-    "Quer dar aula e viver do esporte com estrutura, não no improviso",
-    "Treina sozinho e precisa de um plano, não de bater bola aleatória",
+    "Já dá aula e quer parar de improvisar a cada turma",
+    "Joga bem e vai começar a ensinar, e não quer começar torto",
+    "Trabalha com esporte e quer o futevôlei como profissão, não como bico",
+    "Tem aluno, mas sente que a relação não segura ninguém",
+    "Cobra pela aula e trava na hora de explicar o próprio valor",
   ],
   naoEh: [
-    "Quer resultado sem pisar na areia",
+    // Este filtro é o mais importante da lista: o produto NÃO melhora o jogo
+    // de quem compra, e deixar isso ambíguo gera reembolso e review ruim.
+    "Só quer melhorar o próprio jogo",
+    "Acha que jogar bem já basta para ensinar bem",
     "Procura fórmula mágica de sete dias",
-    "Não aceita refazer fundamento pra evoluir",
   ],
   remate:
     "Prefiro perder a venda a te vender uma expectativa que a areia não vai cumprir.",

@@ -66,7 +66,7 @@ export default function Hero() {
               <Rotulo tom="claro">{hero.olho}</Rotulo>
             </Reveal>
 
-            <h1 className="display mt-5 text-[clamp(2.2rem,7.4vw,4.4rem)] text-white">
+            <h1 className="display mt-5 text-[clamp(2rem,7.4vw,4.1rem)] text-white max-[380px]:text-[1.85rem]">
               <LinhasReveal
                 linhas={[
                   hero.linha1,
