@@ -40,9 +40,15 @@ export default function Hero() {
             eixo do conjunto simbolo+lettering. Medido: nessa faixa de altura o
             creme limpo comeca em 51%, entao a borda esquerda do bloco encosta
             no limite sem invadir o azul. */}
-        <div className="absolute top-[68%] left-[51%] hidden w-[36%] lg:block">
+        <div className="absolute top-[68%] left-[51%] hidden w-[36%] md:block">
           <div className="flex flex-col items-center gap-3">
-            <Botao href={marca.checkout}>{hero.cta}</Botao>
+            <Botao
+              href={marca.checkout}
+              tamanho="md"
+              className="lg:px-11 lg:py-5 lg:text-[1rem]"
+            >
+              {hero.cta}
+            </Botao>
             <p className="text-center text-[0.82rem] leading-snug text-noite-900">
               <span className="font-bold">
                 {oferta.parcelasQtd} de {oferta.parcelasValor}
@@ -58,7 +64,7 @@ export default function Hero() {
 
       {/* ---------------- copy ---------------- */}
       <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+        <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10 lg:gap-16">
           <div className="max-w-[45rem]">
             <Reveal>
               <Rotulo tom="claro">{hero.olho}</Rotulo>
@@ -85,7 +91,7 @@ export default function Hero() {
             {/* No desktop o botão já está sobre o banner; aqui ele só existe
                 abaixo de lg, onde a sobreposição não cabe. */}
             <Reveal atraso={200}>
-              <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center lg:hidden">
+              <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center md:hidden">
                 <Botao href={marca.checkout} className="w-full sm:w-auto">
                   {hero.cta}
                 </Botao>
@@ -100,10 +106,13 @@ export default function Hero() {
             </Reveal>
           </div>
 
-          {/* A bola só entra a partir de lg: no celular ela empurraria o botão
-              para fora da primeira dobra, e hover não existe em toque. */}
-          <Reveal atraso={260} className="hidden lg:block">
-            <BolaTroca className="w-[19rem] xl:w-[22rem]" />
+          {/* A bola entra a partir de md, não de lg: com o navegador em zoom,
+              uma janela de 1507px cai abaixo de 1024 em pixels CSS e a bola
+              sumia sem motivo aparente. No celular ela continua fora, porque
+              empurraria o botão de compra para fora da primeira dobra e hover
+              não existe em toque. */}
+          <Reveal atraso={260} className="hidden md:block">
+            <BolaTroca className="w-[13rem] lg:w-[18rem] xl:w-[21rem]" />
           </Reveal>
         </div>
       </div>
