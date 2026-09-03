@@ -66,6 +66,15 @@
   --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
 }
 
+/**
+ * A Nav é fixa e cobre o topo da tela. Sem esta margem, clicar num link do
+ * menu leva a seção para debaixo da barra e o título fica escondido.
+ * 4.5rem ≈ a altura da barra com folga.
+ */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;

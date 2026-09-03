@@ -65,7 +65,7 @@ export const provas = [
     decimais: 0,
     pad: 2,
     sufixo: "",
-    rotulo: "pilares, do primeiro toque ao patrocínio",
+    rotulo: "frentes do trabalho de dar aula",
   },
   {
     valor: 100,
@@ -130,49 +130,60 @@ export const autor = {
 /* ------------------------------------------------------------------ */
 /*  OS 6 PILARES                                                       */
 /* ------------------------------------------------------------------ */
-// >>> AJUSTAR: renomeie conforme o conteúdo real do curso.
-export const pilares = [
+/**
+ * O que a pessoa passa a SABER FAZER.
+ *
+ * Não é a lista de módulos, de propósito: o cliente decidiu que a estrutura
+ * do curso não aparece na página de vendas. Índice não vende; capacidade sim,
+ * e ainda evita que alguém compare aula a aula com um concorrente.
+ *
+ * Regra que não pode ser quebrada aqui: NENHUMA promessa de resultado, renda
+ * ou retorno financeiro (CDC art. 37 e política do Meta Ads — ver o aviso
+ * legal em components/Rodape.tsx). Descreva o que o curso ENSINA, nunca o que
+ * a pessoa vai conquistar.
+ */
+export const capacidades = [
   {
     n: "01",
-    titulo: "Fundamento",
-    resumo: "Toque, domínio e recepção",
+    titulo: "Postura de professor",
+    resumo: "A virada antes da técnica",
     texto:
-      "A base refeita no detalhe: apoio, quadril, ponto de contato. É aqui que a bola para de fugir do seu pé na hora que decide.",
+      "Sair do lugar de quem joga bem para o de quem consegue ensinar. São coisas diferentes, e é a primeira que trava a maioria.",
   },
   {
     n: "02",
-    titulo: "Ataque",
-    resumo: "Shark, cabeça e finalização",
+    titulo: "A aula de pé",
+    resumo: "Começo, meio e fim",
     texto:
-      "Quando bater forte, quando colocar, como esconder a intenção até o último instante. Ponto se decide na leitura, não na força.",
+      "Conduzir uma aula do aquecimento ao encerramento sem improviso — e sem aquele silêncio de não saber o que vem agora.",
   },
   {
     n: "03",
-    titulo: "Defesa e leitura",
-    resumo: "Antecipação e cobertura",
+    titulo: "Turma desnivelada",
+    resumo: "Iniciante e veterano na mesma quadra",
     texto:
-      "Ler o corpo do adversário e saber onde a bola cai antes dela sair do pé dele. Defesa boa é posicionamento, não milagre.",
+      "Adaptar o mesmo exercício para quem nunca tocou na bola e para quem joga há dez anos, sem deixar ninguém parado esperando.",
   },
   {
     n: "04",
-    titulo: "Físico na areia",
-    resumo: "Salto, potência e resistência",
+    titulo: "Planejamento",
+    resumo: "A sequência, não o dia solto",
     texto:
-      "Preparação pensada pra areia, não pra academia. Pra você chegar no terceiro set com a mesma perna do primeiro.",
+      "Encadear as aulas para que a evolução fique visível para o próprio aluno — que é o que faz ele voltar na semana seguinte.",
   },
   {
     n: "05",
-    titulo: "Cabeça de atleta",
-    resumo: "Rotina, recuperação e mentalidade",
+    titulo: "Seu nome",
+    resumo: "Posicionamento e presença",
     texto:
-      "Como montar a semana de treino, o que comer, como dormir e como jogar ponto apertado sem a mão tremer.",
+      "Como se apresentar como professor de futevôlei: o que comunicar, onde aparecer e o que sustenta a diferença entre você e o vizinho de quadra.",
   },
   {
     n: "06",
-    titulo: "Fora da quadra",
-    resumo: "Torneio, aula, patrocínio e nome",
+    titulo: "O lado do negócio",
+    resumo: "Tratar a aula como serviço",
     texto:
-      "A parte que quase ninguém ensina: entrar em circuito, montar dupla, dar aula, se posicionar e transformar o esporte em renda.",
+      "Organizar o que você oferece, formar preço e combinar regras com o aluno. A parte que quase ninguém ensina a quem veio da quadra.",
   },
 ];
 
