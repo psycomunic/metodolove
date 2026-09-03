@@ -1,75 +1,84 @@
-import { bonus } from "@/lib/content";
-import { CabecalhoSecao, Reveal } from "./ui";
+import { bonus, marca, oferta } from "@/lib/content";
+import { Reveal, Rotulo } from "./ui";
 
 /**
- * Bônus. A grade de três colunas saiu junto com os três bônus inventados:
- * com um item só, grade vira buraco. Agora é arte à esquerda e texto à
- * direita, e o layout se adapta se outros bônus reais entrarem depois.
+ * Bônus.
+ *
+ * Vira faixa MARINHO no meio da página, e não é decisão de gosto: Método,
+ * Público e Bônus vinham em creme, três seções seguidas do mesmo tom, e o
+ * bônus sumia no meio delas. Sobre marinho ele lê como coisa à parte, que é
+ * exatamente o que ele é.
+ *
+ * A arte é um mockup 3D em PNG com transparência e sombra própria. Por isso
+ * ela flutua sem moldura, sem recorte e sem proporção forçada: enquadrá-la
+ * cortaria a caixa e mataria o brilho que já vem embutido no arquivo.
  */
 export default function Bonus() {
   if (bonus.length === 0) return null;
 
   return (
-    <section className="bg-areia-100 py-20 sm:py-24">
-      <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
-        <CabecalhoSecao
-          rotulo="Vai junto, sem custo extra"
-          titulo={
-            <h2 className="display mt-6 text-[clamp(1.56rem,4.68vw,2.5rem)] text-tinta">
-              Bônus de entrada
-            </h2>
-          }
-          texto="Entra junto com o curso, sem custo e sem prazo separado. É conteúdo do método, não brinde de campanha."
-        />
+    <section className="relative isolate overflow-hidden bg-noite-900 py-20 text-areia-50 sm:py-28">
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(75%_60%_at_25%_0%,#10365c_0%,#0a2340_50%,#082038_100%)]" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 z-10 mx-auto h-px w-[min(28rem,60%)] bg-[linear-gradient(to_right,transparent,#c0a268,transparent)]"
+      />
 
-        {/* Com um bônus só, grade de duas colunas deixa metade da linha
-            vazia. O layout acompanha a quantidade. */}
-        <div
-          className={`fio mt-12 grid gap-x-12 gap-y-10 border-t pt-10 ${
-            bonus.length > 1 ? "md:grid-cols-2" : ""
-          }`}
-        >
-          {bonus.map((item, i) => (
-            <Reveal key={item.titulo} atraso={i * 70}>
-              <article
-                className={`grid gap-8 sm:items-center ${
-                  bonus.length > 1
-                    ? "sm:grid-cols-[13rem_1fr]"
-                    : "sm:grid-cols-[minmax(0,26rem)_1fr] lg:gap-16"
-                }`}
-              >
-                {item.imagem ? (
-                  <div
-                    className={`elevado relative aspect-2/3 w-full overflow-hidden ${
-                      bonus.length > 1 ? "max-w-[13rem]" : "max-w-[26rem]"
-                    }`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={item.imagem}
-                      alt={item.titulo}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ) : null}
+      <div className="relative z-10 mx-auto max-w-[80rem] px-5 sm:px-8">
+        {bonus.map((item, i) => (
+          <div
+            key={item.titulo}
+            className={`grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 ${
+              i > 0 ? "mt-20 border-t border-white/10 pt-20" : ""
+            }`}
+          >
+            {item.imagem ? (
+              <Reveal className="order-first">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.imagem}
+                  alt={`Módulo bônus ${item.titulo}`}
+                  width={1200}
+                  height={923}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full max-w-[34rem] lg:max-w-none"
+                />
+              </Reveal>
+            ) : null}
 
-                <div>
-                  <p className="placar text-[1.4rem] text-areia-400">
-                    +{String(i + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="display mt-3 text-[clamp(1.6rem,3.6vw,2.6rem)] text-tinta">
-                    {item.titulo}
-                  </h3>
-                  <p className="mt-4 max-w-[34rem] text-[1.05rem] leading-[1.65] text-tinta/70">
-                    {item.texto}
-                  </p>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+            <div>
+              <Reveal>
+                <Rotulo tom="claro">Vai junto, sem custo extra</Rotulo>
+              </Reveal>
+
+              <Reveal atraso={80}>
+                <p className="placar mt-6 text-[1.1rem] text-sol-400">
+                  +{String(i + 1).padStart(2, "0")}
+                </p>
+                <h2 className="display mt-2 text-[clamp(2.1rem,5.6vw,3.4rem)] text-areia-50">
+                  {item.titulo}
+                </h2>
+              </Reveal>
+
+              <Reveal atraso={140}>
+                <p className="mt-5 max-w-[34rem] text-[1.04rem] leading-[1.68] text-bruma-200">
+                  {item.texto}
+                </p>
+              </Reveal>
+
+              <Reveal atraso={200}>
+                <p className="caixa rotulo mt-8 border-areia-300 text-areia-200">
+                  Incluso no {marca.nome}
+                </p>
+                <p className="mt-4 text-[0.84rem] text-bruma-300">
+                  Entra com o curso, no mesmo acesso e sem prazo separado.
+                  {oferta.vagas ? ` ${oferta.vagas}` : ""}
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );

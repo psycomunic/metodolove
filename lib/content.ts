@@ -253,7 +253,7 @@ export const bonus = [
     titulo: "Networking",
     texto:
       "Módulo bônus sobre a rede que sustenta a carreira: com quem você anda, como se apresenta e as portas que isso abre dentro do esporte.",
-    imagem: "/bonus-networking.png",
+    imagem: "/bonus-networking.webp",
   },
 ];
 

@@ -14,3 +14,8 @@ next-env.d.ts
 /2.mp4
 /public/videos/*.mp4
 !/public/videos/*-web.mp4
+
+# Fontes pesadas das artes. O que a pagina usa e a versao derivada e otimizada
+# (bonus-networking.webp, 129 KB contra 2,1 MB do PNG original).
+/public/network.png
+/public/1.jpg
