@@ -18,7 +18,7 @@ export default function CtaFinal() {
           passo={13}
           espessura={7}
           origem="50% 44%"
-          opacidade={0.42}
+          opacidade={0.26}
         />
       </Deriva>
       {/* >>> SLOT DE IMAGEM: a silhueta do Rio saiu daqui em set/2026.

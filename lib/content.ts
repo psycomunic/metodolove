@@ -39,20 +39,23 @@ export const oferta = {
 /*  HERO                                                               */
 /* ------------------------------------------------------------------ */
 export const hero = {
-  olho: "Método completo de futevôlei",
+  olho: "Formação de professor de futevôlei",
   linha1: "Você já joga.",
   linha2: "Agora aprenda",
   // A única frase da página sobre bloco de cor chapada.
   linha3Destaque: "a viver disso",
+  // O texto anterior descrevia um curso que não existe: falava em refazer o
+  // fundamento e preparar o físico do próprio aluno. O produto forma
+  // PROFESSOR. Não devolva o foco para a técnica de quem compra.
   subtitulo:
-    "Seis módulos que refazem seu fundamento, corrigem sua leitura de jogo e preparam seu físico pra areia — e depois mostram como entrar em torneio, dar aula e transformar quadra em renda.",
+    "Para quem já joga, ou já dá aula, e quer fazer isso do jeito certo: conduzir a aula, atender turma desnivelada, se posicionar como professor e sustentar o futevôlei como profissão.",
   assinaturaSub:
     "O professor bom ensina. O professor malandro muda de vida com o esporte.",
   cta: "Quero entrar no Método",
   notas: [
     "Aulas gravadas, no seu ritmo",
-    "Do primeiro toque ao nível competitivo",
-    "Feito por quem vive de areia",
+    "Para quem joga e quer ensinar",
+    "Feito por quem vive de dar aula",
   ],
   fotoArte: "Charllove em quadra, sol baixo, areia visível",
 };
@@ -126,14 +129,15 @@ export const autor = {
    * buraco que ele aponta nos outros professores. Não troque isso por
    * biografia de atleta: enfraquece a oferta.
    *
-   * >>> CONFERIR antes de publicar: os títulos de melhor vendedor (4x na
-   * Reserva, 1x na Honda) são afirmações verificáveis sobre pessoa real. Se
-   * não houver como comprovar, troque por formulação mais branda — número
-   * inflado em anúncio derruba conta no Meta.
+   * Os títulos de vendas foram SUAVIZADOS de propósito (set/2026). No áudio
+   * ele diz "quatro vezes o melhor vendedor do país" e "melhor vendedor do
+   * Brasil"; a página diz "entre os melhores". Superlativo absoluto sobre
+   * pessoa real, em anúncio pago, é afirmação que alguém pode exigir prova —
+   * e conta reprovada no Meta custa mais do que a força da frase.
    */
   paragrafos: [
     "Joguei futebol profissional até os 23 anos. Foram anos que me deram disciplina, visão de equipe e resiliência — e que terminaram cedo, como terminam para quase todo mundo.",
-    "Depois vim para o varejo. Na Reserva fui quatro vezes o melhor vendedor do país, e foi ali que aprendi a comunicar valor, não só mostrar produto. Um cliente virou amigo e me levou para a Honda, onde fui o melhor vendedor do Brasil de novo. Ali entendi que resultado vem de método e consistência, não de talento solto.",
+    "Depois vim para o varejo. Na Reserva passei anos entre os melhores vendedores do país, e foi ali que aprendi a comunicar valor, não só mostrar produto. Um cliente virou amigo e me levou para a Honda, onde a história se repetiu. Ali entendi que resultado vem de método e consistência, não de talento solto.",
     "Depois da pandemia veio a virada: decidi trabalhar com o que eu amo, agora como treinador e empreendedor. Fundei a GR7, depois a Deca 7 e o CTP 10.",
     "Criei o Método LLOVE porque vejo muito professor bom sem didática, sem método e sem clareza — e, mais grave, sem conexão nenhuma com o aluno. Aqui eu te passo o que aprendi na marra, na rua e na quadra.",
   ],
@@ -198,10 +202,10 @@ export const capacidades = [
   },
   {
     n: "06",
-    titulo: "O lado do negócio",
+    titulo: "Profissão, não bico",
     resumo: "Tratar a aula como serviço",
     texto:
-      "Organizar o que você oferece, formar preço e combinar regras com o aluno. A parte que quase ninguém ensina a quem veio da quadra.",
+      "Organizar o que você oferece, formar preço e combinar regras com o aluno. É o que separa dar uma aula por fora de exercer a coisa como profissão.",
   },
 ];
 
@@ -325,8 +329,10 @@ export const faq = [
 /* ------------------------------------------------------------------ */
 export const ctaFinal = {
   olho: "Última chamada",
-  titulo: ["Daqui a um ano você", "vai jogar melhor", "de qualquer jeito."],
+  // Pergunta do Charllove, da Aula 0.1. É a melhor linha do curso inteiro:
+  // separa quem dá aula de quem constrói uma base de alunos fiéis.
+  titulo: ["Alguém já te ensinou", "a fazer o teu aluno", "virar o teu fã?"],
   texto:
-    "A pergunta é se vai ser por tentativa e erro, como foi comigo, ou por um caminho que alguém já andou e desenhou pra você.",
+    "Dar aula quase todo mundo dá. O que quase ninguém ensinou a você foi o resto: conduzir, se posicionar e sustentar isso como profissão, não como bico de fim de semana.",
   cta: "Entrar no Método LLOVE",
 };
