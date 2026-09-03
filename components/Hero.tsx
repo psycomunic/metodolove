@@ -1,4 +1,5 @@
 import { hero, marca, oferta } from "@/lib/content";
+import BolaTroca from "./BolaTroca";
 import { Botao, Destaque, Reveal, Rotulo } from "./ui";
 import { LinhasReveal } from "./movimento";
 
@@ -57,44 +58,52 @@ export default function Hero() {
 
       {/* ---------------- copy ---------------- */}
       <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
-        <div className="max-w-[45rem]">
-          <Reveal>
-            <Rotulo tom="claro">{hero.olho}</Rotulo>
-          </Reveal>
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-16">
+          <div className="max-w-[45rem]">
+            <Reveal>
+              <Rotulo tom="claro">{hero.olho}</Rotulo>
+            </Reveal>
 
-          <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
-            <LinhasReveal
-              linhas={[
-                hero.linha1,
-                hero.linha2,
-                <Destaque key="destaque" cor="creme">
-                  {hero.linha3Destaque}
-                </Destaque>,
-              ]}
-            />
-          </h1>
+            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
+              <LinhasReveal
+                linhas={[
+                  hero.linha1,
+                  hero.linha2,
+                  <Destaque key="destaque" cor="creme">
+                    {hero.linha3Destaque}
+                  </Destaque>,
+                ]}
+              />
+            </h1>
 
-          <Reveal atraso={120}>
-            <p className="mt-6 max-w-[34rem] text-[0.95rem] leading-[1.6] text-bruma-200 sm:text-[1.02rem]">
-              {hero.subtitulo}
-            </p>
-          </Reveal>
-
-          {/* No desktop o botão já está sobre o banner; aqui ele só existe
-              abaixo de lg, onde a sobreposição não cabe. */}
-          <Reveal atraso={200}>
-            <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center lg:hidden">
-              <Botao href={marca.checkout} className="w-full sm:w-auto">
-                {hero.cta}
-              </Botao>
-              <p className="text-[0.8rem] leading-snug text-bruma-200">
-                <span className="font-bold text-white">
-                  {oferta.parcelasQtd} de {oferta.parcelasValor}
-                </span>
-                <br />
-                {oferta.garantiaDias} dias de garantia
+            <Reveal atraso={120}>
+              <p className="mt-6 max-w-[34rem] text-[0.95rem] leading-[1.6] text-bruma-200 sm:text-[1.02rem]">
+                {hero.subtitulo}
               </p>
-            </div>
+            </Reveal>
+
+            {/* No desktop o botão já está sobre o banner; aqui ele só existe
+                abaixo de lg, onde a sobreposição não cabe. */}
+            <Reveal atraso={200}>
+              <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center lg:hidden">
+                <Botao href={marca.checkout} className="w-full sm:w-auto">
+                  {hero.cta}
+                </Botao>
+                <p className="text-[0.8rem] leading-snug text-bruma-200">
+                  <span className="font-bold text-white">
+                    {oferta.parcelasQtd} de {oferta.parcelasValor}
+                  </span>
+                  <br />
+                  {oferta.garantiaDias} dias de garantia
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* A bola só entra a partir de lg: no celular ela empurraria o botão
+              para fora da primeira dobra, e hover não existe em toque. */}
+          <Reveal atraso={260} className="hidden lg:block">
+            <BolaTroca className="w-[19rem] xl:w-[22rem]" />
           </Reveal>
         </div>
       </div>

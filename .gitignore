@@ -7,9 +7,10 @@ out
 next-env.d.ts
 .vercel
 
-# Vídeos brutos. São ~50 MB somados e hoje não são usados por nada: o hero
-# virou imagem (FUNDO-HERO-*.jpg) e o HeroReveal saiu de cena. Ficam fora do
-# repositório até que se decida onde usá-los.
+# Os vídeos BRUTOS ficam fora: 25 MB somados. As versões -web.mp4, geradas
+# por ffmpeg a 720x720 e crf 30, pesam 683 KB juntas e SÃO versionadas, porque
+# a página depende delas.
 /1.mp4
 /2.mp4
 /public/videos/*.mp4
+!/public/videos/*-web.mp4

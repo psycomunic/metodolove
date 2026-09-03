@@ -9,7 +9,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  *  — prefers-reduced-motion desliga parallax por completo.
  * ------------------------------------------------------------------ */
 
-function useMovimentoReduzido() {
+export function useMovimentoReduzido() {
   const [reduzido, setReduzido] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
