@@ -1,0 +1,45 @@
+VÍDEOS DO HERO
+==============
+
+Coloque os dois vídeos das bolas aqui, com estes nomes exatos:
+
+  bola-1.mp4   → cena base, a que aparece o tempo todo
+  bola-2.mp4   → cena revelada pelo holofote que segue o cursor
+
+Enquanto os arquivos não existirem, o hero volta sozinho para o desenho com
+gradiente e foto. Nada quebra e nada fica com espaço vazio.
+
+COMO EXPORTAR
+-------------
+Formato:     MP4, codec H.264 (compatível com todos os navegadores)
+Resolução:   1920x1080. Não adianta mais que isso, o vídeo fica de fundo.
+Duração:     4 a 8 segundos, em laço — o corte precisa emendar sem solavanco
+Áudio:       REMOVA a faixa de áudio. O vídeo toca mudo e sem áudio ele fica
+             bem mais leve
+Peso alvo:   até 2 MB cada. Acima disso o hero demora a pintar em 4G e a
+             conversão cai
+
+Comando de referência, se você tiver ffmpeg:
+
+  ffmpeg -i entrada.mov -an -vf "scale=1920:-2" -c:v libx264 \
+         -crf 28 -preset slow -movflags +faststart bola-1.mp4
+
+  -an              remove o áudio
+  -crf 28          qualidade; suba o número para arquivo menor
+  +faststart       deixa o vídeo começar a tocar antes de baixar inteiro
+
+ENQUADRAMENTO
+-------------
+O título ocupa a METADE ESQUERDA da tela. Escolha (ou reenquadre) tomadas em
+que a bola e a ação fiquem do lado DIREITO — o véu azul escurece bem mais a
+esquerda para o texto ficar legível.
+
+Os dois vídeos precisam ter o MESMO enquadramento. O efeito é a mesma cena
+mudando sob o facho de luz; se a câmera estiver em posição diferente, vira um
+corte, não uma revelação. Ex.: bola-1 com a bola parada na areia, bola-2 com o
+mesmo quadro em pleno ataque.
+
+WEBM (opcional)
+---------------
+Se quiser economizar mais banda, gere também bola-1.webm e bola-2.webm e troque
+o <video src> por <source> em components/HeroReveal.tsx, com o WebM antes do MP4.

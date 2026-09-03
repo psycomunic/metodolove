@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Tokens — os papéis de cada um estão em docs/DESIGN.md
+   Direção: cartaz de torneio. Marinho é o campo, areia é o papel,
+   laranja e lima são os dois gritos — e gritam em turnos, nunca juntos
+   no mesmo bloco.
+   ============================================================ */
+@theme {
+  /* ============================================================
+     Paleta amostrada das artes do hero (public/FUNDO-HERO-*.jpg).
+     Não invente valores novos aqui: o hero é uma FOTO, e qualquer
+     cor que não saia dela cria uma emenda visível na página.
+     ============================================================ */
+
+  /* --- Marinho. O 800 é o valor EXATO do rodapé das duas imagens.
+         É por ele que a foto emenda com o resto da página. --- */
+  --color-noite-950: #001736;
+  --color-noite-900: #002253;
+  --color-noite-800: #002f73;
+  --color-noite-700: #003d93;
+  --color-noite-600: #0b4eb5;
+  --color-noite-500: #1a63d1;
+
+  /* --- Laranja dos arcos da foto. É o acento e o CTA. --- */
+  --color-sol-600: #d24e00;
+  --color-sol-500: #fc6000;
+  --color-sol-400: #ff7f2e;
+  --color-sol-300: #ffa05c;
+
+  /* --- Verde do top da atleta. Voz secundária, só em display. --- */
+  --color-campo-600: #007a24;
+  --color-campo-500: #009c30;
+  --color-campo-400: #14bc45;
+
+  /* --- Areia do pôr do sol da foto: papel das seções de leitura. --- */
+  --color-areia-50: #fff6e8;
+  --color-areia-100: #fdecd5;
+  --color-areia-200: #f7dab4;
+  --color-areia-300: #e8bd85;
+  --color-areia-400: #c9954f;
+  --color-areia-500: #94682f;
+
+  /* --- Bruma: texto de apoio sobre marinho. --- */
+  --color-bruma-200: #bcd0f2;
+  --color-bruma-300: #8aa6de;
+  --color-bruma-400: #6180bd;
+
+  --color-tinta: #001736;
+
+  --font-display: var(--font-archivo-black), "Arial Black", sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-noite-900);
+  color: var(--color-areia-50);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-campo-500);
+  color: var(--color-noite-950);
+}
+
+/* ---------- Display: cartaz de torneio ---------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  /* A Archivo Black é larga e já vem espaçada de fábrica. Sem tracking
+     negativo a manchete abre demais e perde o bloco de cartaz. A Anton,
+     que era condensada, não precisava disso. */
+  letter-spacing: -0.022em;
+  /* Entrelinha um pouco maior que a da condensada: a Black tem altura-x
+     alta e, a 0.86, as linhas colidiam. */
+  line-height: 0.94;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Número de placar: tabular, para as colunas alinharem. */
+.placar {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* Caixa alta sempre com tracking (checklist anti-slop). */
+.rotulo {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   Vocabulário de forma do cartaz
+   ============================================================ */
+
+/**
+ * Bloco de manchete: cor chapada, canto vivo, inclinação mínima.
+ * A inclinação é do BLOCO; o texto volta ao prumo por contra-rotação,
+ * senão a linha de base fica torta e a manchete perde a força.
+ */
+.bloco {
+  display: inline-block;
+  transform: rotate(var(--inclina, -1.4deg));
+  transform-origin: left center;
+}
+.bloco > span {
+  display: inline-block;
+  transform: rotate(calc(var(--inclina, -1.4deg) * -1));
+  padding: 0.1em 0.34em 0.16em;
+}
+
+/* Pílula vazada: dado secundário. Contorno, nunca preenchimento.
+   NÃO declare `display` aqui: esta classe vem depois do Tailwind na cascata
+   e passaria por cima de `hidden`/`flex` nos utilitários. Quem posiciona é
+   o utilitário; a classe cuida só da forma. */
+.pilula {
+  align-items: center;
+  gap: 0.9rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  padding: 0.62rem 1.6rem;
+}
+
+/* Caixa vazada de canto vivo: rótulo sobre bloco de cor. */
+.caixa {
+  display: inline-block;
+  border: 2px solid currentColor;
+  padding: 0.42rem 1.1rem;
+}
+
+/* ---------- Grão de filme ---------- */
+.grao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grao);
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  opacity: 0.17;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---------- Entrada por scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--atraso, 0ms);
+}
+.reveal[data-visivel="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Bloco de manchete que "pinta" da esquerda para a direita ao entrar. */
+.pinta {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.72s cubic-bezier(0.65, 0, 0.35, 1);
+  transition-delay: var(--atraso, 0ms);
+}
+.pinta[data-visivel="true"] {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .pinta {
+    clip-path: none;
+    transition: none;
+  }
+  .flutua,
+  .balanca,
+  .faixa-corre,
+  .pulsa {
+    animation: none !important;
+  }
+}
+
+/* ---------- Movimento ambiente ---------- */
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.flutua {
+  animation: flutuar 8s ease-in-out infinite;
+}
+
+@keyframes balancar {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-26px);
+  }
+}
+.balanca {
+  animation: balancar 15s ease-in-out infinite;
+}
+
+@keyframes correr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.faixa-corre {
+  display: flex;
+  width: max-content;
+  animation: correr 36s linear infinite;
+}
+
+/* Respiração dos arcos: escala mínima, longa. Sugere a onda, não pisca. */
+@keyframes pulsar {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.035);
+    opacity: 1;
+  }
+}
+.pulsa {
+  animation: pulsar 14s ease-in-out infinite;
+  transform-origin: var(--origem, 50% 50%);
+}
+
+/* ---------- Fios (substituem sombras) ---------- */
+.fio {
+  border-color: color-mix(in srgb, var(--color-areia-400) 55%, transparent);
+}
+.fio-claro {
+  border-color: color-mix(in srgb, var(--color-areia-100) 22%, transparent);
+}
+
+/* Sombra só onde há elevação real: bloco da oferta e fotos. */
+.elevado {
+  box-shadow: 0 34px 70px -46px rgba(6, 14, 58, 0.95);
+}
+
+.contorno {
+  -webkit-text-stroke: 2px currentColor;
+  color: transparent;
+}
+
+/* Accordion */
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .cruz {
+  transform: rotate(45deg);
+}

@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env*.local
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+
+# Vídeos brutos. São ~50 MB somados e hoje não são usados por nada: o hero
+# virou imagem (FUNDO-HERO-*.jpg) e o HeroReveal saiu de cena. Ficam fora do
+# repositório até que se decida onde usá-los.
+/1.mp4
+/2.mp4
+/public/videos/*.mp4
