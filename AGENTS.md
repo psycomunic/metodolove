@@ -64,6 +64,12 @@ escolha. Estas cinco regras não podem ser quebradas sem refazer aquele document
 7. **Nunca use areia translúcida sobre o marinho** (`bg-areia-*/NN`) — compõe em cinza.
    Seção de leitura usa areia opaca.
 8. **Não desenhe arcos por cima do hero**: as artes `FUNDO-HERO-*.jpg` já os trazem.
+9. **Numeração é sempre a placa de peito** (classe `.placa` em `app/globals.css`): chapa
+   marinho, número creme, fio interno. Lista numerada nova usa essa peça, não uma
+   variação. Duas numerações diferentes na mesma página anulam o gesto que a página tem
+   de mais memorável. A placa não é card: ela contém só o número.
+10. **Emenda entre seções é reta.** Nada de elipse, onda ou arredondamento na fronteira
+    entre o marinho e o papel. Cartaz de torneio tem corte seco.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula
