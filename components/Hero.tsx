@@ -150,6 +150,33 @@ export default function Hero() {
           </dl>
         </div>
       ) : null}
+
+      {/* ---------------- fecho do hero ----------------
+          Duas coisas resolvidas aqui, e elas não competem:
+
+          1. O espaço abaixo do botão estava morto desde que a barra de
+             métricas saiu. Agora ele carrega o que derruba objeção bem na
+             hora da decisão — prazo, forma de pagamento, garantia.
+          2. O azul encontrava o creme numa linha reta absoluta, e parecia
+             duas imagens coladas. O arco é do mesmo vocabulário dos arcos
+             concêntricos que já existem na arte do hero, então a borda fecha
+             a peça em vez de só terminá-la. */}
+      <div className="relative border-t border-white/15">
+        <div className="mx-auto flex max-w-[80rem] flex-wrap items-center gap-x-8 gap-y-2 px-5 py-5 text-[0.76rem] font-semibold tracking-wide text-bruma-200 sm:px-8">
+          <span>Acesso imediato</span>
+          <span className="h-3 w-px bg-white/25" />
+          <span>{oferta.acesso}</span>
+          <span className="h-3 w-px bg-white/25" />
+          <span>Cartão, Pix ou boleto</span>
+          <span className="h-3 w-px bg-white/25" />
+          <span>{oferta.garantiaDias} dias de garantia</span>
+        </div>
+      </div>
+
+      {/* O raio enorme faz a curva ler como arco amplo, não como bolha. */}
+      <div className="relative h-12 w-full overflow-hidden sm:h-20" aria-hidden="true">
+        <div className="absolute inset-x-[-14%] top-0 h-[30rem] rounded-[50%] bg-areia-100" />
+      </div>
     </section>
   );
 }
