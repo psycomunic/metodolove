@@ -12,10 +12,26 @@ import { useMovimentoReduzido } from "./movimento";
  * que a manchete ao lado diz. E o facho obriga a pessoa a DESCOBRIR isso, o
  * que prende mais que uma troca automática.
  *
- * Os dois vídeos vêm com fundo branco, e é por isso que o disco existe: a cor
- * dele é a MESMA do fundo dos arquivos (#FAFAF8, amostrada dos cantos), então
- * a máscara circular não deixa emenda. Não tente remover o branco por blend
- * mode: multiply escurece a bola azul e darken come a de dinheiro.
+ * Os vídeos vêm com fundo branco, e o ENQUADRAMENTO deles resolve isso.
+ * Medido quadro a quadro nos dois arquivos: a bola tem raio de 0,389 da
+ * largura do quadro e o centro dela fica em (49,5%, 51,0%), não em (50%, 50%).
+ *
+ * Esse 1% de desvio é o que produzia uma meia-lua branca no topo quando eu só
+ * escalava: escalar a partir do centro amplia o desvio junto. Por isso o
+ * transform desloca ANTES de escalar. Depois de centrada, 0,5 / 0,389 = 1,285
+ * é a escala mínima para a bola encostar na borda; 1,30 dá a folga.
+ *
+ * Não tente remover o branco por blend mode: multiply escurece a bola azul e
+ * darken come a de dinheiro.
+ *
+ * A sombra existe porque a bola preenche o disco inteiro: sem fundo branco
+ * sobrando, o círculo É a esfera, e a sombra a tira do plano em vez de deixá-la
+ * com cara de adesivo.
+ *
+ * Ela é forte de propósito. O fundo é marinho quase preto (#082038), e sombra
+ * discreta ali simplesmente não aparece — some no próprio fundo. São duas
+ * camadas: uma curta e opaca logo abaixo, para o contato, e uma longa e muito
+ * difusa, para a distância. É como sombra real se comporta.
  */
 export default function BolaTroca({ className = "" }: { className?: string }) {
   const caixa = useRef<HTMLDivElement>(null);
@@ -101,7 +117,7 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
       onPointerDown={() => setTocado((t) => !t)}
       role="img"
       aria-label="Bola do Método LLOVE girando. Um facho de luz revela uma bola feita de dinheiro por baixo."
-      className={`relative aspect-square overflow-hidden rounded-full bg-[#FAFAF8] ${className}`}
+      className={`relative aspect-square overflow-hidden rounded-full bg-[#FAFAF8] shadow-[0_22px_28px_-10px_rgba(0,0,0,0.9),0_60px_90px_-24px_rgba(0,0,0,0.95)] ${className}`}
     >
       <video
         ref={base}
@@ -111,7 +127,8 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
         playsInline
         preload="metadata"
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full scale-110 object-cover"
+        style={ENQUADRA}
+        className="absolute inset-0 h-full w-full object-cover"
       />
       <video
         ref={revela}
@@ -122,13 +139,22 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
         preload="metadata"
         aria-hidden="true"
         // Em toque não existe cursor: o toque troca a bola inteira.
-        className={`absolute inset-0 h-full w-full scale-110 object-cover ${
+        style={ENQUADRA}
+        className={`absolute inset-0 h-full w-full object-cover ${
           tocado ? "[mask-image:none] opacity-100 [-webkit-mask-image:none]" : ""
         }`}
       />
     </div>
   );
 }
+
+/**
+ * Centraliza a bola e a amplia até encostar na borda do disco.
+ * O translate vem depois do scale na string porque o CSS aplica da direita
+ * para a esquerda: desloca primeiro, em coordenadas não escaladas, e só então
+ * amplia em torno do centro.
+ */
+const ENQUADRA = { transform: "scale(1.3) translate(0.5%, -1%)" } as const;
 
 /** Facho fechado: círculo de raio zero, longe da tela. */
 const FECHADO = "radial-gradient(circle 0px at -999px -999px, #fff, transparent)";

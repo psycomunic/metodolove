@@ -112,7 +112,7 @@ export default function Hero() {
               empurraria o botão de compra para fora da primeira dobra e hover
               não existe em toque. */}
           <Reveal atraso={260} className="hidden md:block">
-            <BolaTroca className="w-[13rem] lg:w-[18rem] xl:w-[21rem]" />
+            <BolaTroca className="w-[14rem] lg:w-[20rem] xl:w-[25rem]" />
           </Reveal>
         </div>
       </div>
