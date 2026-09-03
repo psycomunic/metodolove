@@ -19,7 +19,7 @@ import { Botao, Destaque, Reveal, Rotulo } from "./ui";
  */
 export default function CtaFinal() {
   return (
-    <section className="grao relative isolate overflow-hidden bg-noite-950 pt-24 pb-24 text-areia-100 sm:pt-32 sm:pb-32">
+    <section className="grao relative isolate overflow-hidden bg-noite-950 pt-14 pb-16 text-areia-100 sm:pt-20 sm:pb-24">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(80%_60%_at_50%_0%,#10365c_0%,#0a2340_45%,#050f1f_100%)]" />
 
       {/* Fio dourado: o único ornamento, e vem do banner da marca, onde os

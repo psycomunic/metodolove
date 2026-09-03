@@ -9,7 +9,7 @@ export default function Depoimentos() {
   if (depoimentos.length === 0) return null;
 
   return (
-    <section className="bg-areia-100 py-24 sm:py-32">
+    <section className="bg-areia-100 py-14 sm:py-20">
       <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
         <Reveal>
           <Rotulo>Quem já está dentro</Rotulo>

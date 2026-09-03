@@ -7,7 +7,7 @@ export default function Autor() {
   return (
     <section
       id="charllove"
-      className="grao relative overflow-hidden bg-noite-950 py-24 text-areia-100 sm:py-32"
+      className="grao relative overflow-hidden bg-noite-950 py-14 text-areia-100 sm:py-20"
     >
       <Deriva velocidade={50} className="absolute inset-x-0 top-12">
         <LinhaDagua className="balanca h-6 w-full text-noite-600" />

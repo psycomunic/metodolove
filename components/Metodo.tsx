@@ -13,7 +13,7 @@ import { CabecalhoSecao, Reveal } from "./ui";
  */
 export default function Metodo() {
   return (
-    <section id="metodo" className="relative overflow-hidden bg-areia-100 py-24 sm:py-32">
+    <section id="metodo" className="relative overflow-hidden bg-areia-100 py-14 sm:py-20">
       <span
         aria-hidden="true"
         className="display contorno pointer-events-none absolute -top-8 -right-6 hidden text-[16rem] leading-none select-none lg:block"

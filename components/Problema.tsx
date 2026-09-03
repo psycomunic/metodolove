@@ -4,7 +4,7 @@ import { Reveal, Rotulo } from "./ui";
 
 export default function Problema() {
   return (
-    <section className="bg-areia-100 py-24 sm:py-32">
+    <section className="bg-areia-100 py-14 sm:py-20">
       <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
           {/* trilho à esquerda */}

@@ -17,7 +17,7 @@ export default function Bonus() {
   if (bonus.length === 0) return null;
 
   return (
-    <section className="relative isolate overflow-hidden bg-noite-900 py-20 text-areia-50 sm:py-28">
+    <section className="relative isolate overflow-hidden bg-noite-900 py-14 text-areia-50 sm:py-20">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(75%_60%_at_25%_0%,#10365c_0%,#0a2340_50%,#082038_100%)]" />
       <div
         aria-hidden="true"

@@ -6,7 +6,7 @@ export default function Oferta() {
   return (
     <section
       id="oferta"
-      className="grao relative isolate overflow-hidden bg-noite-900 pt-24 pb-28 text-areia-100 sm:pt-32"
+      className="grao relative isolate overflow-hidden bg-noite-900 pt-14 pb-16 text-areia-100 sm:pt-20 sm:pb-24"
     >
       <div className="absolute inset-0 z-0 bg-[radial-gradient(110%_72%_at_18%_-4%,#16308F_0%,#0B1A5E_46%,#060E3A_100%)]" />
       {/* >>> SLOT DE IMAGEM: a silhueta do Rio saiu daqui em set/2026. */}
@@ -30,48 +30,75 @@ export default function Oferta() {
           texto="Pagamento único. Sem mensalidade, sem taxa escondida, sem renovação automática. Você entra hoje e o material é seu pelo tempo de acesso combinado."
         />
 
-        {/* bloco da oferta — aqui o card é justificado: é o container da conversão */}
+        {/* Bloco da oferta. Aqui o card é justificado: é o container da
+            conversão, o único lugar da página com interação de verdade.
+
+            Três correções de set/2026, todas de alinhamento:
+
+            1. A coluna do preço estava centrada na vertical enquanto a da
+               esquerda era alinhada ao topo. Os dois lados corriam em ritmos
+               diferentes e sobrava um vazio no pé da esquerda. Agora as duas
+               partem da mesma linha.
+            2. O canto era vivo em tudo e o conjunto lia como duas caixas
+               encostadas. Um raio pequeno tira a dureza sem virar bolha: é a
+               exceção do container de conversão, não uma licença geral.
+            3. A divisão entre os painéis era só a troca de cor. Ganhou um fio
+               dourado, que é o recurso do banner da marca. */}
         <Reveal atraso={160} className="mt-14">
-          <div className="elevado mx-auto grid max-w-[64rem] overflow-hidden bg-areia-50 text-tinta lg:grid-cols-[1.02fr_0.98fr]">
-            <div className="fio border-b p-8 sm:p-11 lg:border-r lg:border-b-0">
+          <div className="elevado mx-auto grid max-w-[64rem] overflow-hidden rounded-lg bg-areia-50 text-tinta lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="flex flex-col p-8 sm:p-11">
               <p className="rotulo text-noite-600">Você leva</p>
-              <h3 className="display mt-4 text-[2.1rem] text-tinta">
+              <h3 className="display mt-4 text-[clamp(1.6rem,3.4vw,2.1rem)] text-tinta">
                 {marca.nome} completo
               </h3>
-              <ul className="mt-8 space-y-3.5">
+
+              <ul className="mt-8 space-y-4">
                 {inclusos.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-3.5 text-[0.93rem] leading-snug text-tinta/80"
+                    className="flex gap-3.5 text-[0.95rem] leading-snug text-tinta/80"
                   >
-                    <Check className="mt-0.5 h-4.5 w-4.5 text-noite-600" />
+                    <Check className="mt-0.5 h-4.5 w-4.5 shrink-0 text-noite-600" />
                     {item}
                   </li>
                 ))}
               </ul>
+
+              {/* Fecha o pé da coluna, que antes terminava no ar. A garantia
+                  aqui não é repetição do bloco de baixo: ali ela é argumento,
+                  aqui é a última objeção derrubada ao lado do botão. */}
+              <div className="fio mt-auto flex items-start gap-4 border-t pt-7">
+                <p className="placar shrink-0 text-[2.6rem] leading-none text-sol-500">
+                  {oferta.garantiaDias}
+                  <span className="rotulo mt-1 block text-tinta/45">dias</span>
+                </p>
+                <p className="text-[0.9rem] leading-[1.6] text-tinta/65">
+                  Entre, assista tudo e leve para a sua turma. Se em {oferta.garantiaDias}{" "}
+                  dias achar que não é para você, manda um e-mail e eu devolvo cada
+                  centavo. Sem justificativa, sem enrolação.
+                </p>
+              </div>
             </div>
 
-            {/* Painel de preço em MARINHO, não num segundo creme. Os dois
-                cremes tinham tom quase igual e a divisão do card não lia como
-                intenção; e sobre marinho o laranja do botão ganha o contraste
-                que ele precisa ter no ponto da decisão. */}
-            <div className="flex flex-col justify-center bg-noite-900 p-8 text-areia-50 sm:p-11">
+            {/* Painel de preço em marinho, com fio dourado na emenda.
+                O conteúdo corre do topo, sem mt-auto empurrando o botão para
+                baixo: aquilo abria um vão no MEIO da coluna, entre o preço e o
+                botão, e vazio no meio de um bloco lê como erro. Sobrando no
+                fim de um painel de cor chapada, lê como respiro. */}
+            <div className="relative flex flex-col bg-noite-900 p-8 text-areia-50 sm:p-11 lg:border-l lg:border-areia-400/30">
               {oferta.vagas ? (
                 <p className="rotulo mb-6 text-sol-400">{oferta.vagas}</p>
               ) : null}
 
-              <p className="rotulo text-bruma-300">
+              <p className="text-[0.86rem] text-bruma-300">
                 De <span className="line-through">{oferta.precoCheio}</span> por
               </p>
 
-              {/* Uma só escala tipográfica no preço. Antes eram três corpos
-                  diferentes na mesma linha e o "de" minúsculo entre eles
-                  quebrava a leitura do número. */}
-              <p className="mt-5">
+              <p className="mt-6">
                 <span className="rotulo block text-bruma-200">
                   {oferta.parcelasQtd} sem juros de
                 </span>
-                <span className="placar mt-2 block text-[clamp(2.6rem,9vw,4.2rem)] text-white">
+                <span className="placar mt-2 block text-[clamp(2.6rem,8vw,3.9rem)] text-white">
                   {oferta.parcelasValor}
                 </span>
               </p>
@@ -88,26 +115,6 @@ export default function Oferta() {
                 Compra segura · Acesso liberado assim que o pagamento aprovar
                 <br />
                 {oferta.acesso} · Cartão, Pix ou boleto
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* garantia */}
-        <Reveal atraso={110} className="mt-14">
-          <div className="mx-auto flex max-w-[48rem] flex-col items-start gap-6 border-t border-noite-700/60 pt-10 sm:flex-row sm:gap-10">
-            <p className="placar shrink-0 text-[3.6rem] leading-none text-sol-500">
-              {oferta.garantiaDias}
-              <span className="rotulo mt-1 block text-bruma-300">dias</span>
-            </p>
-            <div>
-              <h3 className="display text-[1.6rem] text-areia-50">
-                Risco zero, de verdade
-              </h3>
-              <p className="mt-3 max-w-[34rem] text-[0.95rem] leading-[1.68] text-areia-200/72">
-                Entre, assista tudo, leve pra areia e teste. Se em {oferta.garantiaDias}{" "}
-                dias você achar que não é pra você, manda um e-mail e eu devolvo cada
-                centavo. Sem justificativa, sem enrolação.
               </p>
             </div>
           </div>

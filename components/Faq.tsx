@@ -3,7 +3,7 @@ import { Reveal, Rotulo } from "./ui";
 
 export default function Faq() {
   return (
-    <section id="duvidas" className="bg-areia-100 py-24 sm:py-32">
+    <section id="duvidas" className="bg-areia-100 py-14 sm:py-20">
       <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
