@@ -46,7 +46,8 @@ export const hero = {
   linha3Destaque: "a viver disso",
   subtitulo:
     "Seis módulos que refazem seu fundamento, corrigem sua leitura de jogo e preparam seu físico pra areia — e depois mostram como entrar em torneio, dar aula e transformar quadra em renda.",
-  assinaturaSub: "É o material que eu queria ter recebido no meu primeiro ano de quadra.",
+  assinaturaSub:
+    "O professor bom ensina. O professor malandro muda de vida com o esporte.",
   cta: "Quero entrar no Método",
   notas: [
     "Aulas gravadas, no seu ritmo",
@@ -113,15 +114,32 @@ export const problema = {
 export const autor = {
   olho: "Quem te leva até lá",
   nome: "Charllove",
-  cargo: "Atleta, professor e criador do Método LLOVE",
-  // >>> AJUSTAR: escreva aqui a SUA história real. O texto abaixo é rascunho,
-  //     feito a partir da sua bio do Instagram. Troque por números, títulos e
-  //     datas verdadeiros — história específica converte, história genérica não.
+  cargo: "Ex-atleta, treinador e criador do Método LLOVE",
+  /**
+   * História tirada da própria voz dele, na Aula 0.1 do curso (transcrita em
+   * set/2026), e não da bio do Instagram. O rascunho anterior dizia que ele
+   * "começou como todo mundo, sem professor e sem método" — é falso: ele veio
+   * do futebol profissional e de duas carreiras de vendedor campeão nacional.
+   *
+   * O que credencia o Charllove a ensinar PROFESSOR não é jogar bem. É a
+   * combinação esporte + comunicação de valor + método, que é exatamente o
+   * buraco que ele aponta nos outros professores. Não troque isso por
+   * biografia de atleta: enfraquece a oferta.
+   *
+   * >>> CONFERIR antes de publicar: os títulos de melhor vendedor (4x na
+   * Reserva, 1x na Honda) são afirmações verificáveis sobre pessoa real. Se
+   * não houver como comprovar, troque por formulação mais branda — número
+   * inflado em anúncio derruba conta no Meta.
+   */
   paragrafos: [
-    "Comecei como quase todo mundo começa: bola, areia e vontade. Sem professor, sem método, sem ninguém pra dizer se o que eu estava fazendo ia me levar a algum lugar.",
-    "Errei muito. Repeti fundamento torto por temporadas inteiras, treinei pesado no dia errado, entrei em torneio despreparado. Cada coisa que hoje eu ensino em dez minutos me custou meses pra descobrir sozinho.",
-    "O Método LLOVE é o material que eu queria ter recebido no meu primeiro ano de quadra. Ele existe pra encurtar o seu caminho — e pra que sua paixão pelo futevôlei tenha chance de virar profissão.",
+    "Joguei futebol profissional até os 23 anos. Foram anos que me deram disciplina, visão de equipe e resiliência — e que terminaram cedo, como terminam para quase todo mundo.",
+    "Depois vim para o varejo. Na Reserva fui quatro vezes o melhor vendedor do país, e foi ali que aprendi a comunicar valor, não só mostrar produto. Um cliente virou amigo e me levou para a Honda, onde fui o melhor vendedor do Brasil de novo. Ali entendi que resultado vem de método e consistência, não de talento solto.",
+    "Depois da pandemia veio a virada: decidi trabalhar com o que eu amo, agora como treinador e empreendedor. Fundei a GR7, depois a Deca 7 e o CTP 10.",
+    "Criei o Método LLOVE porque vejo muito professor bom sem didática, sem método e sem clareza — e, mais grave, sem conexão nenhuma com o aluno. Aqui eu te passo o que aprendi na marra, na rua e na quadra.",
   ],
+  // Frase dele, da Aula 0.1. É a tese do produto inteiro em uma linha.
+  citacao:
+    "Não basta só saber dar aula. É sobre se conectar, saber o seu valor e marcar presença na vida dos alunos.",
   assinatura: "Charllove",
   foto: "/images/charllove.jpg", // >>> COLOQUE sua foto em public/images/
   fotoArte: "Retrato, contato visual, quadra desfocada ao fundo",

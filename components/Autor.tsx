@@ -55,8 +55,19 @@ export default function Autor() {
               ))}
             </div>
 
-            <Reveal atraso={340}>
-              <p className="display mt-10 border-t border-noite-800 pt-6 text-[1.6rem] text-noite-500">
+            {/* A tese do produto na voz dele. Fica DEPOIS da história porque
+                só faz sentido depois de saber de onde ele veio: é a conclusão
+                da trajetória, não uma frase de efeito solta. */}
+            <Reveal atraso={330}>
+              <blockquote className="mt-10 border-l-[3px] border-sol-500 pl-5">
+                <p className="display text-[clamp(1.3rem,3vw,1.85rem)] text-areia-50">
+                  {autor.citacao}
+                </p>
+              </blockquote>
+            </Reveal>
+
+            <Reveal atraso={400}>
+              <p className="display mt-8 border-t border-noite-800 pt-6 text-[1.6rem] text-noite-500">
                 — {autor.assinatura}
               </p>
             </Reveal>
