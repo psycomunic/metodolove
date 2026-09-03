@@ -1,6 +1,6 @@
 import { hero, marca, oferta, provas } from "@/lib/content";
 import { Contador, LinhasReveal } from "./movimento";
-import { Botao, Check, Destaque, Pilula, Reveal, Rotulo } from "./ui";
+import { Botao, Destaque, Pilula, Reveal, Rotulo } from "./ui";
 
 /**
  * Hero de dobra única, conduzido pelas artes FUNDO-HERO-*.jpg.
@@ -113,49 +113,43 @@ export default function Hero() {
                 </span>
               </div>
             </Reveal>
-
-            {/* As notas somem em janela baixa: numa dobra apertada, quem tem de
-                sobreviver é a manchete e o botão, não a lista de apoio. */}
-            <Reveal atraso={300}>
-              <ul className="mt-7 hidden flex-wrap gap-x-6 gap-y-2 min-[900px]:flex">
-                {hero.notas.map((nota) => (
-                  <li
-                    key={nota}
-                    className="flex items-center gap-2 text-[0.76rem] font-semibold text-bruma-200"
-                  >
-                    <Check className="h-4 w-4 text-sol-400" />
-                    {nota}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
           </div>
         </div>
       </div>
 
-      {/* ---------------- placar, ancorado no pé da dobra ---------------- */}
-      <div className="relative border-t border-noite-600/40 bg-noite-900/85 backdrop-blur-sm">
-        <dl className="mx-auto grid max-w-[80rem] grid-cols-2 px-5 sm:px-8 lg:grid-cols-4">
-          {provas.map((item, i) => (
-            <div
-              key={item.rotulo}
-              className={`py-2.5 md:py-4 lg:px-7 ${i % 2 === 1 ? "border-l border-noite-600/30 pl-5 lg:pl-7" : ""} ${
-                i > 1 ? "border-t border-noite-600/30 lg:border-t-0" : ""
-              } ${i === 2 ? "lg:border-l lg:border-noite-600/30" : ""}`}
-            >
-              <dt className="placar text-[clamp(1.25rem,3.4vw,2.1rem)] text-sol-400">
-                <Contador valor={item.valor} decimais={item.decimais} pad={item.pad} />
-                {item.sufixo ? (
-                  <span className="ml-1 text-[0.42em] text-white">{item.sufixo}</span>
-                ) : null}
-              </dt>
-              <dd className="mt-0.5 max-w-[13rem] text-[0.64rem] leading-tight text-bruma-300 md:mt-1 md:text-[0.7rem]">
-                {item.rotulo}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
+      {/* ---------------- prova, no pé da dobra ----------------
+          Fio de 1px sobre o próprio azul do hero, não uma barra escura
+          separada: a barra criava uma terceira zona entre a foto e a seção
+          seguinte e cortava o hero em vez de fechá-lo.
+
+          A faixa só existe se houver número de verdade. Ver o comentário em
+          lib/content.ts: prova fraca em lugar nobre custa mais que espaço
+          vazio. */}
+      {provas.some((p) => p.valor !== null) ? (
+        <div className="relative border-t border-white/12">
+          <dl className="mx-auto flex max-w-[80rem] flex-col gap-5 px-5 py-5 sm:flex-row sm:items-baseline sm:gap-12 sm:px-8">
+            {provas
+              .filter((item) => item.valor !== null)
+              .map((item) => (
+                <div key={item.rotulo} className="flex items-baseline gap-3">
+                  <dt className="placar text-[clamp(1.5rem,3.4vw,2.1rem)] text-sol-400">
+                    <Contador
+                      valor={item.valor as number}
+                      decimais={item.decimais}
+                      pad={item.pad}
+                    />
+                    {item.sufixo ? (
+                      <span className="ml-1 text-[0.42em] text-white">{item.sufixo}</span>
+                    ) : null}
+                  </dt>
+                  <dd className="max-w-[15rem] text-[0.74rem] leading-snug text-bruma-200">
+                    {item.rotulo}
+                  </dd>
+                </div>
+              ))}
+          </dl>
+        </div>
+      ) : null}
     </section>
   );
 }

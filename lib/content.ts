@@ -52,30 +52,32 @@ export const hero = {
   assinaturaSub:
     "O professor bom ensina. O professor malandro muda de vida com o esporte.",
   cta: "Quero entrar no Método",
-  notas: [
-    "Aulas gravadas, no seu ritmo",
-    "Para quem já ensina, ou vai começar",
-    "Feito por quem vive de dar aula",
-  ],
   fotoArte: "Charllove em quadra, sol baixo, areia visível",
 };
 
-// Números reais, tirados do perfil @_charllove. Se mudarem, atualize aqui.
-export const provas = [
-  { valor: 93.5, decimais: 1, sufixo: "mil", rotulo: "seguidores no Instagram" },
-  { valor: 821, decimais: 0, sufixo: "", rotulo: "conteúdos publicados sobre o esporte" },
+/**
+ * Prova de que o Charllove sabe FORMAR professor.
+ *
+ * A versão anterior trazia seguidores do Instagram e número de posts. Isso
+ * prova popularidade, não competência para formar — e quem decide pagar por
+ * uma formação profissional não compra por causa de seguidor.
+ *
+ * >>> AJUSTAR: preencha `valor` com os números verdadeiros. Enquanto
+ * estiverem em null a faixa inteira NÃO aparece, pelo mesmo critério dos
+ * depoimentos: espaço vazio custa menos que prova fraca em lugar nobre.
+ */
+export const provas: {
+  valor: number | null;
+  decimais?: number;
+  pad?: number;
+  sufixo: string;
+  rotulo: string;
+}[] = [
+  { valor: null, sufixo: "", rotulo: "anos dando aula e formando professor" },
   {
-    valor: 6,
-    decimais: 0,
-    pad: 2,
+    valor: null,
     sufixo: "",
-    rotulo: "frentes do trabalho de dar aula",
-  },
-  {
-    valor: 100,
-    decimais: 0,
-    sufixo: "%",
-    rotulo: "online — treine na areia perto de casa",
+    rotulo: "alunos e professores que já passaram pelo método",
   },
 ];
 
