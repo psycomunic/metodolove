@@ -16,8 +16,7 @@ export const marca = {
   autor: "Charllove",
   instagram: "https://instagram.com/_charllove",
   instagramHandle: "@_charllove",
-  // >>> AJUSTAR: link real do checkout (Hotmart/Kiwify/Eduzz…)
-  checkout: "https://pay.hotmart.com/SEU-LINK-AQUI",
+  checkout: "https://pay.kiwify.com.br/y20epeD",
   // >>> AJUSTAR: link do Grupo VIP gratuito citado na bio do Instagram
   grupoVip: "https://instagram.com/_charllove",
   email: "contato@metodollove.com.br", // >>> AJUSTAR
@@ -30,7 +29,7 @@ export const oferta = {
   precoCheio: "R$ 597,00", // >>> AJUSTAR: valor de ancoragem
   preco: "R$ 297,90",
   parcelasQtd: "12x",
-  parcelasValor: "R$ 29,52", // >>> CONFIRA o parcelamento real do seu checkout
+  parcelasValor: "R$ 30,81",
   garantiaDias: 7, // >>> AJUSTAR se sua garantia for diferente
   acesso: "12 meses de acesso", // >>> AJUSTAR (vitalício? 1 ano?)
   vagas: "", // opcional, ex.: "Últimas 30 vagas com esse valor"

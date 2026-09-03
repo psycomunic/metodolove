@@ -23,14 +23,27 @@ marcados no arquivo com `// >>> AJUSTAR`. Em ordem de urgência:
 
 | # | O quê | Onde |
 |---|---|---|
-| 1 | **Link do checkout** — hoje aponta pra um endereço falso, nenhum botão vende | `marca.checkout` |
-| 2 | **Parcelamento** — confira o valor real que a sua plataforma mostra | `oferta.parcelasValor` |
-| 3 | **Fotos** — hero e retrato | `public/images/`, veja o `LEIA-ME.txt` de lá |
-| 4 | **Sua história** — o texto atual é rascunho tirado da sua bio | `autor.paragrafos` |
-| 5 | **Nomes dos módulos** — ajuste pro conteúdo real do curso | `pilares` |
-| 6 | **CNPJ, razão social, e-mail e domínio** | `marca` |
-| 7 | **Preço de ancoragem** (o "de R$ ___ por") | `oferta.precoCheio` |
-| 8 | **Prazo de garantia e tempo de acesso** | `oferta.garantiaDias`, `oferta.acesso` |
+| 1 | **Vídeos das bolas** — `bola-1.mp4` e `bola-2.mp4`, o efeito de holofote depende deles | `public/videos/`, veja o `LEIA-ME.txt` de lá |
+| 2 | **Fotos** — retrato e imagem de compartilhamento | `public/images/`, veja o `LEIA-ME.txt` de lá |
+| 3 | **Sua história** — o texto atual é rascunho tirado da sua bio | `autor.paragrafos` |
+| 4 | **Nomes dos módulos** — ajuste pro conteúdo real do curso | `pilares` |
+| 5 | **CNPJ, razão social, e-mail e domínio** | `marca` |
+| 6 | **Preço de ancoragem** (o "de R$ ___ por") | `oferta.precoCheio` |
+| 7 | **Prazo de garantia e tempo de acesso** | `oferta.garantiaDias`, `oferta.acesso` |
+
+Checkout (`https://pay.kiwify.com.br/y20epeD`) e parcelamento (12x de R$ 30,81) já estão
+configurados.
+
+### O holofote do hero
+
+Dois vídeos empilhados: `bola-1.mp4` toca o tempo todo e `bola-2.mp4` só aparece dentro de
+um facho circular que segue o cursor. Uma varredura automática roda uma vez ao carregar, pra
+quem nunca move o mouse descobrir que o efeito existe.
+
+Enquanto os arquivos não estiverem em `public/videos/`, o hero cai sozinho no desenho de
+gradiente + foto — sem espaço vazio e sem erro no console. O código está em
+`components/HeroReveal.tsx`; o raio do facho e os véus azuis são as duas coisas que você
+pode querer calibrar depois de ver o efeito com o vídeo real.
 
 ### Depoimentos
 

@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import { hero, marca, oferta, provas } from "@/lib/content";
 import { Areia, Sol } from "./art";
+import HeroReveal from "./HeroReveal";
 import { Contador, Deriva, Desmascara, Horizonte, LinhasReveal } from "./movimento";
 import { Botao, Check, Foto, Rabisco, Rotulo } from "./ui";
 
@@ -9,12 +13,19 @@ import { Botao, Check, Foto, Rabisco, Rotulo } from "./ui";
  * O horizonte do Rio corre em três camadas conforme a página desce.
  */
 export default function Hero() {
+  // Com os vídeos no ar, eles viram a mídia principal e o painel de foto sai
+  // de cena — ficariam disputando a mesma metade da tela.
+  const [comVideo, setComVideo] = useState(false);
+
   return (
     <section
       id="topo"
       className="grao relative isolate overflow-hidden bg-mar-900 text-areia-100"
     >
       <div className="absolute inset-0 z-0 bg-[radial-gradient(115%_78%_at_72%_-6%,#0E5180_0%,#062A45_48%,#04192B_100%)]" />
+
+      {/* Vídeos das bolas com holofote de revelação no cursor. */}
+      <HeroReveal aoCarregar={setComVideo} />
 
       {/* O sol se põe atrás do painel de foto — a sobreposição é o que dá profundidade. */}
       <Deriva velocidade={90} className="absolute -top-32 right-[4%] z-0 sm:-top-16 sm:right-[10%]">
@@ -29,7 +40,11 @@ export default function Hero() {
       />
 
       {/* --------- painel de foto: sangra na borda direita --------- */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-[42%] lg:block">
+      <div
+        className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-[42%] ${
+          comVideo ? "hidden" : "hidden lg:block"
+        }`}
+      >
         <Desmascara atraso={320} className="elevado absolute top-36 right-0 bottom-16 left-10">
           <div className="relative h-full w-full overflow-hidden">
             <Foto
@@ -61,7 +76,11 @@ export default function Hero() {
           </h1>
 
           {/* foto no celular: entra depois da manchete, ainda dominante */}
-          <Desmascara className="elevado relative mt-9 aspect-4/3 w-full overflow-hidden lg:hidden">
+          <Desmascara
+            className={`elevado relative mt-9 aspect-4/3 w-full overflow-hidden ${
+              comVideo ? "hidden" : "lg:hidden"
+            }`}
+          >
             <Foto
               src="/images/hero.jpg"
               alt="Charllove jogando futevôlei em quadra de areia"

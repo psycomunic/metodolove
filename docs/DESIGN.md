@@ -127,6 +127,7 @@ partículas.
 | Máscara de abertura | fotos | continuidade — a imagem "chega" no lugar |
 | Contador | placar de números do hero | hierarquia — o número é o argumento |
 | Faixa correndo | dizeres entre seções | textura de cartaz de torneio |
+| Holofote de revelação | dois vídeos empilhados no hero | hierarquia — a mídia vira o argumento, e o cursor participa |
 
 Regras seguidas de `references/motion.md`: nada com easing linear, nada acima de 900 ms, e
 `prefers-reduced-motion` desliga parallax, contador e máscara por completo.
@@ -165,3 +166,34 @@ revisão de código sozinha não teria encontrado:
 - [x] Papéis de mídia preservados: hero é conduzido por foto, com placeholder honesto e direção de arte
 - [x] Um detalhe memorável: o placar numerado + o horizonte da Guanabara em parallax
 - [x] Teste editorial: trocando o logo por um hotel-butique, a página deixa de fazer sentido — logo, é específica
+
+---
+
+## Holofote do hero
+
+Referência trazida pelo cliente: o hero "Cyber Ronin", em que uma imagem base é atravessada
+por uma segunda cena revelada num facho radial que segue o cursor.
+
+**O que foi aproveitado:** a mecânica. Duas camadas empilhadas, a de cima recortada por uma
+`radial-gradient` como `mask-image` que acompanha o ponteiro, com queda suave em cinco
+paradas e raio responsivo (120px abaixo de 480, 160px abaixo de 720, 260px acima).
+
+**O que foi rejeitado:** tudo o mais daquele hero — paleta laranja/creme cyberpunk, tipografia
+Orbitron, o vocabulário de "Neural Edges". Nada disso pertence a um curso de futevôlei, e
+adotar aquilo jogaria fora o reference lock.
+
+**A adaptação:** em vez de duas imagens, dois vídeos das bolas. A camada base toca sempre; a
+revelada mostra a mesma cena em outro momento. Dois véus azuis diferentes — mais pesado à
+esquerda, onde vive a manchete, mais leve à direita — mantêm o texto legível e a cena dentro
+da paleta de mar e areia.
+
+Duas decisões que o hero original não precisava tomar:
+
+- **Varredura de apresentação.** Numa página de vendas, quem chega pelo Instagram muitas
+  vezes não move o mouse antes de decidir sair. O facho faz uma passada sozinho ao carregar,
+  uma vez só, e devolve o controle no primeiro movimento do ponteiro.
+- **Degradação sem os arquivos.** Se os vídeos não carregarem — arquivo ausente, rede ruim,
+  codec sem suporte — as camadas se apagam e o hero volta ao desenho de gradiente com o
+  painel de foto. Nunca sobra um retângulo preto no lugar mais caro da página.
+
+`prefers-reduced-motion` pausa os dois vídeos e desliga o facho por completo.
