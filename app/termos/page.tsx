@@ -30,7 +30,7 @@ export default function Termos() {
       <p>
         Conforme o art. 49 do Código de Defesa do Consumidor, você pode desistir da compra
         em até 7 dias corridos contados da confirmação do pagamento e receber o valor
-        integral de volta. Nossa garantia é de {oferta.garantiaDias} dias — basta escrever
+        integral de volta. Nossa garantia é de {oferta.garantiaDias} dias. Basta escrever
         para <a href={`mailto:${marca.email}`}>{marca.email}</a>, sem necessidade de
         justificativa.
       </p>

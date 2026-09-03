@@ -68,7 +68,7 @@ export default function Autor() {
 
             <Reveal atraso={400}>
               <p className="display mt-8 border-t border-noite-800 pt-6 text-[1.6rem] text-noite-500">
-                — {autor.assinatura}
+                {autor.assinatura}
               </p>
             </Reveal>
           </div>

@@ -41,7 +41,7 @@ export default function Legal({
 
         <p className="fio mt-16 border-t pt-8 text-[0.8rem] leading-relaxed text-tinta/45">
           Este texto é um ponto de partida gerado para o site. Peça a um advogado que
-          revise antes de publicar — as obrigações mudam conforme a sua operação.
+          revise antes de publicar. As obrigações mudam conforme a sua operação.
         </p>
       </main>
     </div>

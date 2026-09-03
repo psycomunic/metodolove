@@ -40,7 +40,7 @@ export default function Metodo() {
           <Reveal atraso={130}>
             <p className="mt-7 max-w-[33rem] text-[1rem] leading-[1.68] text-tinta/70">
               Quem joga há anos costuma travar na primeira aula que dá. Não por falta de
-              técnica — por não ter método para ensinar. É esse método que está aqui,
+              técnica. Por não ter método para ensinar. É esse método que está aqui,
               organizado em seis frentes.
             </p>
           </Reveal>

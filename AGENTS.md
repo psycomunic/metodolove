@@ -65,6 +65,11 @@ escolha. Estas cinco regras não podem ser quebradas sem refazer aquele document
    Seção de leitura usa areia opaca.
 8. **Não desenhe arcos por cima do hero**: as artes `FUNDO-HERO-*.jpg` já os trazem.
 
+**Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
+dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula
+ou dois-pontos, nunca apenas apague o traço. Vale para `lib/content.ts` e para qualquer
+texto em componente; comentários de código podem manter.
+
 Caixa alta sempre com `letter-spacing` (use a classe `.rotulo`). Nunca use emoji como ícone.
 
 ---

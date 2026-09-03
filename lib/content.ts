@@ -48,7 +48,7 @@ export const hero = {
   // fundamento e preparar o físico do próprio aluno. O produto forma
   // PROFESSOR. Não devolva o foco para a técnica de quem compra.
   subtitulo:
-    "Para professor e profissional da área: conduzir a aula com método, atender turma desnivelada, criar vínculo que faz o aluno voltar e sustentar o futevôlei como profissão — não como bico de fim de semana.",
+    "Para professor e profissional da área: conduzir a aula com método, atender turma desnivelada, criar vínculo que faz o aluno voltar e sustentar o futevôlei como profissão, não como bico de fim de semana.",
   assinaturaSub:
     "O professor bom ensina. O professor malandro muda de vida com o esporte.",
   cta: "Quero entrar no Método",
@@ -93,7 +93,7 @@ export const problema = {
     {
       titulo: "Você ensina como aprendeu",
       texto:
-        "Repete o que fizeram com você, sem saber por que funcionou. Vai bem até chegar o aluno que não pega daquele jeito — e aí não há plano B.",
+        "Repete o que fizeram com você, sem saber por que funcionou. Vai bem até chegar o aluno que não pega daquele jeito. Aí não há plano B.",
     },
     {
       titulo: "Cada aula começa do zero",
@@ -103,7 +103,7 @@ export const problema = {
     {
       titulo: "A turma desnivelada te trava",
       texto:
-        "Iniciante e veterano no mesmo horário. Você atende um e deixa o outro parado esperando — os dois saem achando que a aula não era pra eles.",
+        "Iniciante e veterano no mesmo horário. Você atende um e deixa o outro parado esperando. Os dois saem achando que a aula não era pra eles.",
     },
     {
       titulo: "O aluno elogia, paga e some",
@@ -138,10 +138,10 @@ export const autor = {
    * e conta reprovada no Meta custa mais do que a força da frase.
    */
   paragrafos: [
-    "Joguei futebol profissional até os 23 anos. Foram anos que me deram disciplina, visão de equipe e resiliência — e que terminaram cedo, como terminam para quase todo mundo.",
+    "Joguei futebol profissional até os 23 anos. Foram anos que me deram disciplina, visão de equipe e resiliência. E que terminaram cedo, como terminam para quase todo mundo.",
     "Depois vim para o varejo. Na Reserva passei anos entre os melhores vendedores do país, e foi ali que aprendi a comunicar valor, não só mostrar produto. Um cliente virou amigo e me levou para a Honda, onde a história se repetiu. Ali entendi que resultado vem de método e consistência, não de talento solto.",
     "Depois da pandemia veio a virada: decidi trabalhar com o que eu amo, agora como treinador e empreendedor. Fundei a GR7, depois a Deca 7 e o CTP 10.",
-    "Criei o Método LLOVE porque vejo muito professor bom sem didática, sem método e sem clareza — e, mais grave, sem conexão nenhuma com o aluno. Aqui eu te passo o que aprendi na marra, na rua e na quadra.",
+    "Criei o Método LLOVE porque vejo muito professor bom sem didática, sem método e sem clareza. E, mais grave, sem conexão nenhuma com o aluno. Aqui eu te passo o que aprendi na marra, na rua e na quadra.",
   ],
   // Frase dele, da Aula 0.1. É a tese do produto inteiro em uma linha.
   citacao:
@@ -179,7 +179,7 @@ export const capacidades = [
     titulo: "A aula de pé",
     resumo: "Começo, meio e fim",
     texto:
-      "Conduzir uma aula do aquecimento ao encerramento sem improviso — e sem aquele silêncio de não saber o que vem agora.",
+      "Conduzir uma aula do aquecimento ao encerramento sem improviso, e sem aquele silêncio de não saber o que vem agora.",
   },
   {
     n: "03",
@@ -193,7 +193,7 @@ export const capacidades = [
     titulo: "Planejamento",
     resumo: "A sequência, não o dia solto",
     texto:
-      "Encadear as aulas para que a evolução fique visível para o próprio aluno — que é o que faz ele voltar na semana seguinte.",
+      "Encadear as aulas para que a evolução fique visível para o próprio aluno. É o que faz ele voltar na semana seguinte.",
   },
   {
     n: "05",
