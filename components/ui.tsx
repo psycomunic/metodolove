@@ -89,6 +89,54 @@ export function Pilula({
   return <span className={`pilula rotulo inline-flex ${className}`}>{children}</span>;
 }
 
+/**
+ * Cabeçalho de seção em duas colunas: manchete à esquerda, texto de apoio à
+ * direita, alinhados pela base.
+ *
+ * A versão anterior empilhava rótulo, manchete e parágrafo num trilho
+ * estreito à esquerda, e a metade direita da tela ficava morta em quatro
+ * seções seguidas. Com a Archivo Black as manchetes ficaram curtas e o vazio
+ * piorou. Aqui o texto de apoio ocupa esse lado em vez de o espaço sobrar.
+ */
+export function CabecalhoSecao({
+  rotulo,
+  titulo,
+  texto,
+  tom = "escuro",
+  className = "",
+}: {
+  rotulo: ReactNode;
+  titulo: ReactNode;
+  texto?: ReactNode;
+  tom?: "escuro" | "claro";
+  className?: string;
+}) {
+  return (
+    <header
+      className={`grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-16 ${className}`}
+    >
+      <div>
+        <Reveal>
+          <Rotulo tom={tom}>{rotulo}</Rotulo>
+        </Reveal>
+        {titulo}
+      </div>
+
+      {texto ? (
+        <Reveal atraso={130}>
+          <div
+            className={`text-[1rem] leading-[1.68] lg:pb-2 ${
+              tom === "claro" ? "text-bruma-200" : "text-tinta/70"
+            }`}
+          >
+            {texto}
+          </div>
+        </Reveal>
+      ) : null}
+    </header>
+  );
+}
+
 /** Rótulo de seção. Caixa alta sempre com tracking. */
 export function Rotulo({
   children,

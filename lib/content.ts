@@ -290,15 +290,23 @@ export const depoimentos: Depoimento[] = [];
 /* ------------------------------------------------------------------ */
 /*  O QUE ESTÁ INCLUSO                                                 */
 /* ------------------------------------------------------------------ */
+/**
+ * O que acompanha a compra.
+ *
+ * A lista anterior era de curso para JOGADOR e trazia coisas que não existem
+ * neste produto: correção em câmera lenta, planilha de treino na areia, guia
+ * de torneios e montagem de dupla. Também dizia "6 módulos" quando são sete.
+ *
+ * >>> AJUSTAR: confirme item a item com o cliente. O que sobrou aqui é o que
+ * dá para afirmar com o que eu vi na área de membros; se algo não for verdade,
+ * tire. Item falso no bloco de conversão é o pior lugar possível para errar.
+ */
 export const inclusos = [
-  "6 módulos completos, do fundamento ao profissional",
-  "Aulas gravadas em alta definição, assista quando quiser",
-  "Correções em câmera lenta e ângulo de quadra",
-  "Planilha de treino pra areia",
-  "Guia de torneios e montagem de dupla",
-  "Acesso ao grupo VIP de alunos",
+  "Curso completo, da mentalidade de educador à monetização",
+  "Aulas gravadas, assista quando e quantas vezes quiser",
+  "Módulo bônus de Networking",
+  "Acesso pelo computador e pelo celular",
   "Atualizações do método sem custo extra",
-  "Certificado de conclusão",
 ];
 
 /* ------------------------------------------------------------------ */

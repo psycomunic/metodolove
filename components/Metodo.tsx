@@ -1,6 +1,6 @@
 import { capacidades } from "@/lib/content";
 import { LinhasReveal } from "./movimento";
-import { Reveal, Rotulo } from "./ui";
+import { CabecalhoSecao, Reveal } from "./ui";
 
 /**
  * O que a pessoa passa a saber fazer, em forma de placar de torneio:
@@ -22,29 +22,23 @@ export default function Metodo() {
       </span>
 
       <div className="relative mx-auto max-w-[80rem] px-5 sm:px-8">
-        <div className="max-w-[40rem]">
-          <Reveal>
-            <Rotulo>O que você passa a saber fazer</Rotulo>
-          </Reveal>
-          <h2 className="display mt-6 text-[clamp(1.87rem,5.62vw,3.28rem)] text-tinta">
-            <LinhasReveal
-              linhas={[
-                "Jogar bem e ensinar bem",
-                "são coisas diferentes.",
-                <span key="segunda" className="text-noite-600">
-                  A segunda se aprende.
-                </span>,
-              ]}
-            />
-          </h2>
-          <Reveal atraso={130}>
-            <p className="mt-7 max-w-[33rem] text-[1rem] leading-[1.68] text-tinta/70">
-              Quem joga há anos costuma travar na primeira aula que dá. Não por falta de
-              técnica. Por não ter método para ensinar. É esse método que está aqui,
-              organizado em seis frentes.
-            </p>
-          </Reveal>
-        </div>
+        <CabecalhoSecao
+          rotulo="O que você passa a saber fazer"
+          titulo={
+            <h2 className="display mt-6 text-[clamp(1.87rem,5.46vw,3.04rem)] text-tinta">
+              <LinhasReveal
+                linhas={[
+                  "Jogar bem e ensinar bem",
+                  "são coisas diferentes.",
+                  <span key="segunda" className="text-noite-600">
+                    A segunda se aprende.
+                  </span>,
+                ]}
+              />
+            </h2>
+          }
+          texto="Quem joga há anos costuma travar na primeira aula que dá. Não por falta de técnica. Por não ter método para ensinar. É esse método que está aqui, organizado em seis frentes."
+        />
 
         {/* placar */}
         <div className="fio mt-16 border-t">

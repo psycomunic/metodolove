@@ -1,18 +1,25 @@
 import { publico } from "@/lib/content";
-import { Check, Reveal, Rotulo } from "./ui";
+import { CabecalhoSecao, Check, Reveal } from "./ui";
 
 export default function Publico() {
   return (
     <section className="bg-areia-100 py-24 sm:py-32">
       <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
-        <Reveal>
-          <Rotulo>Antes de você decidir</Rotulo>
-        </Reveal>
-        <Reveal atraso={70}>
-          <h2 className="display mt-6 max-w-[24rem] text-[clamp(1.87rem,5.46vw,2.96rem)] text-tinta">
-            Isso aqui não é<span className="block text-noite-600">pra todo mundo.</span>
-          </h2>
-        </Reveal>
+        <CabecalhoSecao
+          rotulo="Antes de você decidir"
+          titulo={
+            <h2 className="display mt-6 max-w-[24rem] text-[clamp(1.87rem,5.46vw,2.96rem)] text-tinta">
+              Isso aqui não é<span className="block text-noite-600">pra todo mundo.</span>
+            </h2>
+          }
+          // O remate subiu do rodapé da segunda coluna para cá. Ele é a frase
+          // mais forte da seção e estava enterrado no fim de uma lista.
+          texto={
+            <span className="block text-[1.06rem] leading-[1.6] font-medium text-tinta">
+              {publico.remate}
+            </span>
+          }
+        />
 
         {/* duas colunas separadas por fio vertical, sem caixas */}
         <div className="mt-14 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
@@ -57,9 +64,6 @@ export default function Publico() {
                   </li>
                 ))}
               </ul>
-              <p className="fio mt-9 border-t pt-6 text-[0.9rem] leading-relaxed font-medium text-tinta/70">
-                {publico.remate}
-              </p>
             </div>
           </Reveal>
         </div>

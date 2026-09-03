@@ -1,6 +1,6 @@
 import { inclusos, marca, oferta } from "@/lib/content";
 import { LinhasReveal } from "./movimento";
-import { Botao, Check, Reveal, Rotulo } from "./ui";
+import { Botao, CabecalhoSecao, Check, Reveal } from "./ui";
 
 export default function Oferta() {
   return (
@@ -12,27 +12,23 @@ export default function Oferta() {
       {/* >>> SLOT DE IMAGEM: a silhueta do Rio saiu daqui em set/2026. */}
 
       <div className="relative z-10 mx-auto max-w-[80rem] px-5 sm:px-8">
-        <div className="max-w-[34rem]">
-          <Reveal>
-            <Rotulo tom="claro">O investimento</Rotulo>
-          </Reveal>
-          <h2 className="display mt-6 text-[clamp(1.79rem,5.46vw,2.96rem)] text-areia-50">
-            <LinhasReveal
-              linhas={[
-                "Menos que um par",
-                <span key="chuteiras" className="text-bruma-300">
-                  de chuteiras de areia.
-                </span>,
-              ]}
-            />
-          </h2>
-          <Reveal atraso={130}>
-            <p className="mt-6 text-[1rem] leading-[1.68] text-areia-200/75">
-              Pagamento único. Sem mensalidade, sem taxa escondida, sem renovação
-              automática.
-            </p>
-          </Reveal>
-        </div>
+        <CabecalhoSecao
+          tom="claro"
+          rotulo="O investimento"
+          titulo={
+            <h2 className="display mt-6 text-[clamp(1.79rem,5.46vw,2.96rem)] text-areia-50">
+              <LinhasReveal
+                linhas={[
+                  "Menos que um par",
+                  <span key="chuteiras" className="text-bruma-300">
+                    de chuteiras de areia.
+                  </span>,
+                ]}
+              />
+            </h2>
+          }
+          texto="Pagamento único. Sem mensalidade, sem taxa escondida, sem renovação automática. Você entra hoje e o material é seu pelo tempo de acesso combinado."
+        />
 
         {/* bloco da oferta — aqui o card é justificado: é o container da conversão */}
         <Reveal atraso={160} className="mt-14">
@@ -55,40 +51,40 @@ export default function Oferta() {
               </ul>
             </div>
 
-            <div className="flex flex-col justify-center bg-areia-200 p-8 sm:p-11">
+            {/* Painel de preço em MARINHO, não num segundo creme. Os dois
+                cremes tinham tom quase igual e a divisão do card não lia como
+                intenção; e sobre marinho o laranja do botão ganha o contraste
+                que ele precisa ter no ponto da decisão. */}
+            <div className="flex flex-col justify-center bg-noite-900 p-8 text-areia-50 sm:p-11">
               {oferta.vagas ? (
-                <p className="rotulo mb-6 text-sol-600">{oferta.vagas}</p>
+                <p className="rotulo mb-6 text-sol-400">{oferta.vagas}</p>
               ) : null}
 
-              <p className="text-[0.82rem] font-semibold text-tinta/45">
-                De{" "}
-                <span className="line-through decoration-noite-600 decoration-2">
-                  {oferta.precoCheio}
-                </span>{" "}
-                por
+              <p className="rotulo text-bruma-300">
+                De <span className="line-through">{oferta.precoCheio}</span> por
               </p>
 
-              <p className="placar mt-4 flex items-baseline gap-2 text-tinta">
-                <span className="text-[clamp(1.72rem,5.46vw,2.34rem)]">
-                  {oferta.parcelasQtd}
+              {/* Uma só escala tipográfica no preço. Antes eram três corpos
+                  diferentes na mesma linha e o "de" minúsculo entre eles
+                  quebrava a leitura do número. */}
+              <p className="mt-5">
+                <span className="rotulo block text-bruma-200">
+                  {oferta.parcelasQtd} sem juros de
                 </span>
-                <span className="font-sans text-[0.9rem] font-bold text-tinta/50">
-                  de
-                </span>
-                <span className="text-[clamp(2.03rem,7.80vw,3.28rem)]">
+                <span className="placar mt-2 block text-[clamp(2.6rem,9vw,4.2rem)] text-white">
                   {oferta.parcelasValor}
                 </span>
               </p>
 
-              <p className="fio mt-4 border-t pt-4 text-[0.88rem] font-semibold text-tinta/60">
-                ou {oferta.preco} à vista
+              <p className="mt-4 border-t border-white/15 pt-4 text-[0.9rem] text-bruma-200">
+                ou <span className="font-bold text-white">{oferta.preco}</span> à vista
               </p>
 
               <Botao href={marca.checkout} className="mt-8 w-full">
                 Quero minha vaga
               </Botao>
 
-              <p className="mt-5 text-[0.72rem] leading-relaxed text-tinta/50">
+              <p className="mt-5 text-[0.74rem] leading-relaxed text-bruma-300">
                 Compra segura · Acesso liberado assim que o pagamento aprovar
                 <br />
                 {oferta.acesso} · Cartão, Pix ou boleto
