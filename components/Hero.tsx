@@ -9,74 +9,93 @@ import { LinhasReveal } from "./movimento";
  * mais o lettering MÉTODO LLOVE à direita. Nada de texto por cima dele, senão
  * a manchete briga com o próprio nome da marca.
  *
- * Por que duas colunas no desktop, e não o banner em largura cheia no topo:
- * medido, o lettering ocupa de 33% a 62% da altura do banner, então cortar
- * abaixo de 62% decapita o nome. Em largura cheia num monitor de 1440 isso
- * exige 476px só de banner, e banner mais copy passam de 900px. Numa janela
- * baixa e larga (1507x741, a do cliente) nem chega perto. Em coluna o banner
- * fica com metade da largura, aparece INTEIRO e sobra dobra para o botão.
+ * O banner ocupa a largura inteira, sem corte, e o CTA fica POR CIMA dele, na
+ * área clara logo abaixo do lettering. As posições vêm de medição na arte, não
+ * de tentativa: o símbolo ocupa de 47% a 63% da largura, o lettering de 66% a
+ * 91%, e os dois vão de 33% a 63% da altura. O creme abaixo disso está limpo
+ * de 55% a 95% da largura, que é onde o botão pousa.
  *
- * No celular volta a empilhar: a 390px o banner tem 195px de altura e cabe
- * completo, sem corte nenhum.
+ * A sobreposição só existe a partir de lg. No celular o banner tem 195px de
+ * altura a 390px de largura, e 27% disso não comporta um botão: lá ele volta
+ * para o fluxo, abaixo da manchete.
  */
 export default function Hero() {
   return (
     <section id="topo" className="relative isolate overflow-hidden bg-noite-900">
-      <div className="mx-auto w-full max-w-[80rem] px-5 pt-24 pb-10 sm:px-8 lg:pt-28">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.92fr] lg:gap-14">
-          {/* ---------------- banner, inteiro e sem corte ---------------- */}
-          <div className="elevado order-first w-full overflow-hidden lg:order-last">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/HERO-DESKTOP.jpg"
-              alt={`${marca.nome}, curso de ${marca.autor}`}
-              width={1536}
-              height={768}
-              fetchPriority="high"
-              decoding="async"
-              className="h-auto w-full"
+      {/* ---------------- banner em largura total ---------------- */}
+      <div className="relative w-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/HERO-DESKTOP.jpg"
+          alt={`${marca.nome}, curso de ${marca.autor}`}
+          width={1536}
+          height={768}
+          fetchPriority="high"
+          decoding="async"
+          className="h-auto w-full"
+        />
+
+        {/* CTA sobre o creme. left 51% + width 36% da o centro em 69%, que e o
+            eixo do conjunto simbolo+lettering. Medido: nessa faixa de altura o
+            creme limpo comeca em 51%, entao a borda esquerda do bloco encosta
+            no limite sem invadir o azul. */}
+        <div className="absolute top-[68%] left-[51%] hidden w-[36%] lg:block">
+          <div className="flex flex-col items-center gap-3">
+            <Botao href={marca.checkout}>{hero.cta}</Botao>
+            <p className="text-center text-[0.82rem] leading-snug text-noite-900">
+              <span className="font-bold">
+                {oferta.parcelasQtd} de {oferta.parcelasValor}
+              </span>
+              <span className="opacity-70">
+                {" "}
+                · {oferta.garantiaDias} dias de garantia
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------------- copy ---------------- */}
+      <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
+        <div className="max-w-[45rem]">
+          <Reveal>
+            <Rotulo tom="claro">{hero.olho}</Rotulo>
+          </Reveal>
+
+          <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
+            <LinhasReveal
+              linhas={[
+                hero.linha1,
+                hero.linha2,
+                <Destaque key="destaque" cor="creme">
+                  {hero.linha3Destaque}
+                </Destaque>,
+              ]}
             />
-          </div>
+          </h1>
 
-          {/* ---------------- copy ---------------- */}
-          <div className="order-last lg:order-first">
-            <Reveal>
-              <Rotulo tom="claro">{hero.olho}</Rotulo>
-            </Reveal>
+          <Reveal atraso={120}>
+            <p className="mt-6 max-w-[34rem] text-[0.95rem] leading-[1.6] text-bruma-200 sm:text-[1.02rem]">
+              {hero.subtitulo}
+            </p>
+          </Reveal>
 
-            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
-              <LinhasReveal
-                linhas={[
-                  hero.linha1,
-                  hero.linha2,
-                  <Destaque key="destaque" cor="creme">
-                    {hero.linha3Destaque}
-                  </Destaque>,
-                ]}
-              />
-            </h1>
-
-            <Reveal atraso={120}>
-              <p className="mt-6 max-w-[34rem] text-[0.95rem] leading-[1.6] text-bruma-200 sm:text-[1.02rem]">
-                {hero.subtitulo}
+          {/* No desktop o botão já está sobre o banner; aqui ele só existe
+              abaixo de lg, onde a sobreposição não cabe. */}
+          <Reveal atraso={200}>
+            <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center lg:hidden">
+              <Botao href={marca.checkout} className="w-full sm:w-auto">
+                {hero.cta}
+              </Botao>
+              <p className="text-[0.8rem] leading-snug text-bruma-200">
+                <span className="font-bold text-white">
+                  {oferta.parcelasQtd} de {oferta.parcelasValor}
+                </span>
+                <br />
+                {oferta.garantiaDias} dias de garantia
               </p>
-            </Reveal>
-
-            <Reveal atraso={200}>
-              <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-                <Botao href={marca.checkout} className="w-full sm:w-auto">
-                  {hero.cta}
-                </Botao>
-                <p className="text-[0.8rem] leading-snug text-bruma-200">
-                  <span className="font-bold text-white">
-                    {oferta.parcelasQtd} de {oferta.parcelasValor}
-                  </span>
-                  <br />
-                  {oferta.garantiaDias} dias de garantia
-                </p>
-              </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </div>
 
