@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Tokens — os papéis de cada um estão em docs/DESIGN.md
+   Papel = areia · Campo = mar · Acento = pôr do sol (só CTA)
+   ============================================================ */
+@theme {
+  --color-areia-50:  #FBF5E9;
+  --color-areia-100: #F3EAD8;
+  --color-areia-200: #E9DCC2;
+  --color-areia-300: #D8C6A4;
+  --color-areia-400: #BFA87F;
+  --color-areia-500: #8E7648;
+
+  --color-mar-950: #04192B;
+  --color-mar-900: #062A45;
+  --color-mar-800: #0A3B5F;
+  --color-mar-700: #0E5180;
+  --color-mar-600: #1470A6;
+  --color-mar-500: #2090C7;
+  --color-mar-400: #4DAFDC;
+  --color-mar-300: #8AD0EA;
+
+  --color-tinta: #08243B;
+
+  /* Acento: exclusivo de CTA, estado ativo e do rabisco único do hero. */
+  --color-sol-600: #C24A14;
+  --color-sol-500: #F2762E;
+  --color-sol-400: #FF9147;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-areia-100);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection { background: var(--color-sol-500); color: #fff; }
+
+/* ---------- Display: cartaz de torneio ---------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.004em;
+  line-height: 0.86;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+/* Número de placar: tabular, para as colunas alinharem. */
+.placar {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* Caixa alta sempre com tracking (checklist anti-slop). */
+.rotulo {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+p, li { text-wrap: pretty; }
+
+/* ---------- Grão de filme ---------- */
+.grao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grao);
+  background-size: 180px 180px;
+  mix-blend-mode: overlay;
+  opacity: 0.17;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---------- O único destaque à mão da página (hero) ---------- */
+.rabisco { position: relative; white-space: nowrap; }
+.rabisco > svg {
+  position: absolute;
+  left: -1.5%;
+  width: 103%;
+  bottom: 0.09em;
+  height: 0.2em;
+  overflow: visible;
+  pointer-events: none;
+}
+.rabisco > svg path {
+  fill: none;
+  stroke: var(--color-sol-500);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: risca 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.55s forwards;
+}
+@keyframes risca { to { stroke-dashoffset: 0; } }
+
+/* ---------- Entrada por scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--atraso, 0ms);
+}
+.reveal[data-visivel="true"] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .rabisco > svg path { animation: none; stroke-dashoffset: 0; }
+  .flutua, .balanca, .faixa-corre { animation: none !important; }
+}
+
+/* ---------- Movimento ambiente ---------- */
+@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.flutua { animation: flutuar 8s ease-in-out infinite; }
+
+@keyframes balancar { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-26px); } }
+.balanca { animation: balancar 15s ease-in-out infinite; }
+
+@keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.faixa-corre { display: flex; width: max-content; animation: correr 36s linear infinite; }
+
+/* ---------- Fios (substituem sombras) ---------- */
+.fio { border-color: color-mix(in srgb, var(--color-areia-400) 62%, transparent); }
+.fio-claro { border-color: color-mix(in srgb, var(--color-areia-100) 20%, transparent); }
+
+/* Sombra só onde há elevação real: bloco da oferta e fotos. */
+.elevado { box-shadow: 0 34px 70px -46px rgba(4, 25, 43, 0.9); }
+
+.contorno {
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-areia-400) 60%, transparent);
+  color: transparent;
+}
+
+/* Accordion */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] .cruz { transform: rotate(45deg); }

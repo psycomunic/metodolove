@@ -1,0 +1,27 @@
+IMAGENS DA LANDING PAGE
+=======================
+
+Coloque os arquivos abaixo nesta pasta. Enquanto eles não existirem, a página
+mostra um espaço reservado com a direção de arte escrita — nada quebra.
+
+hero.jpg
+  Proporção: 3:4 (vertical). Sugestão: 1200 x 1600 px.
+  Direção: Charllove em quadra, sol baixo, areia visível no enquadramento.
+  Deixe espaço vazio à esquerda da foto — o azul do site avança por ali para o
+  título respirar.
+
+charllove.jpg
+  Proporção: 3:4 (vertical). Sugestão: 1000 x 1333 px.
+  Direção: retrato, contato visual com a câmera, quadra desfocada ao fundo.
+
+og.jpg
+  Tamanho exato: 1200 x 630 px.
+  É a miniatura que aparece quando alguém compartilha o link no WhatsApp,
+  Instagram ou Facebook. Foto de quadra + logo, com texto grande o bastante
+  para ser lido em tamanho pequeno.
+
+depoimentos/ (opcional)
+  Fotos quadradas dos alunos, 400 x 400 px, para a seção de depoimentos.
+
+Dica: exporte em JPG com qualidade ~80 e largura máxima de 1600px. Foto pesada
+derruba a taxa de conversão em quem entra pelo 4G.
