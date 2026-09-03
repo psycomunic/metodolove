@@ -28,31 +28,39 @@ export default function Hero() {
       {/* ---------------- camada de foto ---------------- */}
       <div className="absolute inset-0 -z-10">
         <picture>
-          <source media="(min-width: 768px)" srcSet="/FUNDO-HERO-DESKTOP.jpg" />
+          <source
+            media="(min-width: 768px) and (min-aspect-ratio: 1/1)"
+            srcSet="/FUNDO-HERO-DESKTOP.jpg"
+          />
           <img
             src="/FUNDO-HERO-MOBILE.jpg"
             alt="Dupla de atletas em quadra de areia ao pôr do sol, com bola de futevôlei no alto"
             fetchPriority="high"
             decoding="async"
-            // O enquadramento puxa para a direita porque é onde estão os
-            // atletas: quando o corte vier pela largura, quem sai é a areia
-            // vazia da esquerda, que é justamente onde o texto vai por cima.
-            className="h-full w-full object-cover object-[54%_top] md:object-[72%_center]"
+            // CELULAR: largura total em proporção natural, SEM corte. A arte
+            // vertical é 1441x1800; forçá-la a cobrir 390x846 descartava 287px
+            // de largura (42% da imagem) e comia a bola e os arcos laterais.
+            // Abaixo dela aparece o fundo da seção, que é o mesmo #002F73 do
+            // rodapé da arte — a emenda é invisível.
+            //
+            // md+: aí sim object-cover, porque a arte deitada (1800x969) tem
+            // proporção parecida com a da janela e o corte é mínimo. O
+            // enquadramento puxa para a direita, onde estão os atletas.
+            className="w-full deitado:h-full deitado:object-cover deitado:object-[72%_center]"
           />
         </picture>
 
         {/* Véu. Mobile sobe de baixo; a partir de md varre da esquerda. */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_top,#002F73_34%,rgba(0,47,115,0.98)_52%,rgba(0,47,115,0.9)_66%,rgba(0,47,115,0.6)_78%,rgba(0,47,115,0.18)_91%,transparent_100%)] md:bg-[linear-gradient(to_right,#002F73_3%,rgba(0,47,115,0.95)_28%,rgba(0,47,115,0.66)_46%,rgba(0,47,115,0.18)_64%,transparent_79%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_top,#002F73_34%,rgba(0,47,115,0.98)_52%,rgba(0,47,115,0.9)_66%,rgba(0,47,115,0.6)_78%,rgba(0,47,115,0.18)_91%,transparent_100%)] deitado:bg-[linear-gradient(to_right,#002F73_3%,rgba(0,47,115,0.95)_28%,rgba(0,47,115,0.66)_46%,rgba(0,47,115,0.18)_64%,transparent_79%)]" />
         {/* Fecho inferior: garante o azul chapado na emenda com a próxima seção. */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_bottom,transparent,#002F73)] md:h-44" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-[linear-gradient(to_bottom,transparent,#002F73)] deitado:h-44" />
       </div>
 
       {/* ---------------- conteúdo, centrado na dobra ---------------- */}
-      {/* No mobile o conteúdo desce para o pé: o miolo da arte vertical é
-          onde estão os atletas, e texto ali cai em cima dos rostos. A partir
-          de md o texto é uma coluna à esquerda e centra na vertical. */}
-      <div className="flex flex-1 items-end md:items-center">
-        <div className="mx-auto w-full max-w-[80rem] px-5 pt-24 pb-7 sm:px-8 md:pt-20 md:pb-8">
+      {/* No celular o texto começa onde a arte vira azul chapado; a partir
+          de md ele vira coluna à esquerda, centrada na vertical. */}
+      <div className="flex flex-1 items-start deitado:items-center">
+        <div className="mx-auto w-full max-w-[80rem] px-5 pt-[min(68vw,42svh)] pb-6 max-[380px]:pt-[60vw] sm:px-8 deitado:pt-20 deitado:pb-8">
           <div className="max-w-[45rem]">
             <Reveal>
               <Rotulo tom="claro">{hero.olho}</Rotulo>
@@ -71,13 +79,13 @@ export default function Hero() {
             </h1>
 
             <Reveal atraso={120}>
-              <p className="mt-5 max-w-[32rem] text-[0.98rem] leading-[1.6] text-bruma-200 sm:text-[1.05rem] md:mt-6">
+              <p className="mt-5 max-w-[32rem] text-[0.93rem] leading-[1.55] text-bruma-200 sm:text-[1.05rem] md:mt-6">
                 {hero.subtitulo}
               </p>
             </Reveal>
 
             <Reveal atraso={180}>
-              <p className="mt-4 max-w-[32rem] border-l-[3px] border-sol-500 pl-4 text-[0.92rem] leading-[1.5] font-medium text-white">
+              <p className="mt-3.5 max-w-[32rem] border-l-[3px] border-sol-500 pl-4 text-[0.92rem] leading-[1.5] font-medium text-white md:mt-4">
                 {hero.assinaturaSub}
                 <span className="mt-1 block text-[0.76rem] font-normal text-bruma-300">
                   {marca.autor}, {marca.instagramHandle}

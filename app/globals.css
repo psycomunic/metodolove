@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/**
+ * Variante `deitado`: a arte do hero tem DUAS versões, uma em pé e outra
+ * deitada, e quem decide entre elas é a ORIENTAÇÃO da tela, não a largura.
+ * Um tablet de 768px em retrato é largo o bastante para `md:`, mas se
+ * receber a arte deitada o object-cover descarta 1134px de largura. Por
+ * isso todo o hero é chaveado por esta variante.
+ */
+@custom-variant deitado (@media (min-width: 768px) and (min-aspect-ratio: 1/1));
+
 /* ============================================================
    Tokens — os papéis de cada um estão em docs/DESIGN.md
    Direção: cartaz de torneio. Marinho é o campo, areia é o papel,
