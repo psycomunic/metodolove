@@ -22,40 +22,39 @@
      cor que não saia dela cria uma emenda visível na página.
      ============================================================ */
 
-  /* --- Marinho. O 800 é o valor EXATO do rodapé das duas imagens.
-         É por ele que a foto emenda com o resto da página. --- */
-  --color-noite-950: #001736;
-  --color-noite-900: #002253;
-  --color-noite-800: #002f73;
-  --color-noite-700: #003d93;
-  --color-noite-600: #0b4eb5;
-  --color-noite-500: #1a63d1;
+  /* --- Marinho. Amostrado do LOGO OFICIAL (public/logo-llove.png), não de
+         foto: #082038 é a cor do símbolo da marca. A rampa antiga vinha das
+         artes de fundo que o banner do hero substituiu, então a razão de ser
+         dela caiu junto. --- */
+  --color-noite-950: #050f1f;
+  --color-noite-900: #082038;
+  --color-noite-800: #0d2f4d;
+  --color-noite-700: #133f66;
+  --color-noite-600: #1b5286;
+  --color-noite-500: #2a6ba8;
 
-  /* --- Laranja dos arcos da foto. É o acento e o CTA. --- */
+  /* --- Laranja: não sai da marca, mas é o único acento com contraste
+         suficiente para o CTA sobre creme E sobre marinho. Dourado sobre
+         creme não passa em contraste. --- */
   --color-sol-600: #d24e00;
   --color-sol-500: #fc6000;
   --color-sol-400: #ff7f2e;
   --color-sol-300: #ffa05c;
 
-  /* --- Verde do top da atleta. Voz secundária, só em display. --- */
-  --color-campo-600: #007a24;
-  --color-campo-500: #009c30;
-  --color-campo-400: #14bc45;
-
-  /* --- Areia do pôr do sol da foto: papel das seções de leitura. --- */
-  --color-areia-50: #fff6e8;
-  --color-areia-100: #fdecd5;
-  --color-areia-200: #f7dab4;
-  --color-areia-300: #e8bd85;
-  --color-areia-400: #c9954f;
-  --color-areia-500: #94682f;
+  /* --- Areia. O 200 é o creme EXATO do lettering do logo. --- */
+  --color-areia-50: #fff8ec;
+  --color-areia-100: #f7ebd6;
+  --color-areia-200: #f0e0b8;
+  --color-areia-300: #dfc894;
+  --color-areia-400: #c0a268;
+  --color-areia-500: #8a7440;
 
   /* --- Bruma: texto de apoio sobre marinho. --- */
   --color-bruma-200: #bcd0f2;
   --color-bruma-300: #8aa6de;
   --color-bruma-400: #6180bd;
 
-  --color-tinta: #001736;
+  --color-tinta: #082038;
 
   --font-display: var(--font-archivo-black), "Arial Black", sans-serif;
   --font-sans: var(--font-archivo), system-ui, sans-serif;
@@ -90,8 +89,8 @@ body {
 }
 
 ::selection {
-  background: var(--color-campo-500);
-  color: var(--color-noite-950);
+  background: var(--color-areia-200);
+  color: var(--color-noite-900);
 }
 
 /* ---------- Display: cartaz de torneio ---------- */

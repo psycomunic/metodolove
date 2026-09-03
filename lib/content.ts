@@ -147,8 +147,8 @@ export const autor = {
   citacao:
     "Não basta só saber dar aula. É sobre se conectar, saber o seu valor e marcar presença na vida dos alunos.",
   assinatura: "Charllove",
-  foto: "/images/charllove.jpg", // >>> COLOQUE sua foto em public/images/
-  fotoArte: "Retrato, contato visual, quadra desfocada ao fundo",
+  foto: "/colagem-charllove.png",
+  fotoArte: "Colagem do percurso do Charllove",
 };
 
 /* ------------------------------------------------------------------ */
@@ -237,20 +237,23 @@ export const publico = {
 /*  BÔNUS                                                              */
 /* ------------------------------------------------------------------ */
 // >>> AJUSTAR: liste só os bônus que você realmente entrega.
+/**
+ * Bônus. Só entra o que existe de verdade.
+ *
+ * A lista anterior tinha três itens inventados para público jogador (planilha
+ * de treino na areia, guia de torneios, achar dupla). Foram removidos. O
+ * Networking é o único com evidência: o próprio cliente forneceu a arte
+ * public/bonus-networking.png, que traz o selo "MÓDULO BÔNUS".
+ *
+ * >>> AJUSTAR: se houver outros bônus reais, acrescente aqui. A seção some
+ * sozinha se a lista ficar vazia.
+ */
 export const bonus = [
   {
-    titulo: "Grupo VIP de alunos",
+    titulo: "Networking",
     texto:
-      "Comunidade fechada pra tirar dúvida, achar dupla e acompanhar quem está na mesma jornada.",
-  },
-  {
-    titulo: "Planilha de treino na areia",
-    texto:
-      "A semana montada, com progressão, pra você chegar na quadra sabendo o que fazer.",
-  },
-  {
-    titulo: "Guia de torneios",
-    texto: "Como escolher categoria, montar dupla e se preparar pro primeiro campeonato.",
+      "Módulo bônus sobre a rede que sustenta a carreira: com quem você anda, como se apresenta e as portas que isso abre dentro do esporte.",
+    imagem: "/bonus-networking.png",
   },
 ];
 

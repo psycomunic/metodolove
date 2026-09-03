@@ -8,7 +8,14 @@ export default function Rodape() {
       <div className="mx-auto max-w-[80rem]">
         <div className="flex flex-col gap-10 border-b border-noite-800 pb-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <p className="display text-3xl text-areia-100">{marca.nomeCurto}</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-llove.png"
+              alt={marca.nome}
+              width={360}
+              height={64}
+              className="h-10 w-auto"
+            />
             <p className="mt-3 max-w-[24rem] text-[0.85rem] leading-relaxed">
               Método completo de futevôlei, do primeiro toque à quadra profissional.
             </p>

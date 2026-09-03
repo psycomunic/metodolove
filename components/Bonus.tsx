@@ -1,6 +1,11 @@
 import { bonus } from "@/lib/content";
 import { Reveal, Rotulo } from "./ui";
 
+/**
+ * Bônus. A grade de três colunas saiu junto com os três bônus inventados:
+ * com um item só, grade vira buraco. Agora é arte à esquerda e texto à
+ * direita, e o layout se adapta se outros bônus reais entrarem depois.
+ */
 export default function Bonus() {
   if (bonus.length === 0) return null;
 
@@ -11,25 +16,56 @@ export default function Bonus() {
           <Rotulo>Vai junto, sem custo extra</Rotulo>
         </Reveal>
         <Reveal atraso={70}>
-          <h2 className="display mt-6 text-[clamp(1.56rem,4.68vw,2.50rem)] text-tinta">
+          <h2 className="display mt-6 text-[clamp(1.56rem,4.68vw,2.5rem)] text-tinta">
             Bônus de entrada
           </h2>
         </Reveal>
 
-        <div className="fio mt-12 grid gap-x-10 gap-y-8 border-t pt-10 md:grid-cols-3">
+        {/* Com um bônus só, grade de duas colunas deixa metade da linha
+            vazia. O layout acompanha a quantidade. */}
+        <div
+          className={`fio mt-12 grid gap-x-12 gap-y-10 border-t pt-10 ${
+            bonus.length > 1 ? "md:grid-cols-2" : ""
+          }`}
+        >
           {bonus.map((item, i) => (
             <Reveal key={item.titulo} atraso={i * 70}>
-              <div className={i > 0 ? "md:fio md:border-l md:pl-10" : ""}>
-                <p className="placar text-[1.4rem] text-areia-400">
-                  +{String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-4 text-[1.15rem] font-bold tracking-tight text-tinta">
-                  {item.titulo}
-                </h3>
-                <p className="mt-3 text-[0.93rem] leading-[1.65] text-tinta/65">
-                  {item.texto}
-                </p>
-              </div>
+              <article
+                className={`grid gap-8 sm:items-center ${
+                  bonus.length > 1
+                    ? "sm:grid-cols-[13rem_1fr]"
+                    : "sm:grid-cols-[19rem_1fr] lg:gap-12"
+                }`}
+              >
+                {item.imagem ? (
+                  <div
+                    className={`elevado relative aspect-2/3 w-full overflow-hidden ${
+                      bonus.length > 1 ? "max-w-[13rem]" : "max-w-[19rem]"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.imagem}
+                      alt={item.titulo}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ) : null}
+
+                <div>
+                  <p className="placar text-[1.4rem] text-areia-400">
+                    +{String(i + 1).padStart(2, "0")}
+                  </p>
+                  <h3 className="display mt-3 text-[clamp(1.5rem,3vw,2.1rem)] text-tinta">
+                    {item.titulo}
+                  </h3>
+                  <p className="mt-4 max-w-[32rem] text-[1rem] leading-[1.65] text-tinta/70">
+                    {item.texto}
+                  </p>
+                </div>
+              </article>
             </Reveal>
           ))}
         </div>

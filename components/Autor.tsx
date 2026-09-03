@@ -16,7 +16,10 @@ export default function Autor() {
       <div className="relative z-10 mx-auto max-w-[80rem] px-5 sm:px-8">
         <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-20">
           <Reveal className="mx-auto w-full max-w-[21rem] lg:max-w-none">
-            <Desmascara className="elevado relative aspect-3/4 overflow-hidden">
+            {/* Colagem fornecida pelo cliente: DECA 7, pódio, quadra e aula.
+                Vale mais que um retrato porque mostra o percurso, que é
+                exatamente o que o texto ao lado conta. */}
+            <Desmascara className="elevado relative aspect-2/3 overflow-hidden">
               <Foto
                 src={autor.foto}
                 alt={`${autor.nome}, criador do ${marca.nome}`}

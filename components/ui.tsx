@@ -55,15 +55,15 @@ export function Reveal({
  */
 export function Destaque({
   children,
-  cor = "campo",
+  cor = "creme",
   inclina = -1.4,
 }: {
   children: ReactNode;
-  cor?: "campo" | "sol" | "noite";
+  cor?: "creme" | "sol" | "noite";
   inclina?: number;
 }) {
   const tons = {
-    campo: "bg-campo-500 text-white",
+    creme: "bg-areia-200 text-noite-900",
     sol: "bg-sol-500 text-white",
     noite: "bg-noite-800 text-white",
   } as const;
@@ -101,7 +101,7 @@ export function Rotulo({
     <span
       className={`rotulo inline-flex items-center gap-3 before:block before:h-[3px] before:w-8 before:content-[''] ${
         tom === "claro"
-          ? "text-bruma-200 before:bg-campo-500"
+          ? "text-bruma-200 before:bg-areia-200"
           : "text-noite-700 before:bg-sol-500"
       }`}
     >
@@ -141,7 +141,7 @@ export function Botao({
       target="_blank"
       rel="noopener noreferrer"
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-bold tracking-[0.08em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-campo-500 active:translate-y-0 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-bold tracking-[0.08em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
     >
       <span>{children}</span>
       <svg

@@ -21,23 +21,32 @@ export default function Nav() {
           preso ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="fio border-b bg-areia-100/94 backdrop-blur-md">
+        <div className="border-b border-white/10 bg-noite-900/95 backdrop-blur-md">
           <div className="mx-auto flex max-w-[80rem] items-center justify-between gap-4 px-5 py-3 sm:px-8">
-            <a href="#topo" className="display text-2xl leading-none text-tinta">
-              {marca.nomeCurto}
+            {/* Logo oficial. Antes era o nome em tipografia, que competia com
+                o lettering da marca sem ser ele. */}
+            <a href="#topo" className="shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo-llove.png"
+                alt={marca.nome}
+                width={360}
+                height={64}
+                className="h-8 w-auto sm:h-9"
+              />
             </a>
 
-            <nav className="hidden items-center gap-8 text-[0.82rem] font-semibold text-tinta/70 lg:flex">
-              <a className="transition-colors hover:text-sol-600" href="#metodo">
+            <nav className="hidden items-center gap-8 text-[0.82rem] font-semibold text-bruma-200 lg:flex">
+              <a className="transition-colors hover:text-sol-400" href="#metodo">
                 O método
               </a>
-              <a className="transition-colors hover:text-sol-600" href="#charllove">
+              <a className="transition-colors hover:text-sol-400" href="#charllove">
                 Quem ensina
               </a>
-              <a className="transition-colors hover:text-sol-600" href="#oferta">
+              <a className="transition-colors hover:text-sol-400" href="#oferta">
                 Investimento
               </a>
-              <a className="transition-colors hover:text-sol-600" href="#duvidas">
+              <a className="transition-colors hover:text-sol-400" href="#duvidas">
                 Dúvidas
               </a>
             </nav>

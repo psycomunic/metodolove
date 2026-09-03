@@ -25,7 +25,7 @@ export default function Faixa() {
                 {d}
                 <span
                   className={`h-1.5 w-1.5 rounded-full ${
-                    i % 2 === 0 ? "bg-sol-500" : "bg-campo-500"
+                    i % 2 === 0 ? "bg-sol-500" : "bg-areia-300"
                   }`}
                 />
               </span>
