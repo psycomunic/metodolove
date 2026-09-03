@@ -286,6 +286,64 @@ li {
 }
 
 /* ---------- Fios (substituem sombras) ---------- */
+/**
+ * Placa de peito.
+ *
+ * A numeração de placar é o gesto memorável da página, mas até set/2026 ela
+ * era um número bege sobre papel bege: sumia. Virou objeto — chapa marinho,
+ * número creme, fio interno. O fio é o que faz ler como placa impressa em vez
+ * de quadrado colorido.
+ *
+ * Mesma peça na lista de objeções e na de frentes do método. Se aparecer uma
+ * terceira lista numerada, ela usa esta, não uma variação.
+ */
+.placa {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 3.4rem;
+  block-size: 4rem;
+  flex-shrink: 0;
+  background: var(--color-noite-900);
+  color: var(--color-areia-100);
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.placa::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid color-mix(in srgb, var(--color-areia-200) 38%, transparent);
+}
+
+@media (min-width: 640px) {
+  .placa {
+    inline-size: 4.6rem;
+    block-size: 5.5rem;
+    font-size: 2.15rem;
+  }
+  .placa::after {
+    inset: 7px;
+  }
+}
+
+.group:hover .placa {
+  background: var(--color-noite-700);
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .placa {
+    transform: none;
+  }
+}
+
 .fio {
   border-color: color-mix(in srgb, var(--color-areia-400) 55%, transparent);
 }

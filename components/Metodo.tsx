@@ -44,12 +44,12 @@ export default function Metodo() {
         <div className="fio mt-16 border-t">
           {capacidades.map((pilar, i) => (
             <Reveal key={pilar.n} atraso={i * 55}>
-              <article className="group fio grid grid-cols-[3.2rem_1fr] items-baseline gap-x-5 border-b py-7 transition-colors duration-300 sm:grid-cols-[5rem_minmax(0,18rem)_1fr] sm:gap-x-8 sm:py-8">
-                <span className="placar text-[2rem] text-areia-400 transition-colors duration-300 group-hover:text-sol-500 sm:text-[3.2rem]">
+              <article className="group fio grid grid-cols-[auto_1fr] items-start gap-x-5 border-b py-7 sm:grid-cols-[auto_minmax(0,17rem)_1fr] sm:gap-x-8 sm:py-8">
+                <span className="placa" aria-hidden="true">
                   {pilar.n}
                 </span>
 
-                <div className="min-w-0">
+                <div className="min-w-0 self-center">
                   <h3 className="display text-[1.5rem] text-tinta sm:text-[1.75rem]">
                     {pilar.titulo}
                   </h3>
@@ -58,7 +58,7 @@ export default function Metodo() {
                   </p>
                 </div>
 
-                <p className="col-span-2 mt-3 max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/65 sm:col-span-1 sm:mt-0">
+                <p className="col-span-2 mt-4 max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/70 sm:col-span-1 sm:mt-0 sm:self-center">
                   {pilar.texto}
                 </p>
               </article>

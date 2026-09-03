@@ -129,10 +129,6 @@ export default function Hero() {
           <span>{oferta.garantiaDias} dias de garantia</span>
         </div>
       </div>
-
-      <div className="relative h-12 w-full overflow-hidden sm:h-20" aria-hidden="true">
-        <div className="absolute inset-x-[-14%] top-0 h-[30rem] rounded-[50%] bg-areia-100" />
-      </div>
     </section>
   );
 }

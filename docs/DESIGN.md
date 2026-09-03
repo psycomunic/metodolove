@@ -251,3 +251,45 @@ Duas decisões que o hero original não precisava tomar:
   painel de foto. Nunca sobra um retângulo preto no lugar mais caro da página.
 
 `prefers-reduced-motion` pausa os dois vídeos e desliga o facho por completo.
+
+---
+
+## Revisão set/2026 — placa de peito e os dois lados da quadra
+
+Três correções depois que o cliente viu a página no ar.
+
+### A numeração de placar não estava lendo
+
+O lock diz que a numeração é o gesto memorável da página, mas na execução ela era um
+número bege (`areia-400`) sobre papel bege (`areia-100`). Contraste quase nulo: o
+dispositivo estava no código e não estava na tela. Virou **placa de peito** — chapa
+marinho, número creme, fio interno a 5px da borda. O fio é o que faz ler como placa
+impressa em vez de quadrado colorido.
+
+A peça é a mesma na lista de objeções e na de frentes do método, porque é o mesmo
+dispositivo. Uma terceira lista numerada usa esta placa, não uma variação — duas
+numerações diferentes na mesma página anulam o gesto.
+
+Não é card: a placa contém só o número e funciona como marcador gráfico, não como
+container de conteúdo. O teste do card continua valendo para o resto da linha, que segue
+separada por fio de 1px.
+
+### A curva entre hero e papel saiu
+
+Havia uma elipse de areia subindo dentro do marinho no pé do hero. Não vinha de lugar
+nenhum: a referência é cartaz de torneio, e cartaz não tem borda ondulada. Emenda reta.
+
+### "Pra quem é" virou os dois lados da quadra
+
+Eram duas listas de texto corrido sobre o mesmo papel, separadas por um fio. O conteúdo
+era bom e a seção não parecia decidida por ninguém.
+
+Agora os dois lados são materialmente diferentes: quem entra fica no papel claro, quem não
+entra fica num bloco marinho. A oposição é o assunto da seção, então precisa ser visível
+antes de qualquer palavra ser lida — e a metáfora dos lados da quadra pertence ao produto.
+
+O remate ("prefiro perder a venda…") desceu para o lado marinho, ancorado no pé do bloco.
+Ele é sobre quem NÃO deve comprar; solto no cabeçalho, boiava.
+
+A contagem de cada lado (05 / 03) aparece no canto como número de placar. Reforça o mesmo
+vocabulário sem gastar mais um acento de cor.

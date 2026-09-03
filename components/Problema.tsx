@@ -29,22 +29,24 @@ export default function Problema() {
             </Reveal>
           </div>
 
-          {/* lista numerada — fios, não cards */}
-          <ul>
+          {/* Placar de objeções. A placa ancora a linha; sem card. */}
+          <ul className="fio border-t">
             {problema.itens.map((item, i) => (
               <Reveal as="li" key={item.titulo} atraso={i * 80}>
-                <div className="group fio first:fio grid grid-cols-[3rem_1fr] gap-x-5 border-b py-8 first:border-t sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
-                  <span className="placar text-[1.7rem] text-areia-400 transition-colors duration-300 group-hover:text-sol-500 sm:text-[2.3rem]">
+                <div className="group fio grid grid-cols-[auto_1fr] items-start gap-x-5 border-b py-7 sm:gap-x-7 sm:py-8">
+                  <span className="placa" aria-hidden="true">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div>
-                    <h3 className="text-[1.1rem] leading-tight font-bold tracking-tight text-tinta sm:text-[1.2rem]">
-                      {item.titulo}
-                    </h3>
-                    <p className="mt-2.5 max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/65">
-                      {item.texto}
-                    </p>
-                  </div>
+
+                  <h3 className="display self-center text-[1.25rem] leading-[1.1] text-tinta sm:text-[1.6rem]">
+                    {item.titulo}
+                  </h3>
+
+                  {/* No celular o texto ocupa a largura toda; no desktop alinha
+                      sob o título, para a coluna de placas ficar limpa. */}
+                  <p className="col-span-2 mt-4 max-w-[36rem] text-[0.95rem] leading-[1.65] text-tinta/70 sm:col-span-1 sm:col-start-2 sm:mt-0">
+                    {item.texto}
+                  </p>
                 </div>
               </Reveal>
             ))}
