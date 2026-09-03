@@ -96,7 +96,13 @@ export function SilhuetaRio({
   );
 }
 
-export function Ondas({ className = "", cor = "currentColor" }: { className?: string; cor?: string }) {
+export function Ondas({
+  className = "",
+  cor = "currentColor",
+}: {
+  className?: string;
+  cor?: string;
+}) {
   return (
     <svg
       viewBox="0 0 1440 72"
@@ -122,7 +128,13 @@ export function LinhaDagua({ className = "" }: { className?: string }) {
       aria-hidden="true"
       focusable="false"
     >
-      <g fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity="0.5">
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        opacity="0.5"
+      >
         <path d="M-40 8 C 60 -2 140 18 240 8 C 340 -2 420 18 520 8 C 620 -2 700 18 800 8 C 900 -2 980 18 1080 8 C 1180 -2 1260 18 1360 8 C 1420 3 1460 6 1480 8" />
         <path d="M-40 20 C 70 10 150 30 250 20 C 350 10 430 30 530 20 C 630 10 710 30 810 20 C 910 10 990 30 1090 20 C 1190 10 1270 30 1370 20 C 1425 15 1465 18 1480 20" />
       </g>
@@ -146,7 +158,13 @@ export function Sol({ className = "" }: { className?: string }) {
         </radialGradient>
       </defs>
       {/* brilho difuso do fim de tarde */}
-      <circle cx="110" cy="110" r="108" fill="url(#halo)" style={{ mixBlendMode: "screen" }} />
+      <circle
+        cx="110"
+        cy="110"
+        r="108"
+        fill="url(#halo)"
+        style={{ mixBlendMode: "screen" }}
+      />
       {/* disco solar: opaco, para ler como sol e não como mancha */}
       <circle cx="110" cy="110" r="44" fill="url(#disco)" />
     </svg>

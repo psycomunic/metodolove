@@ -60,8 +60,19 @@ export const hero = {
 export const provas = [
   { valor: 93.5, decimais: 1, sufixo: "mil", rotulo: "seguidores no Instagram" },
   { valor: 821, decimais: 0, sufixo: "", rotulo: "conteúdos publicados sobre o esporte" },
-  { valor: 6, decimais: 0, pad: 2, sufixo: "", rotulo: "pilares, do primeiro toque ao patrocínio" },
-  { valor: 100, decimais: 0, sufixo: "%", rotulo: "online — treine na areia perto de casa" },
+  {
+    valor: 6,
+    decimais: 0,
+    pad: 2,
+    sufixo: "",
+    rotulo: "pilares, do primeiro toque ao patrocínio",
+  },
+  {
+    valor: 100,
+    decimais: 0,
+    sufixo: "%",
+    rotulo: "online — treine na areia perto de casa",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -192,11 +203,13 @@ export const publico = {
 export const bonus = [
   {
     titulo: "Grupo VIP de alunos",
-    texto: "Comunidade fechada pra tirar dúvida, achar dupla e acompanhar quem está na mesma jornada.",
+    texto:
+      "Comunidade fechada pra tirar dúvida, achar dupla e acompanhar quem está na mesma jornada.",
   },
   {
     titulo: "Planilha de treino na areia",
-    texto: "A semana montada, com progressão, pra você chegar na quadra sabendo o que fazer.",
+    texto:
+      "A semana montada, com progressão, pra você chegar na quadra sabendo o que fazer.",
   },
   {
     titulo: "Guia de torneios",

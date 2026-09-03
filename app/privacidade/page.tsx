@@ -53,8 +53,8 @@ export default function Privacidade() {
       <h2>Cookies</h2>
       <p>
         Usamos cookies próprios e de terceiros para lembrar preferências e medir
-        campanhas. Você pode bloqueá-los nas configurações do navegador; algumas partes
-        do site podem deixar de funcionar.
+        campanhas. Você pode bloqueá-los nas configurações do navegador; algumas partes do
+        site podem deixar de funcionar.
       </p>
     </Legal>
   );

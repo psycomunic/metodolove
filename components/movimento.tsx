@@ -10,7 +10,7 @@ import { SilhuetaRio } from "./art";
  *  — prefers-reduced-motion desliga parallax por completo.
  * ------------------------------------------------------------------ */
 
-function usaMovimentoReduzido() {
+function useMovimentoReduzido() {
   const [reduzido, setReduzido] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -25,8 +25,12 @@ function usaMovimentoReduzido() {
 /**
  * Progresso do elemento pela viewport, de 0 (entrando por baixo)
  * a 1 (saindo por cima). Atualiza dentro de rAF, num único listener.
+ *
+ * O hook cria o próprio ref e devolve junto: passar um ref como argumento
+ * durante o render deixa o React sem garantia de quando ele será lido.
  */
-function usaProgresso(ref: React.RefObject<HTMLElement | null>, ativo: boolean) {
+function useProgresso<T extends HTMLElement>(ativo: boolean) {
+  const ref = useRef<T>(null);
   const [progresso, setProgresso] = useState(0);
 
   useEffect(() => {
@@ -54,9 +58,9 @@ function usaProgresso(ref: React.RefObject<HTMLElement | null>, ativo: boolean) 
       window.removeEventListener("scroll", agendar);
       window.removeEventListener("resize", agendar);
     };
-  }, [ref, ativo]);
+  }, [ativo]);
 
-  return progresso;
+  return { ref, progresso };
 }
 
 /**
@@ -73,12 +77,11 @@ export function Horizonte({
   cor?: string;
   forca?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduzido = usaMovimentoReduzido();
-  const p = usaProgresso(ref, !reduzido);
+  const reduzido = useMovimentoReduzido();
+  const { ref, progresso } = useProgresso<HTMLDivElement>(!reduzido);
 
   // desloca em torno do centro da tela para não haver salto na entrada
-  const d = (p - 0.5) * 2;
+  const d = (progresso - 0.5) * 2;
   const camadas: { camada: "fundo" | "meio" | "frente"; vel: number }[] = [
     { camada: "fundo", vel: 6 },
     { camada: "meio", vel: 16 },
@@ -114,9 +117,8 @@ export function Deriva({
   velocidade?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduzido = usaMovimentoReduzido();
-  const p = usaProgresso(ref, !reduzido);
+  const reduzido = useMovimentoReduzido();
+  const { ref, progresso } = useProgresso<HTMLDivElement>(!reduzido);
 
   return (
     <div
@@ -125,7 +127,9 @@ export function Deriva({
       style={
         reduzido
           ? undefined
-          : { transform: `translate3d(0, ${((p - 0.5) * velocidade).toFixed(2)}px, 0)` }
+          : {
+              transform: `translate3d(0, ${((progresso - 0.5) * velocidade).toFixed(2)}px, 0)`,
+            }
       }
     >
       {children}
@@ -177,7 +181,7 @@ export function LinhasReveal({
       {linhas.map((linha, i) => (
         <span
           key={i}
-          className="block overflow-hidden pt-[0.2em] pb-[0.42em] -mt-[0.2em] -mb-[0.42em]"
+          className="-mt-[0.2em] -mb-[0.42em] block overflow-hidden pt-[0.2em] pb-[0.42em]"
         >
           <span
             className="block will-change-transform"
@@ -213,14 +217,15 @@ export function Contador({
   duracao?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const reduzido = usaMovimentoReduzido();
-  const [atual, setAtual] = useState(reduzido ? valor : 0);
+  const reduzido = useMovimentoReduzido();
+  const [animado, setAnimado] = useState(0);
+
+  // Com movimento reduzido o número já sai pronto — derivado, não gravado
+  // dentro de um efeito, que dispararia um render em cascata.
+  const atual = reduzido ? valor : animado;
 
   useEffect(() => {
-    if (reduzido) {
-      setAtual(valor);
-      return;
-    }
+    if (reduzido) return;
     const el = ref.current;
     if (!el) return;
 
@@ -233,7 +238,7 @@ export function Contador({
         const passo = (agora: number) => {
           const t = Math.min(1, (agora - inicio) / duracao);
           // desaceleração — o placar chega e para, não bate e volta
-          setAtual(valor * (1 - Math.pow(1 - t, 3)));
+          setAnimado(valor * (1 - Math.pow(1 - t, 3)));
           if (t < 1) quadro = requestAnimationFrame(passo);
         };
         quadro = requestAnimationFrame(passo);
@@ -252,9 +257,7 @@ export function Contador({
     maximumFractionDigits: decimais,
   });
 
-  return (
-    <span ref={ref}>{pad ? texto.padStart(pad, "0") : texto}</span>
-  );
+  return <span ref={ref}>{pad ? texto.padStart(pad, "0") : texto}</span>;
 }
 
 /**
@@ -271,7 +274,7 @@ export function Desmascara({
   atraso?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduzido = usaMovimentoReduzido();
+  const reduzido = useMovimentoReduzido();
   const [dentro, setDentro] = useState(false);
 
   useEffect(() => {

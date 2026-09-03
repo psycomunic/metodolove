@@ -8,7 +8,10 @@ import { Reveal, Rotulo } from "./ui";
  */
 export default function Metodo() {
   return (
-    <section id="metodo" className="relative overflow-hidden bg-areia-200/45 py-24 sm:py-32">
+    <section
+      id="metodo"
+      className="relative overflow-hidden bg-areia-200/45 py-24 sm:py-32"
+    >
       <span
         aria-hidden="true"
         className="display contorno pointer-events-none absolute -top-8 -right-6 hidden text-[16rem] leading-none select-none lg:block"
@@ -26,7 +29,9 @@ export default function Metodo() {
               linhas={[
                 "Seis pilares para sair da areia",
                 "de fim de semana",
-                <span className="text-mar-600">para a quadra que paga.</span>,
+                <span key="paga" className="text-mar-600">
+                  para a quadra que paga.
+                </span>,
               ]}
             />
           </h2>
@@ -40,10 +45,10 @@ export default function Metodo() {
         </div>
 
         {/* placar */}
-        <div className="mt-16 border-t fio">
+        <div className="fio mt-16 border-t">
           {pilares.map((pilar, i) => (
             <Reveal key={pilar.n} atraso={i * 55}>
-              <article className="group grid grid-cols-[3.2rem_1fr] items-baseline gap-x-5 border-b fio py-7 transition-colors duration-300 sm:grid-cols-[6rem_minmax(0,15rem)_1fr] sm:gap-x-8 sm:py-8">
+              <article className="group fio grid grid-cols-[3.2rem_1fr] items-baseline gap-x-5 border-b py-7 transition-colors duration-300 sm:grid-cols-[6rem_minmax(0,15rem)_1fr] sm:gap-x-8 sm:py-8">
                 <span className="placar text-[2rem] text-areia-400 transition-colors duration-300 group-hover:text-sol-500 sm:text-[3.2rem]">
                   {pilar.n}
                 </span>

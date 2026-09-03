@@ -5,28 +5,28 @@
    Papel = areia · Campo = mar · Acento = pôr do sol (só CTA)
    ============================================================ */
 @theme {
-  --color-areia-50:  #FBF5E9;
-  --color-areia-100: #F3EAD8;
-  --color-areia-200: #E9DCC2;
-  --color-areia-300: #D8C6A4;
-  --color-areia-400: #BFA87F;
-  --color-areia-500: #8E7648;
+  --color-areia-50: #fbf5e9;
+  --color-areia-100: #f3ead8;
+  --color-areia-200: #e9dcc2;
+  --color-areia-300: #d8c6a4;
+  --color-areia-400: #bfa87f;
+  --color-areia-500: #8e7648;
 
-  --color-mar-950: #04192B;
-  --color-mar-900: #062A45;
-  --color-mar-800: #0A3B5F;
-  --color-mar-700: #0E5180;
-  --color-mar-600: #1470A6;
-  --color-mar-500: #2090C7;
-  --color-mar-400: #4DAFDC;
-  --color-mar-300: #8AD0EA;
+  --color-mar-950: #04192b;
+  --color-mar-900: #062a45;
+  --color-mar-800: #0a3b5f;
+  --color-mar-700: #0e5180;
+  --color-mar-600: #1470a6;
+  --color-mar-500: #2090c7;
+  --color-mar-400: #4dafdc;
+  --color-mar-300: #8ad0ea;
 
-  --color-tinta: #08243B;
+  --color-tinta: #08243b;
 
   /* Acento: exclusivo de CTA, estado ativo e do rabisco único do hero. */
-  --color-sol-600: #C24A14;
-  --color-sol-500: #F2762E;
-  --color-sol-400: #FF9147;
+  --color-sol-600: #c24a14;
+  --color-sol-500: #f2762e;
+  --color-sol-400: #ff9147;
 
   --font-display: var(--font-anton), "Arial Narrow", sans-serif;
   --font-sans: var(--font-archivo), system-ui, sans-serif;
@@ -51,7 +51,10 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--color-sol-500); color: #fff; }
+::selection {
+  background: var(--color-sol-500);
+  color: #fff;
+}
 
 /* ---------- Display: cartaz de torneio ---------- */
 .display {
@@ -80,7 +83,10 @@ body {
   text-transform: uppercase;
 }
 
-p, li { text-wrap: pretty; }
+p,
+li {
+  text-wrap: pretty;
+}
 
 /* ---------- Grão de filme ---------- */
 .grao::after {
@@ -96,7 +102,10 @@ p, li { text-wrap: pretty; }
 }
 
 /* ---------- O único destaque à mão da página (hero) ---------- */
-.rabisco { position: relative; white-space: nowrap; }
+.rabisco {
+  position: relative;
+  white-space: nowrap;
+}
 .rabisco > svg {
   position: absolute;
   left: -1.5%;
@@ -115,7 +124,11 @@ p, li { text-wrap: pretty; }
   stroke-dashoffset: 1000;
   animation: risca 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.55s forwards;
 }
-@keyframes risca { to { stroke-dashoffset: 0; } }
+@keyframes risca {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
 /* ---------- Entrada por scroll ---------- */
 .reveal {
@@ -126,31 +139,84 @@ p, li { text-wrap: pretty; }
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--atraso, 0ms);
 }
-.reveal[data-visivel="true"] { opacity: 1; transform: none; }
+.reveal[data-visivel="true"] {
+  opacity: 1;
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .rabisco > svg path { animation: none; stroke-dashoffset: 0; }
-  .flutua, .balanca, .faixa-corre { animation: none !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rabisco > svg path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .flutua,
+  .balanca,
+  .faixa-corre {
+    animation: none !important;
+  }
 }
 
 /* ---------- Movimento ambiente ---------- */
-@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-.flutua { animation: flutuar 8s ease-in-out infinite; }
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.flutua {
+  animation: flutuar 8s ease-in-out infinite;
+}
 
-@keyframes balancar { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-26px); } }
-.balanca { animation: balancar 15s ease-in-out infinite; }
+@keyframes balancar {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-26px);
+  }
+}
+.balanca {
+  animation: balancar 15s ease-in-out infinite;
+}
 
-@keyframes correr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.faixa-corre { display: flex; width: max-content; animation: correr 36s linear infinite; }
+@keyframes correr {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.faixa-corre {
+  display: flex;
+  width: max-content;
+  animation: correr 36s linear infinite;
+}
 
 /* ---------- Fios (substituem sombras) ---------- */
-.fio { border-color: color-mix(in srgb, var(--color-areia-400) 62%, transparent); }
-.fio-claro { border-color: color-mix(in srgb, var(--color-areia-100) 20%, transparent); }
+.fio {
+  border-color: color-mix(in srgb, var(--color-areia-400) 62%, transparent);
+}
+.fio-claro {
+  border-color: color-mix(in srgb, var(--color-areia-100) 20%, transparent);
+}
 
 /* Sombra só onde há elevação real: bloco da oferta e fotos. */
-.elevado { box-shadow: 0 34px 70px -46px rgba(4, 25, 43, 0.9); }
+.elevado {
+  box-shadow: 0 34px 70px -46px rgba(4, 25, 43, 0.9);
+}
 
 .contorno {
   -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-areia-400) 60%, transparent);
@@ -158,6 +224,13 @@ p, li { text-wrap: pretty; }
 }
 
 /* Accordion */
-details > summary { list-style: none; cursor: pointer; }
-details > summary::-webkit-details-marker { display: none; }
-details[open] .cruz { transform: rotate(45deg); }
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .cruz {
+  transform: rotate(45deg);
+}

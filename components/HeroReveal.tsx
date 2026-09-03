@@ -152,8 +152,7 @@ export default function HeroReveal({
     aoCarregar?.(true);
   }, [aoCarregar]);
 
-  const comum =
-    "absolute inset-0 h-full w-full object-cover" as const;
+  const comum = "absolute inset-0 h-full w-full object-cover" as const;
 
   return (
     <div

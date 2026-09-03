@@ -6,12 +6,73 @@ Next.js 16 · React 19 · Tailwind CSS 4 · TypeScript.
 
 ---
 
+## Instalando na sua pasta "MÉTODO LOVE"
+
+O projeto vive no GitHub. Para trazê-lo para a pasta onde estão os vídeos, sem apagar nada
+do que já está lá, abra o terminal **dentro da pasta MÉTODO LOVE** e rode:
+
+```bash
+git init
+git remote add origin https://github.com/psycomunic/metodolove.git
+git fetch origin claude/landing-page-conversao-fhq6us
+git checkout -b claude/landing-page-conversao-fhq6us origin/claude/landing-page-conversao-fhq6us
+```
+
+> Usamos `git init` + `fetch` em vez de `git clone` porque o `clone` exige pasta vazia, e a
+> sua já tem os vídeos dentro.
+
+Depois mova os dois vídeos para o lugar que a página procura, renomeando:
+
+```bash
+mkdir -p public/videos
+mv "video 1.mp4" public/videos/bola-1.mp4
+mv "video 2.mp4" public/videos/bola-2.mp4
+```
+
+(Troque `video 1.mp4` e `video 2.mp4` pelos nomes reais dos seus arquivos.)
+
+Por último:
+
+```bash
+npm install
+npm run dev
+```
+
+Abra `http://localhost:3000`. Passe o mouse pelo hero — o holofote deve revelar o segundo
+vídeo.
+
+### Abrindo no Antigravity
+
+Abra a pasta MÉTODO LOVE como projeto. O repositório já traz o que o editor precisa:
+
+- **`AGENTS.md`** — instruções para o assistente de código: onde fica cada coisa, os cinco
+  invariantes de design que não podem ser quebrados e as cinco armadilhas que este código já
+  encontrou. O Antigravity lê esse arquivo sozinho.
+- **`.vscode/`** — formatação ao salvar, correção de lint ao salvar e autocomplete das
+  classes do Tailwind 4.
+- **`.agents/skills/refero-design`** — a skill de design que você instalou, já no formato
+  universal que o Antigravity reconhece.
+
+Na primeira vez que abrir um arquivo `.ts`, aceite usar a versão do TypeScript do projeto
+quando o editor perguntar ("Use Workspace Version").
+
+### Se for editar com IA
+
+Peça para o agente ler o `AGENTS.md` e o `docs/DESIGN.md` antes de mexer no visual. Sem
+isso ele tende a espalhar o laranja pela página, transformar tudo em card e trocar a fonte
+por uma serifada — as três coisas que mais rápido fazem a página parecer feita por IA.
+
+---
+
 ## Rodando
 
 ```bash
 npm install
-npm run dev     # http://localhost:3000
-npm run build   # build de produção
+npm run dev          # http://localhost:3000
+npm run build        # build de produção
+npm run lint         # eslint
+npm run typecheck    # tsc --noEmit
+npm run format       # prettier + ordenação das classes do Tailwind
 ```
 
 ---
@@ -21,15 +82,15 @@ npm run build   # build de produção
 Quase tudo da página está em **`lib/content.ts`**. Os pontos que exigem decisão sua estão
 marcados no arquivo com `// >>> AJUSTAR`. Em ordem de urgência:
 
-| # | O quê | Onde |
-|---|---|---|
-| 1 | **Vídeos das bolas** — `bola-1.mp4` e `bola-2.mp4`, o efeito de holofote depende deles | `public/videos/`, veja o `LEIA-ME.txt` de lá |
-| 2 | **Fotos** — retrato e imagem de compartilhamento | `public/images/`, veja o `LEIA-ME.txt` de lá |
-| 3 | **Sua história** — o texto atual é rascunho tirado da sua bio | `autor.paragrafos` |
-| 4 | **Nomes dos módulos** — ajuste pro conteúdo real do curso | `pilares` |
-| 5 | **CNPJ, razão social, e-mail e domínio** | `marca` |
-| 6 | **Preço de ancoragem** (o "de R$ ___ por") | `oferta.precoCheio` |
-| 7 | **Prazo de garantia e tempo de acesso** | `oferta.garantiaDias`, `oferta.acesso` |
+| #   | O quê                                                                                  | Onde                                         |
+| --- | -------------------------------------------------------------------------------------- | -------------------------------------------- |
+| 1   | **Vídeos das bolas** — `bola-1.mp4` e `bola-2.mp4`, o efeito de holofote depende deles | `public/videos/`, veja o `LEIA-ME.txt` de lá |
+| 2   | **Fotos** — retrato e imagem de compartilhamento                                       | `public/images/`, veja o `LEIA-ME.txt` de lá |
+| 3   | **Sua história** — o texto atual é rascunho tirado da sua bio                          | `autor.paragrafos`                           |
+| 4   | **Nomes dos módulos** — ajuste pro conteúdo real do curso                              | `pilares`                                    |
+| 5   | **CNPJ, razão social, e-mail e domínio**                                               | `marca`                                      |
+| 6   | **Preço de ancoragem** (o "de R$ ___ por")                                             | `oferta.precoCheio`                          |
+| 7   | **Prazo de garantia e tempo de acesso**                                                | `oferta.garantiaDias`, `oferta.acesso`       |
 
 Checkout (`https://pay.kiwify.com.br/y20epeD`) e parcelamento (12x de R$ 30,81) já estão
 configurados.

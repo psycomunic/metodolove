@@ -32,7 +32,10 @@ export default function Rodape() {
             >
               {marca.instagramHandle}
             </a>
-            <a className="transition-colors hover:text-sol-400" href={`mailto:${marca.email}`}>
+            <a
+              className="transition-colors hover:text-sol-400"
+              href={`mailto:${marca.email}`}
+            >
               {marca.email}
             </a>
           </nav>
@@ -41,7 +44,9 @@ export default function Rodape() {
         {/* Aviso legal — exigido pelo Meta e recomendado pelo CDC. */}
         <div className="mt-8 space-y-4 text-[0.74rem] leading-relaxed text-areia-200/40">
           <p>
-            <strong className="font-semibold text-areia-200/60">Aviso sobre resultados.</strong>{" "}
+            <strong className="font-semibold text-areia-200/60">
+              Aviso sobre resultados.
+            </strong>{" "}
             O {marca.nome} é um curso de treinamento esportivo. Os resultados dependem da
             dedicação, da frequência de treino e das condições físicas de cada aluno. Não
             há promessa nem garantia de desempenho atlético, classificação em competições,

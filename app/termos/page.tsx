@@ -45,8 +45,8 @@ export default function Termos() {
 
       <h2>Saúde</h2>
       <p>
-        Atividade física tem riscos. Procure orientação médica antes de iniciar os treinos.
-        O {marca.nome} não presta serviço de saúde e não substitui acompanhamento
+        Atividade física tem riscos. Procure orientação médica antes de iniciar os
+        treinos. O {marca.nome} não presta serviço de saúde e não substitui acompanhamento
         profissional presencial.
       </p>
 

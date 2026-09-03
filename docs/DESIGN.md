@@ -3,7 +3,7 @@
 Pesquisa: o MCP da Refero (`api.refero.design/mcp`) foi adicionado ao projeto, mas exige
 login OAuth interativo, indisponível numa sessão remota. Seguimos o caminho de fallback
 previsto na própria skill: craft references empacotadas + briefing do cliente, com o mesmo
-workflow de *reference lock*.
+workflow de _reference lock_.
 
 ## Briefing
 
@@ -22,7 +22,7 @@ O produto é treino físico vendido a quem pisa na areia; o vocabulário visual 
 pôster de campeonato, placar, número de peito, lower-third de transmissão, foto estourada de
 sol e tipografia condensada em caixa alta.
 
-*Teste editorial:* se trocássemos o logo por um hotel-butique e a página continuasse
+_Teste editorial:_ se trocássemos o logo por um hotel-butique e a página continuasse
 plausível, a direção estaria genérica. Com placar, número de peito e horizonte do Rio, não
 continua — é dessa marca.
 
@@ -41,25 +41,25 @@ continua — é dessa marca.
 
 ### Rejeitar explicitamente
 
-| Rejeitado | Motivo |
-|---|---|
-| Palavra solta trocada por serifada em itálico / cor | Tell nº4 do guia anti-slop. Removida a família serifada do projeto. |
-| Grid de cards como container padrão | Tell nº2. Pilares e bônus viraram tabela/lista com fios. |
-| Stripe lateral colorida decorativa | Tell nº6. Sem significado = removida. |
-| Hero "texto à esquerda, imagem à direita" | Sintoma de layout genérico. Hero é imagem-dominante com sobreposição. |
-| Raio grande e sombra em tudo | Suaviza a direção. Fios de 1px substituem sombras. |
-| Indigo/violeta | Tell nº1 (e o cliente pediu azul do mar, não roxo). |
+| Rejeitado                                           | Motivo                                                                |
+| --------------------------------------------------- | --------------------------------------------------------------------- |
+| Palavra solta trocada por serifada em itálico / cor | Tell nº4 do guia anti-slop. Removida a família serifada do projeto.   |
+| Grid de cards como container padrão                 | Tell nº2. Pilares e bônus viraram tabela/lista com fios.              |
+| Stripe lateral colorida decorativa                  | Tell nº6. Sem significado = removida.                                 |
+| Hero "texto à esquerda, imagem à direita"           | Sintoma de layout genérico. Hero é imagem-dominante com sobreposição. |
+| Raio grande e sombra em tudo                        | Suaviza a direção. Fios de 1px substituem sombras.                    |
+| Indigo/violeta                                      | Tell nº1 (e o cliente pediu azul do mar, não roxo).                   |
 
 ### Papéis dos tokens
 
-| Token | Valor | Papel — e só ele |
-|---|---|---|
-| Papel | `#F3EAD8` areia | fundo da página |
-| Campo | `#062A45` mar profundo | faixas dominantes (hero, autor, oferta, CTA final) |
-| Tinta | `#08243B` | texto sobre areia |
-| Acento | `#F2762E` pôr do sol | CTA primário, estado ativo, o rabisco único do hero |
-| Apoio | `#1470A6` mar | rótulos, ícones de confirmação, fios sobre o campo |
-| Raio | 2px estrutural | única exceção: pílula do CTA primário |
+| Token  | Valor                  | Papel — e só ele                                    |
+| ------ | ---------------------- | --------------------------------------------------- |
+| Papel  | `#F3EAD8` areia        | fundo da página                                     |
+| Campo  | `#062A45` mar profundo | faixas dominantes (hero, autor, oferta, CTA final)  |
+| Tinta  | `#08243B`              | texto sobre areia                                   |
+| Acento | `#F2762E` pôr do sol   | CTA primário, estado ativo, o rabisco único do hero |
+| Apoio  | `#1470A6` mar          | rótulos, ícones de confirmação, fios sobre o campo  |
+| Raio   | 2px estrutural         | única exceção: pílula do CTA primário               |
 
 ### Tipografia
 
@@ -76,24 +76,24 @@ O hero é conduzido por imagem — a foto do atleta na areia é o que carrega a 
 de foto têm proporção fixa e direção de arte escrita; enquanto o arquivo não existe, aparece
 um placeholder honesto com a instrução, nunca uma "foto falsa" feita de CSS.
 
-| Slot | Proporção | Direção de arte |
-|---|---|---|
-| `/images/hero.jpg` | 3:4 vertical | Charllove em quadra, sol baixo, areia visível, espaço negativo à esquerda |
-| `/images/charllove.jpg` | 3:4 vertical | Retrato, contato visual, quadra ao fundo desfocada |
-| `/images/og.jpg` | 1200×630 | Foto de quadra + logo, texto grande legível em miniatura |
+| Slot                    | Proporção    | Direção de arte                                                           |
+| ----------------------- | ------------ | ------------------------------------------------------------------------- |
+| `/images/hero.jpg`      | 3:4 vertical | Charllove em quadra, sol baixo, areia visível, espaço negativo à esquerda |
+| `/images/charllove.jpg` | 3:4 vertical | Retrato, contato visual, quadra ao fundo desfocada                        |
+| `/images/og.jpg`        | 1200×630     | Foto de quadra + logo, texto grande legível em miniatura                  |
 
 ## Ledger de decisões
 
-| Decisão | Origem | Papel preservado | Por quê |
-|---|---|---|---|
-| Areia como papel, azul como campo | briefing do cliente | acento fica fora do papel | pedido explícito: "as cores são azul e cor de areia" |
-| Laranja pôr do sol como acento | craft `color.md` (dominante + acento afiado) | CTA e ativo apenas | maior contraste possível contra o azul profundo; disciplina de acento único |
-| Anton condensado em caixa alta | craft `typography.md` (§0 contexto: marketing, não ferramenta) | display apenas | tipografia de cartaz esportivo; distinção por escala/peso/caixa em vez de troca de face |
-| Placar numerado nos pilares | briefing (esporte) + `anti-ai-slop` "um detalhe memorável" | organiza conteúdo, não decora | tira o conteúdo do grid de cards e devolve vocabulário de torneio |
-| Horizonte do Rio nas bordas | briefing ("Pão de Açúcar") | dispositivo de transição | referência geográfica pedida, usada com função estrutural |
-| Fios de 1px em vez de sombras | `anti-ai-slop` teste do card | separação, não elevação | tirar borda/sombra não prejudicava interação — logo, não era card |
-| Seção de depoimentos que se auto-oculta | `copywriting.md` "prova vence hype" + CDC art. 37 | prova social real apenas | depoimento inventado é propaganda enganosa e derruba conta de anúncio |
-| Um único rabisco à mão no hero | `anti-ai-slop` (destaque precisa de papel de conteúdo) | uma ocorrência na página inteira | é o gesto assinatura, desenhado à mão, não troca de fonte — e não se repete |
+| Decisão                                 | Origem                                                         | Papel preservado                 | Por quê                                                                                 |
+| --------------------------------------- | -------------------------------------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------- |
+| Areia como papel, azul como campo       | briefing do cliente                                            | acento fica fora do papel        | pedido explícito: "as cores são azul e cor de areia"                                    |
+| Laranja pôr do sol como acento          | craft `color.md` (dominante + acento afiado)                   | CTA e ativo apenas               | maior contraste possível contra o azul profundo; disciplina de acento único             |
+| Anton condensado em caixa alta          | craft `typography.md` (§0 contexto: marketing, não ferramenta) | display apenas                   | tipografia de cartaz esportivo; distinção por escala/peso/caixa em vez de troca de face |
+| Placar numerado nos pilares             | briefing (esporte) + `anti-ai-slop` "um detalhe memorável"     | organiza conteúdo, não decora    | tira o conteúdo do grid de cards e devolve vocabulário de torneio                       |
+| Horizonte do Rio nas bordas             | briefing ("Pão de Açúcar")                                     | dispositivo de transição         | referência geográfica pedida, usada com função estrutural                               |
+| Fios de 1px em vez de sombras           | `anti-ai-slop` teste do card                                   | separação, não elevação          | tirar borda/sombra não prejudicava interação — logo, não era card                       |
+| Seção de depoimentos que se auto-oculta | `copywriting.md` "prova vence hype" + CDC art. 37              | prova social real apenas         | depoimento inventado é propaganda enganosa e derruba conta de anúncio                   |
+| Um único rabisco à mão no hero          | `anti-ai-slop` (destaque precisa de papel de conteúdo)         | uma ocorrência na página inteira | é o gesto assinatura, desenhado à mão, não troca de fonte — e não se repete             |
 
 ## QA visual
 
@@ -108,7 +108,7 @@ bloqueado pela política de rede deste ambiente; a pesquisa veio da descrição 
 catálogo dele.
 
 **O que foi aproveitado:** as técnicas — parallax em camadas no scroll, revelação de texto
-linha a linha por máscara, abertura de imagem por *clip-path*.
+linha a linha por máscara, abertura de imagem por _clip-path_.
 
 **O que foi rejeitado:** a estética do catálogo (fundos "Neon Pulse", "Cosmic Ripple",
 heróis 3D de Web3). Ela brigaria com o reference lock e, pior, é justamente o visual de
@@ -119,15 +119,15 @@ horizonte do Rio em velocidades diferentes — serra distante quase parada, Morr
 meio, Pão de Açúcar na frente. A profundidade vem da geografia, não de um gerador de
 partículas.
 
-| Efeito | Onde | Serve a |
-|---|---|---|
-| Parallax de 3 camadas | horizonte do Rio no hero, oferta e CTA final | hierarquia — dá fundo ao campo azul |
-| Deriva vertical | sol, linha d'água | continuidade |
-| Reveal linha a linha | todas as manchetes | hierarquia — impõe a ordem de leitura |
-| Máscara de abertura | fotos | continuidade — a imagem "chega" no lugar |
-| Contador | placar de números do hero | hierarquia — o número é o argumento |
-| Faixa correndo | dizeres entre seções | textura de cartaz de torneio |
-| Holofote de revelação | dois vídeos empilhados no hero | hierarquia — a mídia vira o argumento, e o cursor participa |
+| Efeito                | Onde                                         | Serve a                                                     |
+| --------------------- | -------------------------------------------- | ----------------------------------------------------------- |
+| Parallax de 3 camadas | horizonte do Rio no hero, oferta e CTA final | hierarquia — dá fundo ao campo azul                         |
+| Deriva vertical       | sol, linha d'água                            | continuidade                                                |
+| Reveal linha a linha  | todas as manchetes                           | hierarquia — impõe a ordem de leitura                       |
+| Máscara de abertura   | fotos                                        | continuidade — a imagem "chega" no lugar                    |
+| Contador              | placar de números do hero                    | hierarquia — o número é o argumento                         |
+| Faixa correndo        | dizeres entre seções                         | textura de cartaz de torneio                                |
+| Holofote de revelação | dois vídeos empilhados no hero               | hierarquia — a mídia vira o argumento, e o cursor participa |
 
 Regras seguidas de `references/motion.md`: nada com easing linear, nada acima de 900 ms, e
 `prefers-reduced-motion` desliga parallax, contador e máscara por completo.

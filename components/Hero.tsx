@@ -28,7 +28,10 @@ export default function Hero() {
       <HeroReveal aoCarregar={setComVideo} />
 
       {/* O sol se põe atrás do painel de foto — a sobreposição é o que dá profundidade. */}
-      <Deriva velocidade={90} className="absolute -top-32 right-[4%] z-0 sm:-top-16 sm:right-[10%]">
+      <Deriva
+        velocidade={90}
+        className="absolute -top-32 right-[4%] z-0 sm:-top-16 sm:right-[10%]"
+      >
         <Sol className="flutua h-56 w-56 opacity-90 sm:h-80 sm:w-80" />
       </Deriva>
 
@@ -45,7 +48,10 @@ export default function Hero() {
           comVideo ? "hidden" : "hidden lg:block"
         }`}
       >
-        <Desmascara atraso={320} className="elevado absolute top-36 right-0 bottom-16 left-10">
+        <Desmascara
+          atraso={320}
+          className="elevado absolute top-36 right-0 bottom-16 left-10"
+        >
           <div className="relative h-full w-full overflow-hidden">
             <Foto
               src="/images/hero.jpg"

@@ -33,7 +33,7 @@ export default function Problema() {
           <ul>
             {problema.itens.map((item, i) => (
               <Reveal as="li" key={item.titulo} atraso={i * 80}>
-                <div className="group grid grid-cols-[3rem_1fr] gap-x-5 border-b fio py-8 first:border-t first:fio sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
+                <div className="group fio first:fio grid grid-cols-[3rem_1fr] gap-x-5 border-b py-8 first:border-t sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
                   <span className="placar text-[1.7rem] text-areia-400 transition-colors duration-300 group-hover:text-sol-500 sm:text-[2.3rem]">
                     {String(i + 1).padStart(2, "0")}
                   </span>

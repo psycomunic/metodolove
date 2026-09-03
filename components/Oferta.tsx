@@ -20,7 +20,9 @@ export default function Oferta() {
             <LinhasReveal
               linhas={[
                 "Menos que um par",
-                <span className="text-mar-300">de chuteiras de areia.</span>,
+                <span key="chuteiras" className="text-mar-300">
+                  de chuteiras de areia.
+                </span>,
               ]}
             />
           </h2>
@@ -35,14 +37,17 @@ export default function Oferta() {
         {/* bloco da oferta — aqui o card é justificado: é o container da conversão */}
         <Reveal atraso={160} className="mt-14">
           <div className="elevado mx-auto grid max-w-[64rem] overflow-hidden bg-areia-50 text-tinta lg:grid-cols-[1.02fr_0.98fr]">
-            <div className="border-b fio p-8 sm:p-11 lg:border-r lg:border-b-0">
+            <div className="fio border-b p-8 sm:p-11 lg:border-r lg:border-b-0">
               <p className="rotulo text-mar-600">Você leva</p>
               <h3 className="display mt-4 text-[2.1rem] text-tinta">
                 {marca.nome} completo
               </h3>
               <ul className="mt-8 space-y-3.5">
                 {inclusos.map((item) => (
-                  <li key={item} className="flex gap-3.5 text-[0.93rem] leading-snug text-tinta/80">
+                  <li
+                    key={item}
+                    className="flex gap-3.5 text-[0.93rem] leading-snug text-tinta/80"
+                  >
                     <Check className="mt-0.5 h-4.5 w-4.5 text-mar-600" />
                     {item}
                   </li>
@@ -64,14 +69,18 @@ export default function Oferta() {
               </p>
 
               <p className="placar mt-4 flex items-baseline gap-2 text-tinta">
-                <span className="text-[clamp(2.2rem,7vw,3rem)]">{oferta.parcelasQtd}</span>
-                <span className="text-[0.9rem] font-sans font-bold text-tinta/50">de</span>
+                <span className="text-[clamp(2.2rem,7vw,3rem)]">
+                  {oferta.parcelasQtd}
+                </span>
+                <span className="font-sans text-[0.9rem] font-bold text-tinta/50">
+                  de
+                </span>
                 <span className="text-[clamp(2.6rem,10vw,4.2rem)]">
                   {oferta.parcelasValor}
                 </span>
               </p>
 
-              <p className="mt-4 border-t fio pt-4 text-[0.88rem] font-semibold text-tinta/60">
+              <p className="fio mt-4 border-t pt-4 text-[0.88rem] font-semibold text-tinta/60">
                 ou {oferta.preco} à vista
               </p>
 
@@ -96,7 +105,9 @@ export default function Oferta() {
               <span className="rotulo mt-1 block text-mar-300">dias</span>
             </p>
             <div>
-              <h3 className="display text-[1.6rem] text-areia-50">Risco zero, de verdade</h3>
+              <h3 className="display text-[1.6rem] text-areia-50">
+                Risco zero, de verdade
+              </h3>
               <p className="mt-3 max-w-[34rem] text-[0.95rem] leading-[1.68] text-areia-200/72">
                 Entre, assista tudo, leve pra areia e teste. Se em {oferta.garantiaDias}{" "}
                 dias você achar que não é pra você, manda um e-mail e eu devolvo cada

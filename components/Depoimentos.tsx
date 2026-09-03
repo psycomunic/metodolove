@@ -21,14 +21,14 @@ export default function Depoimentos() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-x-10 gap-y-10 border-t fio pt-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="fio mt-14 grid gap-x-10 gap-y-10 border-t pt-10 md:grid-cols-2 lg:grid-cols-3">
           {depoimentos.map((d, i) => (
             <Reveal key={d.nome + i} atraso={i * 60}>
-              <figure className={i > 0 ? "lg:border-l lg:fio lg:pl-10" : ""}>
+              <figure className={i > 0 ? "lg:fio lg:border-l lg:pl-10" : ""}>
                 <blockquote className="text-[1rem] leading-[1.62] text-tinta/85">
                   “{d.texto}”
                 </blockquote>
-                <figcaption className="mt-6 flex items-center gap-3.5 border-t fio pt-5">
+                <figcaption className="fio mt-6 flex items-center gap-3.5 border-t pt-5">
                   {d.foto ? (
                     <div className="h-11 w-11 shrink-0 overflow-hidden rounded-full">
                       <Foto src={d.foto} alt={d.nome} />

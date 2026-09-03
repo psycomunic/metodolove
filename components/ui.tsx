@@ -113,7 +113,7 @@ export function Botao({
       target="_blank"
       rel="noopener noreferrer"
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 rounded-full bg-sol-500 font-bold uppercase tracking-[0.07em] text-white transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 active:translate-y-0 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-mar-600 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 rounded-full bg-sol-500 font-bold tracking-[0.07em] text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-mar-600 active:translate-y-0 ${medidas} ${className}`}
     >
       <span>{children}</span>
       <svg

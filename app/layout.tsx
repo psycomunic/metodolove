@@ -97,10 +97,7 @@ const faqEstruturado = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${anton.variable} ${archivo.variable}`}
-    >
+    <html lang="pt-BR" className={`${anton.variable} ${archivo.variable}`}>
       <body>
         {children}
         <script

@@ -12,7 +12,11 @@ export default function Faixa() {
     <div className="overflow-hidden border-y border-mar-800 bg-mar-950 py-3">
       <div className="faixa-corre">
         {[0, 1].map((volta) => (
-          <div key={volta} className="flex shrink-0 items-center" aria-hidden={volta === 1}>
+          <div
+            key={volta}
+            className="flex shrink-0 items-center"
+            aria-hidden={volta === 1}
+          >
             {dizeres.map((d) => (
               <span
                 key={d}

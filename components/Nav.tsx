@@ -21,7 +21,7 @@ export default function Nav() {
           preso ? "translate-y-0" : "-translate-y-full"
         }`}
       >
-        <div className="border-b fio bg-areia-100/94 backdrop-blur-md">
+        <div className="fio border-b bg-areia-100/94 backdrop-blur-md">
           <div className="mx-auto flex max-w-[80rem] items-center justify-between gap-4 px-5 py-3 sm:px-8">
             <a href="#topo" className="display text-2xl leading-none text-tinta">
               {marca.nomeCurto}
@@ -58,7 +58,7 @@ export default function Nav() {
       >
         <div className="flex items-center justify-between gap-3">
           <div className="leading-tight">
-            <p className="text-[0.62rem] font-bold uppercase tracking-[0.16em] text-mar-300">
+            <p className="text-[0.62rem] font-bold tracking-[0.16em] text-mar-300 uppercase">
               {oferta.parcelasQtd} de {oferta.parcelasValor}
             </p>
             <p className="text-sm font-bold text-areia-100">ou {oferta.preco} à vista</p>

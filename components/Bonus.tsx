@@ -16,10 +16,10 @@ export default function Bonus() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-x-10 gap-y-8 border-t fio pt-10 md:grid-cols-3">
+        <div className="fio mt-12 grid gap-x-10 gap-y-8 border-t pt-10 md:grid-cols-3">
           {bonus.map((item, i) => (
             <Reveal key={item.titulo} atraso={i * 70}>
-              <div className={i > 0 ? "md:border-l md:fio md:pl-10" : ""}>
+              <div className={i > 0 ? "md:fio md:border-l md:pl-10" : ""}>
                 <p className="placar text-[1.4rem] text-areia-400">
                   +{String(i + 1).padStart(2, "0")}
                 </p>

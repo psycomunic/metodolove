@@ -18,10 +18,10 @@ export default function Faq() {
             </Reveal>
           </div>
 
-          <div className="border-t fio">
+          <div className="fio border-t">
             {faq.map((item, i) => (
               <Reveal key={item.p} atraso={i * 50}>
-                <details className="group border-b fio py-6">
+                <details className="group fio border-b py-6">
                   <summary className="flex items-start justify-between gap-6 text-left">
                     <h3 className="text-[1.02rem] font-bold tracking-tight text-tinta transition-colors group-hover:text-sol-600 sm:text-[1.08rem]">
                       {item.p}
