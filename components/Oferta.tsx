@@ -45,12 +45,12 @@ export default function Oferta() {
           texto="Pagamento único. Sem mensalidade, sem taxa escondida, sem renovação automática. Você entra hoje e o material é seu pelo tempo de acesso combinado."
         />
 
-        <Reveal atraso={160} className="mt-16">
-          <div className="elevado relative mx-auto max-w-[60rem] rounded-lg bg-areia-50 p-9 text-tinta sm:p-12">
+        <Reveal atraso={160} className="mt-9 sm:mt-16">
+          <div className="elevado relative mx-auto max-w-[60rem] rounded-lg bg-areia-50 p-6 text-tinta sm:p-12">
             {/* A etiqueta sai para fora do card: é ela que quebra o retângulo.
                 No celular ela volta para dentro do fluxo, porque saindo em
                 tela estreita ela encostaria na borda da janela. */}
-            <div className="mb-8 inline-block bg-sol-500 px-6 py-4 text-white sm:absolute sm:-top-8 sm:right-12 sm:mb-0 sm:px-7 sm:shadow-lg">
+            <div className="mb-7 -ml-6 w-fit bg-sol-500 py-4 pr-9 pl-6 text-white shadow-lg sm:absolute sm:-top-8 sm:right-12 sm:mb-0 sm:ml-0 sm:px-7">
               <p className="text-[0.72rem] font-semibold text-white/70">
                 De <span className="line-through">{oferta.precoCheio}</span> por
               </p>
@@ -67,7 +67,7 @@ export default function Oferta() {
               {marca.nome} completo
             </h3>
 
-            <ul className="mt-8 grid gap-x-10 gap-y-4 sm:grid-cols-2">
+            <ul className="mt-7 grid gap-x-10 gap-y-3.5 sm:mt-8 sm:grid-cols-2">
               {inclusos.map((item) => (
                 <li
                   key={item}

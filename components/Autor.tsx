@@ -7,7 +7,7 @@ export default function Autor() {
   return (
     <section
       id="charllove"
-      className="grao relative overflow-hidden bg-noite-950 py-14 text-areia-100 sm:py-20"
+      className="grao relative overflow-hidden bg-noite-950 py-11 text-areia-100 sm:py-20"
     >
       <Deriva velocidade={50} className="absolute inset-x-0 top-12">
         <LinhaDagua className="balanca h-6 w-full text-noite-600" />
@@ -42,14 +42,14 @@ export default function Autor() {
               </p>
             </Reveal>
 
-            <div className="mt-9 max-w-[38rem] space-y-5">
+            <div className="mt-7 max-w-[38rem] space-y-4 sm:mt-9 sm:space-y-5">
               {autor.paragrafos.map((p, i) => (
                 <Reveal as="p" key={i} atraso={120 + i * 70}>
                   <span
                     className={
                       i === 0
-                        ? "block text-[1.16rem] leading-[1.58] font-medium text-areia-100"
-                        : "block text-[0.99rem] leading-[1.72] text-areia-200/70"
+                        ? "block text-[1.04rem] leading-[1.5] font-medium text-areia-100 sm:text-[1.16rem] sm:leading-[1.58]"
+                        : "block text-[0.93rem] leading-[1.58] text-areia-200/72 sm:text-[0.99rem] sm:leading-[1.72]"
                     }
                   >
                     {p}
@@ -62,7 +62,7 @@ export default function Autor() {
                 só faz sentido depois de saber de onde ele veio: é a conclusão
                 da trajetória, não uma frase de efeito solta. */}
             <Reveal atraso={330}>
-              <blockquote className="mt-10 border-l-[3px] border-sol-500 pl-5">
+              <blockquote className="mt-8 border-l-[3px] border-sol-500 pl-4 sm:mt-10 sm:pl-5">
                 <p className="display text-[clamp(1.3rem,3vw,1.85rem)] text-areia-50">
                   {autor.citacao}
                 </p>

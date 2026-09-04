@@ -1,12 +1,12 @@
 import { problema } from "@/lib/content";
 import { LinhasReveal } from "./movimento";
-import { Reveal, Rotulo } from "./ui";
+import { Regua, Reveal, Rotulo } from "./ui";
 
 export default function Problema() {
   return (
-    <section className="bg-areia-100 py-14 sm:py-20">
+    <section className="bg-areia-100 py-11 sm:py-20">
       <div className="mx-auto max-w-[80rem] px-5 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
           {/* trilho à esquerda */}
           <div className="lg:sticky lg:top-28 lg:self-start">
             <Reveal>
@@ -29,23 +29,26 @@ export default function Problema() {
             </Reveal>
           </div>
 
-          {/* lista numerada — fios, não cards */}
+          {/*
+            Cada trava abre com a régua de progresso. Sem caixa, sem quadrado:
+            o número informa a posição e o fio informa quanto falta.
+          */}
           <ul>
             {problema.itens.map((item, i) => (
-              <Reveal as="li" key={item.titulo} atraso={i * 80}>
-                <div className="group fio first:fio grid grid-cols-[3rem_1fr] gap-x-5 border-b py-8 first:border-t sm:grid-cols-[4.5rem_1fr] sm:gap-x-7">
-                  <span className="placar text-[1.7rem] text-areia-400 transition-colors duration-300 group-hover:text-sol-500 sm:text-[2.3rem]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="text-[1.1rem] leading-tight font-bold tracking-tight text-tinta sm:text-[1.2rem]">
-                      {item.titulo}
-                    </h3>
-                    <p className="mt-2.5 max-w-[34rem] text-[0.95rem] leading-[1.65] text-tinta/65">
-                      {item.texto}
-                    </p>
-                  </div>
-                </div>
+              <Reveal
+                as="li"
+                key={item.titulo}
+                atraso={i * 70}
+                className="group block pt-7 first:pt-0"
+              >
+                <Regua atual={i + 1} total={problema.itens.length} />
+
+                <h3 className="display mt-3 text-[1.45rem] leading-[1.05] text-tinta sm:text-[1.95rem]">
+                  {item.titulo}
+                </h3>
+                <p className="mt-3 max-w-[34rem] pb-1 text-[0.92rem] leading-[1.55] text-tinta/75 sm:text-[0.98rem]">
+                  {item.texto}
+                </p>
               </Reveal>
             ))}
           </ul>

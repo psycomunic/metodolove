@@ -4,7 +4,7 @@ export default function Rodape() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-noite-800 bg-noite-950 px-5 pt-16 pb-28 text-areia-200/60 sm:px-8 sm:pb-16">
+    <footer className="border-t border-noite-800 bg-noite-950 px-5 pt-16 pb-36 text-areia-200/60 sm:px-8 sm:pb-16">
       <div className="mx-auto max-w-[80rem]">
         <div className="flex flex-col gap-10 border-b border-noite-800 pb-10 md:flex-row md:items-start md:justify-between">
           <div>

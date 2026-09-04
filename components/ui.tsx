@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { oferta } from "@/lib/content";
 
 /** Anima o bloco quando ele entra na viewport. */
 export function Reveal({
@@ -289,5 +290,85 @@ export function Foto({
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * Régua de progresso + fração.
+ *
+ * O fio que separa os itens deixa de ser enfeite e passa a informar: a parte
+ * marinho ocupa `atual/total` da largura, então descendo a lista a régua enche.
+ * Junto vem a fração (01/04), que diz de saída quanto falta — numa página de
+ * vendas, saber que a lista tem quatro itens e não vinte muda a decisão de
+ * continuar lendo.
+ *
+ * A animação depende de `data-visivel` que o `Reveal` põe no elemento pai, então
+ * o item precisa envolver isto num `<Reveal className="group …">`.
+ */
+export function Regua({ atual, total }: { atual: number; total: number }) {
+  const dois = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    <>
+      <div className="relative h-[3px] w-full bg-areia-300">
+        <span
+          className="absolute inset-y-0 left-0 origin-left scale-x-0 bg-noite-900 transition-transform duration-700 ease-out group-data-[visivel=true]:scale-x-100 motion-reduce:scale-x-100 motion-reduce:transition-none"
+          style={{ width: `${(atual / total) * 100}%` }}
+        />
+      </div>
+
+      <p className="placar mt-4 flex items-baseline gap-1 text-noite-900">
+        <span className="text-[1.7rem] leading-none sm:text-[2rem]">{dois(atual)}</span>
+        <span className="text-[0.95rem] leading-none text-areia-500">/{dois(total)}</span>
+      </p>
+    </>
+  );
+}
+
+/**
+ * Linha de preço.
+ *
+ * A informação de preço aparece em três lugares: sob o botão do hero no
+ * celular, sobre o banner no desktop e na barra fixa. Estava escrita três
+ * vezes, com tamanho e alinhamento diferentes em cada uma, e no celular ficava
+ * pequena e encostada na esquerda sob um botão de largura total.
+ *
+ * Agora é uma peça só. Hierarquia: "12x de" pequeno em caixa alta, o valor da
+ * parcela grande em fonte tabular de placar, e a informação de apoio depois de
+ * um fio.
+ */
+export function LinhaPreco({
+  tom = "claro",
+  cauda = "garantia",
+  className = "",
+}: {
+  /** `claro` para fundo marinho, `escuro` para o creme do banner. */
+  tom?: "claro" | "escuro";
+  cauda?: "garantia" | "avista";
+  className?: string;
+}) {
+  const apoio = tom === "claro" ? "text-bruma-300" : "text-noite-800/80";
+  const forte = tom === "claro" ? "text-areia-50" : "text-noite-900";
+  const fio = tom === "claro" ? "bg-white/20" : "bg-noite-900/25";
+
+  return (
+    <p
+      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 ${className}`}
+    >
+      <span
+        className={`text-[0.66rem] font-bold tracking-[0.14em] whitespace-nowrap uppercase ${apoio}`}
+      >
+        {oferta.parcelasQtd} de
+      </span>
+      <span className={`placar text-[1.15rem] whitespace-nowrap ${forte}`}>
+        {oferta.parcelasValor}
+      </span>
+      <span className={`h-3.5 w-px ${fio}`} aria-hidden="true" />
+      <span className={`text-[0.72rem] whitespace-nowrap ${apoio}`}>
+        {cauda === "avista"
+          ? `${oferta.preco} à vista`
+          : `${oferta.garantiaDias} dias de garantia`}
+      </span>
+    </p>
   );
 }

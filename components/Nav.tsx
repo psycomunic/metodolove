@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { marca, oferta } from "@/lib/content";
-import { Botao } from "./ui";
+import { marca } from "@/lib/content";
+import { Botao, LinhaPreco } from "./ui";
 
 export default function Nav() {
   const [preso, setPreso] = useState(false);
@@ -59,23 +59,27 @@ export default function Nav() {
         </div>
       </header>
 
-      {/* barra fixa de conversão — celular */}
+      {/*
+        Barra fixa de compra, celular.
+
+        Era preço encostado na margem esquerda e botão pequeno na direita: o
+        preço lia como sobra e o alvo de toque era metade da tela. Virou duas
+        linhas, preço centralizado em cima e botão de largura total embaixo,
+        que é o maior alvo possível no elemento mais clicado da página.
+
+        O padding de baixo respeita a safe area do iPhone, senão a barra fica
+        atrás do indicador de home.
+      */}
       <div
-        className={`fixed inset-x-0 bottom-0 z-50 border-t border-noite-800 bg-noite-950/97 px-4 py-3 backdrop-blur-md transition-transform duration-400 ease-out sm:hidden ${
+        className={`fixed inset-x-0 bottom-0 z-50 border-t border-noite-800 bg-noite-950/97 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md transition-transform duration-400 ease-out sm:hidden ${
           preso ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <div className="flex items-center justify-between gap-3">
-          <div className="leading-tight">
-            <p className="text-[0.62rem] font-bold tracking-[0.16em] text-bruma-300 uppercase">
-              {oferta.parcelasQtd} de {oferta.parcelasValor}
-            </p>
-            <p className="text-sm font-bold text-areia-100">ou {oferta.preco} à vista</p>
-          </div>
-          <Botao href={marca.checkout} tamanho="md" className="shrink-0">
-            Garantir vaga
-          </Botao>
-        </div>
+        <LinhaPreco cauda="avista" />
+
+        <Botao href={marca.checkout} tamanho="md" className="mt-2.5 w-full">
+          Garantir vaga
+        </Botao>
       </div>
     </>
   );

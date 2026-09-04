@@ -64,6 +64,14 @@ escolha. Estas cinco regras não podem ser quebradas sem refazer aquele document
 7. **Nunca use areia translúcida sobre o marinho** (`bg-areia-*/NN`) — compõe em cinza.
    Seção de leitura usa areia opaca.
 8. **Não desenhe arcos por cima do hero**: as artes `FUNDO-HERO-*.jpg` já os trazem.
+9. **Numeração é sempre a régua** (componente `Regua` em `components/ui.tsx`): fio de 3px
+   onde a parte marinho ocupa `atual/total` da largura, mais a fração `01/04` abaixo.
+   Lista numerada nova usa essa peça, não uma variação. Nada de quadrado, chapa ou
+   caixa em volta do número: o cliente reprovou essa direção em set/2026, duas vezes.
+   A animação depende do `data-visivel` que o `Reveal` põe no pai, então o item precisa
+   estar dentro de um `<Reveal className="group …">`.
+10. **Emenda entre seções é reta.** Nada de elipse, onda ou arredondamento na fronteira
+    entre o marinho e o papel. Cartaz de torneio tem corte seco.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula
