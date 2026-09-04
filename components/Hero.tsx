@@ -57,12 +57,12 @@ export default function Hero() {
       {/* ---------------- copy ---------------- */}
       <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
         <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-6 lg:gap-8">
-          <div className="max-w-[45rem]">
+          <div className="max-w-[45rem] min-w-0">
             <Reveal>
               <Rotulo tom="claro">{hero.olho}</Rotulo>
             </Reveal>
 
-            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
+            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.7rem] max-[340px]:text-[1.45rem]">
               <LinhasReveal
                 linhas={[
                   hero.linha1,
@@ -106,7 +106,7 @@ export default function Hero() {
               por toque e a varredura de apresentação mostra que existe uma
               segunda bola. */}
           <Reveal atraso={260} className="justify-self-center md:justify-self-auto">
-            <BolaTroca className="w-[11.5rem] max-[360px]:w-[10rem] md:w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
+            <BolaTroca className="w-[min(19rem,78vw)] md:w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
           </Reveal>
         </div>
       </div>
