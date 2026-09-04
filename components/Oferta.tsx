@@ -33,9 +33,9 @@ export default function Oferta() {
         </Reveal>
 
         <Reveal atraso={70}>
-          <div className="elevado mt-8 rounded-lg bg-areia-50 p-7 text-tinta sm:p-10">
+          <div className="elevado mt-10 border-t-8 border-sol-500 bg-areia-50 p-8 text-tinta sm:p-12">
             <p className="rotulo text-noite-600">Você leva</p>
-            <h2 className="display mt-2 text-[clamp(1.7rem,4.6vw,2.3rem)]">
+            <h2 className="display mt-3 text-[clamp(2rem,5vw,2.8rem)]">
               {marca.nome} completo
             </h2>
 
@@ -60,7 +60,7 @@ export default function Oferta() {
               <p className="rotulo mt-3 text-noite-600">
                 {oferta.parcelasQtd} sem juros de
               </p>
-              <p className="placar mt-1 text-[clamp(2.8rem,10vw,4rem)] text-tinta">
+              <p className="placar mt-2 text-[clamp(3.2rem,11vw,4.8rem)] tracking-tighter text-tinta">
                 {oferta.parcelasValor}
               </p>
               <p className="mt-2 text-[0.95rem] text-tinta/60">

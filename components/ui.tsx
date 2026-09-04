@@ -57,7 +57,7 @@ export function Reveal({
 export function Destaque({
   children,
   cor = "creme",
-  inclina = -1.4,
+  inclina = -0.8,
 }: {
   children: ReactNode;
   cor?: "creme" | "sol" | "noite";
@@ -114,7 +114,7 @@ export function CabecalhoSecao({
 }) {
   return (
     <header
-      className={`grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-16 ${className}`}
+      className={`grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-20 ${className}`}
     >
       <div>
         <Reveal>
@@ -190,7 +190,7 @@ export function Botao({
       target="_blank"
       rel="noopener noreferrer"
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-bold tracking-[0.08em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-extrabold tracking-[0.06em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
     >
       <span>{children}</span>
       <svg
@@ -310,7 +310,7 @@ export function Regua({ atual, total }: { atual: number; total: number }) {
 
   return (
     <>
-      <div className="relative h-[3px] w-full bg-areia-300">
+      <div className="relative h-[2px] w-full bg-areia-300">
         <span
           className="absolute inset-y-0 left-0 origin-left scale-x-0 bg-noite-900 transition-transform duration-700 ease-out group-data-[visivel=true]:scale-x-100 motion-reduce:scale-x-100 motion-reduce:transition-none"
           style={{ width: `${(atual / total) * 100}%` }}

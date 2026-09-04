@@ -16,7 +16,7 @@ export default function Metodo() {
     <section id="metodo" className="relative overflow-hidden bg-areia-100 py-11 sm:py-20">
       <span
         aria-hidden="true"
-        className="display contorno pointer-events-none absolute -top-8 -right-6 hidden text-[16rem] leading-none select-none lg:block"
+        className="display contorno pointer-events-none absolute -top-12 -right-12 hidden text-[28rem] leading-none select-none opacity-20 lg:block"
       >
         06
       </span>
@@ -25,7 +25,7 @@ export default function Metodo() {
         <CabecalhoSecao
           rotulo="O que você passa a saber fazer"
           titulo={
-            <h2 className="display mt-6 text-[clamp(1.87rem,5.46vw,3.04rem)] text-tinta">
+            <h2 className="display mt-8 text-[clamp(2.2rem,6vw,3.6rem)] leading-none tracking-tight text-tinta">
               <LinhasReveal
                 linhas={[
                   "Jogar bem e ensinar bem",
