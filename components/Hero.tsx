@@ -57,12 +57,12 @@ export default function Hero() {
       {/* ---------------- copy ---------------- */}
       <div className="mx-auto w-full max-w-[80rem] px-5 pt-10 pb-10 sm:px-8">
         <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-6 lg:gap-8">
-          <div className="max-w-[45rem]">
+          <div className="max-w-[45rem] min-w-0">
             <Reveal>
               <Rotulo tom="claro">{hero.olho}</Rotulo>
             </Reveal>
 
-            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.85rem]">
+            <h1 className="display mt-4 text-[clamp(2rem,5.2vw,3.4rem)] text-white max-[380px]:text-[1.7rem] max-[340px]:text-[1.45rem]">
               <LinhasReveal
                 linhas={[
                   hero.linha1,
@@ -97,11 +97,16 @@ export default function Hero() {
 
           {/* A bola entra a partir de md, não de lg: com o navegador em zoom,
               uma janela de 1507px cai abaixo de 1024 em pixels CSS e a bola
-              sumia sem motivo aparente. No celular ela continua fora, porque
-              empurraria o botão de compra para fora da primeira dobra e hover
-              não existe em toque. */}
-          <Reveal atraso={260} className="hidden md:block">
-            <BolaTroca className="w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
+              sumia sem motivo aparente.
+
+              No celular ela é a segunda linha da grade, ou seja, fica DEPOIS
+              do botão de compra. Acima dele empurraria o CTA para fora da
+              primeira dobra, que é o único motivo pelo qual ela estava
+              escondida antes. Hover não existe em toque, então lá a troca é
+              por toque e a varredura de apresentação mostra que existe uma
+              segunda bola. */}
+          <Reveal atraso={260} className="justify-self-center md:justify-self-auto">
+            <BolaTroca className="w-[min(19rem,78vw)] md:w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
           </Reveal>
         </div>
       </div>
