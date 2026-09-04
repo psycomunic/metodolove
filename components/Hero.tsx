@@ -97,11 +97,16 @@ export default function Hero() {
 
           {/* A bola entra a partir de md, não de lg: com o navegador em zoom,
               uma janela de 1507px cai abaixo de 1024 em pixels CSS e a bola
-              sumia sem motivo aparente. No celular ela continua fora, porque
-              empurraria o botão de compra para fora da primeira dobra e hover
-              não existe em toque. */}
-          <Reveal atraso={260} className="hidden md:block">
-            <BolaTroca className="w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
+              sumia sem motivo aparente.
+
+              No celular ela é a segunda linha da grade, ou seja, fica DEPOIS
+              do botão de compra. Acima dele empurraria o CTA para fora da
+              primeira dobra, que é o único motivo pelo qual ela estava
+              escondida antes. Hover não existe em toque, então lá a troca é
+              por toque e a varredura de apresentação mostra que existe uma
+              segunda bola. */}
+          <Reveal atraso={260} className="justify-self-center md:justify-self-auto">
+            <BolaTroca className="w-[11.5rem] max-[360px]:w-[10rem] md:w-[14rem] lg:w-[21rem] xl:w-[29rem]" />
           </Reveal>
         </div>
       </div>

@@ -51,12 +51,6 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
     const alvo = revela.current;
     if (!el || !alvo) return;
 
-    for (const v of [base.current, alvo]) {
-      if (!v) continue;
-      if (reduzido) v.pause();
-      else void v.play().catch(() => {});
-    }
-
     // Fora da tela = facho fechado. É o estado de repouso.
     const esconder = () => {
       alvo.style.webkitMaskImage = FECHADO;
@@ -77,21 +71,23 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
       const c = el.getBoundingClientRect();
       pintar(e.clientX - c.left, e.clientY - c.top);
     };
-    const sair = () => setTocado(false);
-
-    el.addEventListener("pointermove", mover);
-    el.addEventListener("pointerleave", () => {
+    const sair = () => {
       esconder();
-      sair();
-    });
+      setTocado(false);
+    };
+    el.addEventListener("pointermove", mover);
+    el.addEventListener("pointerleave", sair);
+
+    let quadro = 0;
+    let jaApresentou = false;
 
     // Varredura única na entrada: sem ela, quem nunca mexe o mouse não
-    // descobre que existe uma segunda bola.
-    let quadro = 0;
-    if (!reduzido) {
+    // descobre que existe uma segunda bola. No celular é a ÚNICA forma de
+    // descobrir, porque lá o facho não existe e a troca é por toque.
+    const apresentar = () => {
       const largura = el.offsetWidth;
       const meio = el.offsetHeight / 2;
-      const inicio = performance.now() + 900;
+      const inicio = performance.now() + 500;
       const passo = (agora: number) => {
         const t = (agora - inicio) / 1400;
         if (t < 0) {
@@ -109,11 +105,36 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
         quadro = requestAnimationFrame(passo);
       };
       quadro = requestAnimationFrame(passo);
-    }
+    };
+
+    /*
+      Os dois vídeos só tocam quando a bola está na tela.
+      No celular ela fica abaixo da primeira dobra, e sem isso o navegador
+      baixaria 700 KB de vídeo antes de a pessoa ter visto qualquer coisa.
+      Em 4G isso atrasa o hero inteiro.
+    */
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        const dentro = entrada.isIntersecting;
+        for (const v of [base.current, alvo]) {
+          if (!v) continue;
+          if (dentro && !reduzido) void v.play().catch(() => {});
+          else v.pause();
+        }
+        if (dentro && !reduzido && !jaApresentou) {
+          jaApresentou = true;
+          apresentar();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observador.observe(el);
 
     return () => {
+      observador.disconnect();
       cancelAnimationFrame(quadro);
       el.removeEventListener("pointermove", mover);
+      el.removeEventListener("pointerleave", sair);
     };
   }, [reduzido]);
 
