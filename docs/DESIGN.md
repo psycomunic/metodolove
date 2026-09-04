@@ -293,3 +293,33 @@ Ele é sobre quem NÃO deve comprar; solto no cabeçalho, boiava.
 
 A contagem de cada lado (05 / 03) aparece no canto como número de placar. Reforça o mesmo
 vocabulário sem gastar mais um acento de cor.
+
+---
+
+## Revisão set/2026 (2) — a régua substitui a placa
+
+A placa de peito resolvia o contraste e criava outro problema: quatro chapas marinho
+empilhadas leem como quadrados grudados no texto, e o cliente reprovou duas vezes. Foram
+testadas quatro direções numa página de comparação antes de decidir:
+
+| Variante                                           | Resultado                                    |
+| -------------------------------------------------- | -------------------------------------------- |
+| A: número sólido grande na linha de base do título | Funciona, mas é a correção óbvia             |
+| B: número rebaixado a rótulo, título vira o herói  | Lê muito bem, perde o vocabulário de placar  |
+| C: número vazado com o texto por cima              | Rejeitada: o contorno em areia some no papel |
+| **D: régua de progresso como separador**           | **Escolhida**                                |
+
+**A régua.** O fio que separa os itens deixa de ser enfeite e passa a informar: a parte
+marinho ocupa `atual/total` da largura, então descendo a lista ela enche, e no último item
+está cheia. Junto vem a fração `01/04`, que diz de saída quanto falta.
+
+Numa página de vendas isso não é ornamento. Saber que a lista tem quatro itens, e não
+vinte, muda a decisão de continuar lendo. O dispositivo informa e decora ao mesmo tempo,
+que é o critério para um detalhe entrar.
+
+A peça é a mesma nas duas listas. Em `Metodo` são seis frentes, então a régua enche em
+sextos e fecha em `06/06`.
+
+**Por que não tem caixa.** Sem chapa, sem borda e sem quadrado, o número volta a ser
+tipografia e o título vira o objeto mais pesado do item, que é o certo: quem escaneia a
+página lê os títulos, não os números.

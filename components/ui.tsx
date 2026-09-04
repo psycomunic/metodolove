@@ -291,3 +291,35 @@ export function Foto({
     </div>
   );
 }
+
+/**
+ * Régua de progresso + fração.
+ *
+ * O fio que separa os itens deixa de ser enfeite e passa a informar: a parte
+ * marinho ocupa `atual/total` da largura, então descendo a lista a régua enche.
+ * Junto vem a fração (01/04), que diz de saída quanto falta — numa página de
+ * vendas, saber que a lista tem quatro itens e não vinte muda a decisão de
+ * continuar lendo.
+ *
+ * A animação depende de `data-visivel` que o `Reveal` põe no elemento pai, então
+ * o item precisa envolver isto num `<Reveal className="group …">`.
+ */
+export function Regua({ atual, total }: { atual: number; total: number }) {
+  const dois = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    <>
+      <div className="relative h-[3px] w-full bg-areia-300">
+        <span
+          className="absolute inset-y-0 left-0 origin-left scale-x-0 bg-noite-900 transition-transform duration-700 ease-out group-data-[visivel=true]:scale-x-100 motion-reduce:scale-x-100 motion-reduce:transition-none"
+          style={{ width: `${(atual / total) * 100}%` }}
+        />
+      </div>
+
+      <p className="placar mt-4 flex items-baseline gap-1 text-noite-900">
+        <span className="text-[1.7rem] leading-none sm:text-[2rem]">{dois(atual)}</span>
+        <span className="text-[0.95rem] leading-none text-areia-500">/{dois(total)}</span>
+      </p>
+    </>
+  );
+}
