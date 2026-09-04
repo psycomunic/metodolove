@@ -1,6 +1,6 @@
 import { hero, marca, oferta } from "@/lib/content";
 import BolaTroca from "./BolaTroca";
-import { Botao, Destaque, Reveal, Rotulo } from "./ui";
+import { Botao, Destaque, LinhaPreco, Reveal, Rotulo } from "./ui";
 import { LinhasReveal } from "./movimento";
 
 /**
@@ -49,15 +49,7 @@ export default function Hero() {
             >
               {hero.cta}
             </Botao>
-            <p className="text-center text-[0.82rem] leading-snug text-noite-900">
-              <span className="font-bold">
-                {oferta.parcelasQtd} de {oferta.parcelasValor}
-              </span>
-              <span className="opacity-70">
-                {" "}
-                · {oferta.garantiaDias} dias de garantia
-              </span>
-            </p>
+            <LinhaPreco tom="escuro" />
           </div>
         </div>
       </div>
@@ -91,17 +83,14 @@ export default function Hero() {
             {/* No desktop o botão já está sobre o banner; aqui ele só existe
                 abaixo de lg, onde a sobreposição não cabe. */}
             <Reveal atraso={200}>
-              <div className="mt-7 flex flex-col items-start gap-4 sm:flex-row sm:items-center md:hidden">
+              {/* Botão de largura total no celular, preço centralizado logo
+                  abaixo. Antes o preço ficava encostado na esquerda sob um
+                  botão que ocupava a linha inteira, e lia como desalinhado. */}
+              <div className="mt-7 flex flex-col items-stretch gap-3.5 sm:items-center md:hidden">
                 <Botao href={marca.checkout} className="w-full sm:w-auto">
                   {hero.cta}
                 </Botao>
-                <p className="text-[0.8rem] leading-snug text-bruma-200">
-                  <span className="font-bold text-white">
-                    {oferta.parcelasQtd} de {oferta.parcelasValor}
-                  </span>
-                  <br />
-                  {oferta.garantiaDias} dias de garantia
-                </p>
+                <LinhaPreco />
               </div>
             </Reveal>
           </div>

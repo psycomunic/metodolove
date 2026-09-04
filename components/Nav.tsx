@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { marca, oferta } from "@/lib/content";
-import { Botao } from "./ui";
+import { marca } from "@/lib/content";
+import { Botao, LinhaPreco } from "./ui";
 
 export default function Nav() {
   const [preso, setPreso] = useState(false);
@@ -75,16 +75,7 @@ export default function Nav() {
           preso ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        <p className="flex items-center justify-center gap-2.5">
-          <span className="text-[0.66rem] font-bold tracking-[0.14em] text-bruma-300 uppercase">
-            {oferta.parcelasQtd} de
-          </span>
-          <span className="placar text-[1.15rem] text-areia-50">
-            {oferta.parcelasValor}
-          </span>
-          <span className="h-3.5 w-px bg-white/20" />
-          <span className="text-[0.72rem] text-bruma-300">{oferta.preco} à vista</span>
-        </p>
+        <LinhaPreco cauda="avista" />
 
         <Botao href={marca.checkout} tamanho="md" className="mt-2.5 w-full">
           Garantir vaga

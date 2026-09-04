@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { oferta } from "@/lib/content";
 
 /** Anima o bloco quando ele entra na viewport. */
 export function Reveal({
@@ -321,5 +322,49 @@ export function Regua({ atual, total }: { atual: number; total: number }) {
         <span className="text-[0.95rem] leading-none text-areia-500">/{dois(total)}</span>
       </p>
     </>
+  );
+}
+
+/**
+ * Linha de preço.
+ *
+ * A informação de preço aparece em três lugares: sob o botão do hero no
+ * celular, sobre o banner no desktop e na barra fixa. Estava escrita três
+ * vezes, com tamanho e alinhamento diferentes em cada uma, e no celular ficava
+ * pequena e encostada na esquerda sob um botão de largura total.
+ *
+ * Agora é uma peça só. Hierarquia: "12x de" pequeno em caixa alta, o valor da
+ * parcela grande em fonte tabular de placar, e a informação de apoio depois de
+ * um fio.
+ */
+export function LinhaPreco({
+  tom = "claro",
+  cauda = "garantia",
+  className = "",
+}: {
+  /** `claro` para fundo marinho, `escuro` para o creme do banner. */
+  tom?: "claro" | "escuro";
+  cauda?: "garantia" | "avista";
+  className?: string;
+}) {
+  const apoio = tom === "claro" ? "text-bruma-300" : "text-noite-800/80";
+  const forte = tom === "claro" ? "text-areia-50" : "text-noite-900";
+  const fio = tom === "claro" ? "bg-white/20" : "bg-noite-900/25";
+
+  return (
+    <p
+      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 ${className}`}
+    >
+      <span className={`text-[0.66rem] font-bold tracking-[0.14em] uppercase ${apoio}`}>
+        {oferta.parcelasQtd} de
+      </span>
+      <span className={`placar text-[1.15rem] ${forte}`}>{oferta.parcelasValor}</span>
+      <span className={`h-3.5 w-px ${fio}`} aria-hidden="true" />
+      <span className={`text-[0.72rem] ${apoio}`}>
+        {cauda === "avista"
+          ? `${oferta.preco} à vista`
+          : `${oferta.garantiaDias} dias de garantia`}
+      </span>
+    </p>
   );
 }
