@@ -355,12 +355,16 @@ export function LinhaPreco({
     <p
       className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 ${className}`}
     >
-      <span className={`text-[0.66rem] font-bold tracking-[0.14em] uppercase ${apoio}`}>
+      <span
+        className={`text-[0.66rem] font-bold tracking-[0.14em] whitespace-nowrap uppercase ${apoio}`}
+      >
         {oferta.parcelasQtd} de
       </span>
-      <span className={`placar text-[1.15rem] ${forte}`}>{oferta.parcelasValor}</span>
+      <span className={`placar text-[1.15rem] whitespace-nowrap ${forte}`}>
+        {oferta.parcelasValor}
+      </span>
       <span className={`h-3.5 w-px ${fio}`} aria-hidden="true" />
-      <span className={`text-[0.72rem] ${apoio}`}>
+      <span className={`text-[0.72rem] whitespace-nowrap ${apoio}`}>
         {cauda === "avista"
           ? `${oferta.preco} à vista`
           : `${oferta.garantiaDias} dias de garantia`}
