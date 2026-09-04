@@ -312,18 +312,36 @@ export const inclusos = [
 /* ------------------------------------------------------------------ */
 /*  FAQ                                                                */
 /* ------------------------------------------------------------------ */
+/**
+ * As seis dúvidas que travam a compra.
+ *
+ * As anteriores eram todas de JOGADOR: "nunca joguei, serve pra mim?", "já
+ * jogo há anos, vai ser básico demais?", "preciso de quadra e dupla pra
+ * treinar?". Nenhuma é a dúvida de quem vai pagar por uma formação de
+ * professor, e FAQ que responde a pergunta errada não derruba objeção
+ * nenhuma: só ocupa espaço antes do botão.
+ *
+ * Regra desta lista: nada de promessa de resultado, renda ou retorno. A
+ * pergunta sobre ganhar dinheiro é a mais provável de todas e a mais
+ * perigosa; a resposta diz o que o curso ENSINA, nunca o que a pessoa vai
+ * faturar.
+ */
 export const faq = [
   {
-    p: "Nunca joguei futevôlei. Serve pra mim?",
-    r: "Serve. O método começa no fundamento, antes de qualquer jogada bonita. Quem chega do zero aprende na ordem certa e sai na frente de quem passou anos aprendendo torto.",
+    p: "Ainda não dou aula. Faz sentido para mim?",
+    r: "Faz, e é onde ele mais economiza tempo. O método começa na postura de professor e na estrutura da aula, que é justamente o que ninguém ensina a quem vem da quadra. Você começa com método em vez de descobrir na tentativa e erro.",
   },
   {
-    p: "Já jogo há anos. Não vai ser básico demais?",
-    r: "Os primeiros módulos refazem a base no detalhe, e é aí que jogador experiente costuma achar o erro que trava a evolução dele. Depois disso o conteúdo vai pra leitura de jogo, preparo específico e a parte profissional.",
+    p: "Já dou aula há anos. Não vai ser básico demais?",
+    r: "O conteúdo não é sobre fundamento de futevôlei, é sobre ensinar. Planejamento de uma sequência de aulas, turma desnivelada, vínculo com o aluno e o lado profissional. São as partes que quem já dá aula costuma resolver no improviso.",
   },
   {
-    p: "Preciso de quadra e dupla pra treinar?",
-    r: "A maior parte dos treinos é individual e cabe em qualquer quadra de areia. Onde a dupla é necessária, o exercício vem com alternativa pra quem treina sozinho.",
+    p: "Preciso ter turma montada para começar?",
+    r: "Não. O material funciona tanto para quem já tem alunos quanto para quem ainda vai dar a primeira aula. O que muda é a ordem em que você aplica.",
+  },
+  {
+    p: "Isso me garante ganhar dinheiro dando aula?",
+    r: "Não, e desconfie de quem prometer isso. O que está aqui é o método: como conduzir a aula, como se posicionar, como estruturar e precificar o seu serviço. O resultado depende de você aplicar, da sua região e da sua dedicação.",
   },
   {
     p: "Como funciona o acesso?",
@@ -331,11 +349,7 @@ export const faq = [
   },
   {
     p: "E se eu não gostar?",
-    r: `Você tem ${oferta.garantiaDias} dias pra pedir reembolso total. Um e-mail basta, sem justificativa. O risco é meu.`,
-  },
-  {
-    p: "Em quanto tempo eu vejo diferença?",
-    r: "Depende de quantas vezes por semana você pisa na areia e de quanto aplica. O que o método garante é direção: você para de treinar no escuro. Resultado vem de treino aplicado, não de vídeo assistido.",
+    r: `Você tem ${oferta.garantiaDias} dias para pedir reembolso total. Um e-mail basta, sem justificativa. O risco é meu.`,
   },
 ];
 
