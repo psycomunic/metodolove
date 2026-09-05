@@ -1,5 +1,6 @@
 import { mercado } from "@/lib/content";
 import { Contador, Reveal } from "./movimento";
+import FutevoleiBall from "./rio/FutevoleiBall";
 import { Manchete, Olho } from "./ui";
 
 /**
@@ -16,7 +17,10 @@ export default function Mercado() {
       id="mercado"
       className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
-      <div className="mx-auto max-w-[80rem]">
+      <div className="relative mx-auto max-w-[80rem]">
+        {/* A bola boia ao lado da manchete, só onde há coluna sobrando. */}
+        <FutevoleiBall className="pointer-events-none absolute top-0 right-0 hidden h-40 w-40 text-ink lg:block" />
+
         <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
             <Olho>{mercado.olho}</Olho>
@@ -27,6 +31,13 @@ export default function Mercado() {
             flui
             className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
           />
+          {/* Onde o esporte nasceu, na mesma areia. É a linha que amarra o
+              dado de mercado ao lugar. */}
+          <Reveal atraso={100}>
+            <p className="mono mt-6 text-[0.8125rem] leading-[1.8] text-fraco sm:mt-7 sm:text-[0.66rem]">
+              {mercado.origem}
+            </p>
+          </Reveal>
         </header>
 
         <dl className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">

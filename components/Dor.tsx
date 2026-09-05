@@ -1,5 +1,6 @@
 import { dor } from "@/lib/content";
 import { Reveal } from "./movimento";
+import RedeFutevolei from "./rio/RedeFutevolei";
 import { CardSpot, Manchete, Olho } from "./ui";
 
 /**
@@ -21,8 +22,16 @@ export default function Dor() {
   return (
     <section
       id="dor"
-      className="border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
+      {/* A quadra fica atrás da seção que fala da aula que desanda. Textura,
+          não ilustração: 8% e recortada pela direita. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 right-[-10%] -z-10 hidden h-[28rem] w-[34rem] -translate-y-1/2 text-ink lg:block"
+      >
+        <RedeFutevolei />
+      </div>
       <div className="mx-auto grid max-w-[80rem] gap-10 sm:gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-start lg:gap-20">
         <header className="text-center sm:text-left lg:sticky lg:top-28 lg:self-start">
           <Reveal>

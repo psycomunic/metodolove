@@ -1,5 +1,7 @@
 import { hero, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
+import GaivotasLoop from "./rio/GaivotasLoop";
+import RioSkyline from "./rio/RioSkyline";
 import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
 
 /**
@@ -17,6 +19,11 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
  *
  * A altura desconta a barra de urgência e a pílula da nav, que estão no fluxo
  * acima: 100svh cheios empurrariam o CTA para fora da primeira dobra.
+ *
+ * O RIO. O horizonte fica na BASE da seção, atrás de tudo, e o sol se pondo é
+ * um disco de azul-claro logo acima da linha dos morros. Gaivotas cruzam o céu
+ * em quase um minuto. Nada disso pode competir com a manchete: se o olho for
+ * para o horizonte antes de ir para o título, está forte demais.
  */
 export default function Hero() {
   return (
@@ -37,7 +44,27 @@ export default function Hero() {
             filter: "blur(140px)",
           }}
         />
+        {/* Sol se pondo, logo acima da linha dos morros. Disco baixo e largo:
+            sol alto no céu leria como mais um blob de gradiente. */}
+        <div
+          className="absolute bottom-[6rem] left-1/2 h-[16rem] w-[26rem] -translate-x-1/2 rounded-full opacity-[0.1] sm:bottom-[9rem] sm:h-[24rem] sm:w-[42rem]"
+          style={{
+            background: "radial-gradient(circle, #4FA3FF 0%, transparent 68%)",
+            filter: "blur(60px)",
+          }}
+        />
       </div>
+
+      {/* Gaivotas: três, em alturas e ritmos diferentes, para nunca lerem como
+          uma fila. */}
+      <GaivotasLoop className="-z-10 text-ink" />
+
+      {/* Horizonte, colado na base da seção. */}
+      {/* Acima da foto (-z-5 contra -z-10), e não atrás dela: atrás, a metade
+          direita da orla ficava escondida e o Corcovado era cortado ao meio
+          pela borda da imagem. À frente, o horizonte cruza justamente o terço
+          de baixo da foto, que já está desbotado no navy. */}
+      <RioSkyline className="absolute inset-x-0 bottom-0 -z-[5]" />
 
       {/* ---------- foto, celular ----------
           Faixa de 52vh no topo, cor real, fundindo no navy pela base.

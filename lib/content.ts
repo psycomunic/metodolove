@@ -32,6 +32,9 @@ export const marca = {
   razaoSocial: "CHARLLOVE TREINAMENTOS LTDA", // >>> AJUSTAR
   dominio: "metodollove.com.br", // >>> AJUSTAR
   resumo: "Formação para professores de futevôlei: da postura à profissão.",
+  // Assinatura de origem, no rodapé. O curso é do Rio e a página inteira diz
+  // isso; aqui ela assina, como estúdio assina projeto.
+  coordenadas: "Rio de Janeiro · 22°58'S 43°11'W",
 };
 
 export const oferta = {
@@ -59,7 +62,7 @@ export const urgencia =
 /*  HERO                                                               */
 /* ------------------------------------------------------------------ */
 export const hero = {
-  olho: "Formação para professores de futevôlei · 6 módulos + bônus",
+  olho: "Rio de Janeiro · Formação para professores de futevôlei",
   selo: "Turma aberta",
   /**
    * Manchete, opção A (no ar).
@@ -93,8 +96,10 @@ export const hero = {
 /* ------------------------------------------------------------------ */
 export const pilares = [
   "fundamento antes de firula",
+  "nascido no rio",
   "areia todo dia",
   "leitura de jogo",
+  "copacabana 1965",
   "do racha ao circuito",
   "paixão vira profissão",
 ];
@@ -180,6 +185,8 @@ export const mercado = {
   ],
   texto:
     "Todo mês abre arena nova, e toda arena precisa de professor. Mas arena não quer “o cara que joga bem”. Arena quer quem segura turma, fideliza aluno e cuida do próprio nome. É isso que o Método LLOVE forma.",
+  origem:
+    "O futevôlei nasceu em Copacabana, em 1965. O método nasceu na mesma areia.",
 };
 
 /* ------------------------------------------------------------------ */
@@ -293,7 +300,7 @@ export const modulos = {
  * mais do que a força da frase.
  */
 export const autor = {
-  olho: "Quem ensina",
+  olho: "Da areia do Rio para o Brasil",
   linhas: ["Quem te leva"],
   linhaDestaque: "até lá",
   nome: "Charllove",

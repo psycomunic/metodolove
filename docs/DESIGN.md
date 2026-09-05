@@ -198,6 +198,97 @@ linhas por manchete e piso de corpo de fonte.
 
 ---
 
+## Rio de Janeiro
+
+O professor é do Rio e o esporte nasceu em Copacabana. A cidade aparece na
+página inteira, sempre no mesmo registro: **navy sobre navy, contorno em
+branco translúcido, movimento lento demais para chamar atenção sozinho**. Se
+um elemento do Rio disputar o olho com a manchete ou com o botão, ele está
+forte demais e a página perde, não ganha.
+
+Tudo em SVG desenhado no código, em `components/rio/`. Nenhum raster, nenhum
+ícone de biblioteca, nenhum emoji.
+
+| Peça               | Onde                                                    |
+| ------------------ | ------------------------------------------------------- |
+| `RioSkyline`       | base do hero (dia) e do CTA final (noite)               |
+| `GaivotasLoop`     | céu do hero                                             |
+| `RedeFutevolei`    | fundo da seção Dor, à direita                           |
+| `FutevoleiBall`    | ao lado da manchete de Mercado                          |
+| `CalcadaoWaves`    | divisores de Mecanismo, Oferta e rodapé; textura da bio |
+| `CristoSilhouette` | atrás do texto da bio                                   |
+| `PaoDeAcucar`      | canto do card de bônus, com o bondinho                  |
+| `Monograma`        | rodapé (e `app/icon.svg` no favicon)                    |
+
+### O que faz a silhueta ler como Rio
+
+Os morros do Rio são domos de granito: **altos para a base que têm**. A
+primeira versão do `RioSkyline` espalhou cada morro por 200 a 300 unidades de
+largura e o resultado foi uma serra genérica de papel de parede. A inclinação
+entrega a cidade mais do que o contorno.
+
+Depois disso, três detalhes carregam o reconhecimento e não podem sumir:
+
+1. **O topo achatado da Pedra da Gávea**, com a face de pedra quase vertical
+   do lado do mar.
+2. **Os dois picos do Dois Irmãos**, colados, o da esquerda bem mais alto e
+   mais pontiagudo.
+3. **O cabo do bondinho** ligando o cume da Urca ao do Pão de Açúcar. Sem ele,
+   os dois morros da direita são só dois montes.
+
+O Cristo tem 30 m num morro de 710 m, ou 4% da altura (5,4% com o pedestal).
+No desenho ele tem 6,5%: um fio acima do real, porque abaixo disso some no
+traço, e ainda muito longe do bonequinho de ilustração de agência.
+
+### Três camadas, e a de trás é a mais clara
+
+Sobre fundo escuro a perspectiva atmosférica **inverte**: o que está longe
+recebe bruma e clareia. Escurecer a camada distante para "afastar" faz ela
+sumir no fundo. Serra distante `#16294A` a 32%, cartões-postais `#0E1F3A` a
+68%, mar e areia por último.
+
+### Enquadramento, que muda de eixo com a tela
+
+`xMidYMax slice` corta o excedente, e o eixo do corte depende da razão da
+tela:
+
+- **Desktop** (mais achatado que o viewBox): corta EM CIMA. Por isso nenhum
+  cume passa de y=42 e o Cristo tem folga acima.
+- **Celular**: corta NAS LATERAIS. Em 360px sobra a faixa de x=350 a x=1250,
+  e é por isso que a composição inteira vive entre x=300 e x=1300 em vez de
+  espalhada nos 1600 do viewBox.
+
+### Movimento
+
+Só `transform` e `opacity`, `will-change: transform`, e tudo desligado em
+`prefers-reduced-motion`.
+
+- **Parallax** (`useParallax`): scroll mais mouse, uma escuta para as três
+  camadas, transformação escrita direto no nó. O deslocamento é sempre PARA
+  BAIXO: a camada que desce enquanto a página sobe é o que lê como
+  profundidade, e subir empurraria o desenho para fora do topo do contêiner,
+  que é recortado, decapitando o cume mais alto. No celular tudo entra pela
+  metade.
+- **Bondinho**: os passos saem da própria curva quadrática do cabo, amostrada
+  em t = 0, ¼, ½, ¾ e 1. Mexeu no cabo, refaça a conta em `@keyframes
+bondinho`. O `translate` inicial fica num grupo POR FORA do animado:
+  `transform` de CSS sobrepõe o atributo `transform` do SVG, e com os dois no
+  mesmo nó o carrinho salta para a origem do viewBox.
+- **Ondas do calçadão**: oito ladrilhos numa fila e translação de -50%, que
+  equivale a quatro ladrilhos idênticos. A emenda nunca aparece.
+- **Bola**: o pai boia e o filho gira. Compor rotação e translação no mesmo nó
+  faz a bola parecer presa a um fio em vez de boiar.
+- **Luzes da orla**: posições e ritmos escritos à mão. `Math.random` daria
+  valores diferentes no servidor e no cliente e quebraria a hidratação.
+
+### Cor
+
+Só navy, azul-noite e branco de baixa opacidade. O azul `--accent` entra
+apenas como brilho fino de contraluz na crista dos morros. **Verde não existe
+em nenhuma peça do Rio**: verde é do botão de compra e de mais nada.
+
+---
+
 ## Por que a direção mudou
 
 A direção anterior ("cartaz de torneio") tinha três problemas que o redesign resolve:

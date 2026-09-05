@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Marca sem texto: a curva contínua do Morro da Urca subindo para o cume
+       do Pão de Açúcar, que é o mesmo traço que assina o monograma no rodapé.
+       Sem tipografia de propósito: favicon não tem fonte carregada. -->
+  <rect width="64" height="64" rx="14" fill="#06111F"/>
+  <path d="M6,48 L14,48 C20,48 25,44 30,38 C34,33 38,30 42,31
+           C46,32 49,36 51,41
+           C53,35 55,27 60,22"
+        fill="none" stroke="#E8EEF5" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Ponto azul, nao verde: verde na marca e so o botao de compra. -->
+  <circle cx="46" cy="17" r="3.4" fill="#4FA3FF"/>
+</svg>

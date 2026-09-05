@@ -1,5 +1,6 @@
 import { modulos } from "@/lib/content";
 import { Reveal } from "./movimento";
+import PaoDeAcucar from "./rio/PaoDeAcucar";
 import { CardSpot, Manchete, Olho } from "./ui";
 
 /**
@@ -71,13 +72,18 @@ export default function Modulos() {
                   filter: "blur(70px)",
                 }}
               />
-              <p className="mono text-[0.8125rem] text-accent sm:text-[0.66rem]">
+              {/* O bondinho sobe no canto do card de bônus. Networking é
+                  justamente sobre chegar do outro lado; o desenho diz isso sem
+                  precisar de metáfora escrita. */}
+              <PaoDeAcucar className="pointer-events-none absolute right-4 bottom-0 h-32 w-44 text-ink sm:h-40 sm:w-56" />
+
+              <p className="mono relative text-[0.8125rem] text-accent sm:text-[0.66rem]">
                 {modulos.bonus.n}
               </p>
-              <h3 className="display mt-3 text-[1.65rem] text-ink sm:mt-4 sm:text-[2.1rem]">
+              <h3 className="display relative mt-3 text-[1.65rem] text-ink sm:mt-4 sm:text-[2.1rem]">
                 {modulos.bonus.titulo}
               </h3>
-              <p className="mt-3 max-w-[42rem] text-[1rem] leading-[1.6] text-mute">
+              <p className="relative mt-3 max-w-[42rem] text-[1rem] leading-[1.6] text-mute">
                 {modulos.bonus.texto}
               </p>
             </div>

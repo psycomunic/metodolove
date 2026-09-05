@@ -1,5 +1,6 @@
 import { ctaFinal, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
+import RioSkyline from "./rio/RioSkyline";
 import { Botao, Manchete } from "./ui";
 
 /**
@@ -8,10 +9,15 @@ import { Botao, Manchete } from "./ui";
  * Full bleed, aurora forte e manchete no maior corpo da página inteira. É a
  * última coisa que a pessoa lê, e o botão embaixo dela é o único elemento
  * verde da tela: não há mais nada abaixo competindo com ele.
+ *
+ * O horizonte volta aqui, agora de NOITE: luzes acesas na orla, cada uma no
+ * próprio ritmo, e o reflexo dos morros na água. A página abre com o Rio de
+ * fim de tarde e fecha com o Rio à noite, o que dá a ela um começo e um fim
+ * no mesmo lugar.
  */
 export default function CtaFinal() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-line px-5 py-20 sm:px-8 sm:py-32 lg:py-40">
+    <section className="relative isolate overflow-hidden border-t border-line px-5 pt-20 pb-40 sm:px-8 sm:pt-32 sm:pb-56 lg:pt-40 lg:pb-64">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute bottom-[-30%] left-1/2 h-[26rem] w-[30rem] -translate-x-1/2 rounded-full opacity-[0.2] sm:h-[44rem] sm:w-[68rem]"
@@ -28,6 +34,8 @@ export default function CtaFinal() {
           }}
         />
       </div>
+
+      <RioSkyline noturno className="absolute inset-x-0 bottom-0 -z-10" />
 
       <div className="mx-auto max-w-[54rem] text-center">
         <Manchete

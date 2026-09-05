@@ -1,5 +1,6 @@
 import { investimento, marca, oferta } from "@/lib/content";
 import { Reveal } from "./movimento";
+import CalcadaoWaves from "./rio/CalcadaoWaves";
 import { Botao, Check, Escudo, Olho } from "./ui";
 
 /**
@@ -27,6 +28,10 @@ export default function Oferta() {
           filter: "blur(140px)",
         }}
       />
+
+      {/* Só o fio de calçadão no topo. Aqui nada pode disputar o olho com o
+          preço e com o botão. */}
+      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" opacidade={0.05} />
 
       <div className="mx-auto max-w-[42rem]">
         <Reveal className="text-center">

@@ -33,6 +33,8 @@ Antes de dar qualquer tarefa por concluída: `npm run lint && npm run typecheck 
 | Uma seção específica                    | `components/<NomeDaSeção>.tsx`  |
 | Reveal, contador, ímã, spotlight        | `components/movimento.tsx`      |
 | Botão, olho, manchete, foto, check      | `components/ui.tsx`             |
+| Qualquer desenho do Rio                 | `components/rio/`               |
+| Parallax das camadas do Rio             | `components/rio/parallax.ts`    |
 | Foto do Charllove no hero               | `public/HERO-DESKTOP.jpg`       |
 | Colagem do percurso dele                | `public/colagem-charllove.png`  |
 
@@ -78,6 +80,12 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
 11. **Celular fecha em 360px**, não em 390. Toda manchete usa `umaLinha`
     (curta, cabe em uma linha) ou `flui` (longa, corre natural em até três
     linhas). Corpo com piso de 16px, label mono com piso de 13px.
+
+12. **O Rio é textura, não ilustração.** Toda peça de `components/rio/` é
+    navy sobre navy com contorno em branco translúcido, e movimento lento
+    demais para alguém ver acontecer. Se um desenho da cidade disputar o
+    olho com a manchete ou com o botão, ele está forte demais. Verde não
+    entra em nenhum deles.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula

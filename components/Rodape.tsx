@@ -1,4 +1,6 @@
 import { marca, menu } from "@/lib/content";
+import CalcadaoWaves from "./rio/CalcadaoWaves";
+import Monograma from "./rio/Monograma";
 
 /**
  * Rodapé.
@@ -9,25 +11,26 @@ import { marca, menu } from "@/lib/content";
  *
  * O padding de baixo é maior no celular por causa da barra fixa de compra,
  * que cobriria a última linha.
+ *
+ * O monograma e as coordenadas fecham a página como estúdio assina projeto:
+ * discreto, no pé, e sem explicar. Quem é do Rio reconhece a latitude.
  */
 export default function Rodape() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
+    <footer className="relative border-t border-line bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
+      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" opacidade={0.06} />
+
       <div className="mx-auto max-w-[80rem]">
         <div className="flex flex-col gap-8 border-b border-line pb-9 sm:gap-10 sm:pb-10 md:flex-row md:items-start md:justify-between">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-llove.png"
-              alt={marca.nome}
-              width={360}
-              height={64}
-              className="mx-auto h-9 w-auto sm:mx-0"
-            />
+            <Monograma className="mx-auto h-14 w-auto text-ink sm:mx-0" />
             <p className="mx-auto mt-4 max-w-[24rem] text-[1rem] leading-relaxed text-mute sm:text-[0.9rem]">
               {marca.resumo}
+            </p>
+            <p className="mono mt-4 text-[0.75rem] text-fraco sm:text-[0.62rem]">
+              {marca.coordenadas}
             </p>
           </div>
 

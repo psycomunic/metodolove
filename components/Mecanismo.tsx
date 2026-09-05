@@ -1,5 +1,6 @@
 import { mecanismo } from "@/lib/content";
 import { Reveal } from "./movimento";
+import CalcadaoWaves from "./rio/CalcadaoWaves";
 import { CardSpot, Manchete, Olho } from "./ui";
 
 /**
@@ -14,8 +15,11 @@ export default function Mecanismo() {
   return (
     <section
       id="metodo"
-      className="border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
+      {/* Calçadão como divisor, em cima e embaixo. As ondas correm devagar
+          demais para alguém ver acontecer, e é essa a intenção. */}
+      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" />
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[48rem] sm:text-left">
           <Reveal>
@@ -61,6 +65,8 @@ export default function Mecanismo() {
           </p>
         </Reveal>
       </div>
+
+      <CalcadaoWaves className="absolute inset-x-0 bottom-0 text-ink" />
     </section>
   );
 }

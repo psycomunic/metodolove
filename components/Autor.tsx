@@ -1,5 +1,10 @@
+"use client";
+
 import { autor, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
+import CalcadaoWaves from "./rio/CalcadaoWaves";
+import CristoSilhouette from "./rio/CristoSilhouette";
+import { useParallax } from "./rio/parallax";
 import { Foto, Manchete, Olho } from "./ui";
 
 /**
@@ -11,13 +16,32 @@ import { Foto, Manchete, Olho } from "./ui";
  *
  * A citação é a tese do produto em uma linha e por isso vem em display, não
  * em itálico de blockquote.
+ *
+ * O RIO. O Cristo fica atrás do texto, à direita, a 15%, e desce devagar
+ * enquanto a seção passa. Ele é grande de propósito: aqui a página fala de
+ * quem é o professor e de onde ele vem, e é a única seção em que um símbolo
+ * da cidade pode ocupar área. O calçadão corre por baixo de tudo, a 5%.
  */
 export default function Autor() {
+  const { raiz, coleta } = useParallax([44]);
+
   return (
     <section
       id="charllove"
-      className="border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      ref={raiz}
+      className="relative isolate overflow-hidden border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
+      <CalcadaoWaves
+        className="absolute inset-x-0 top-1/3 -z-20 text-ink"
+        opacidade={0.05}
+      />
+      <div
+        ref={coleta(0)}
+        aria-hidden="true"
+        className="pointer-events-none absolute top-4 right-[-8%] -z-10 h-[22rem] w-[18rem] text-ink sm:h-[30rem] sm:w-[24rem] lg:right-[-6%] lg:h-[36rem] lg:w-[28rem]"
+      >
+        <CristoSilhouette opacidade={0.11} />
+      </div>
       <div className="mx-auto grid max-w-[80rem] gap-9 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-20">
         <Reveal className="lg:sticky lg:top-28">
           <div className="mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden rounded-2xl border border-line lg:max-w-none">

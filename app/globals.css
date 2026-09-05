@@ -368,3 +368,129 @@ details > summary::-webkit-details-marker {
 details[open] .cruz {
   transform: rotate(135deg);
 }
+
+/* ============================================================
+   Rio de Janeiro
+   ------------------------------------------------------------
+   O lugar aparece a página inteira, e sempre no mesmo registro:
+   navy sobre navy, contorno em branco translúcido, movimento
+   lento demais para chamar atenção sozinho. Se um elemento do
+   Rio disputar o olho com a manchete ou com o botão, ele está
+   forte demais.
+
+   Toda animação daqui é só transform ou opacity, e toda uma
+   desliga em prefers-reduced-motion.
+   ============================================================ */
+
+@layer components {
+  /* Ondas do calçadão: duas cópias lado a lado e uma translação de -50%,
+     mesmo truque do marquee. A emenda cai fora da tela. */
+  @keyframes ondas {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  .ondas-correm {
+    display: flex;
+    width: max-content;
+    animation: ondas 60s linear infinite;
+    will-change: transform;
+  }
+
+  /* Bondinho subindo do Morro da Urca para o Pão de Açúcar. Os passos saem
+     da curva quadrática do cabo, amostrada em t = 0, ¼, ½, ¾ e 1: o carrinho
+     acompanha a barriga do cabo em vez de cortar reto. Vai e volta. */
+  @keyframes bondinho {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    25% {
+      transform: translate3d(33.5px, -13.31px, 0);
+    }
+    50% {
+      transform: translate3d(67px, -30.25px, 0);
+    }
+    75% {
+      transform: translate3d(100.5px, -50.81px, 0);
+    }
+    100% {
+      transform: translate3d(134px, -75px, 0);
+    }
+  }
+  .bondinho {
+    animation: bondinho 25s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  /* Bola: gira devagar dentro de um pai que flutua. Separar os dois eixos
+     evita compor rotação com translação no mesmo elemento, que faz a bola
+     parecer que balança em vez de boiar. */
+  @keyframes boia {
+    0%,
+    100% {
+      transform: translate3d(0, -8px, 0);
+    }
+    50% {
+      transform: translate3d(0, 8px, 0);
+    }
+  }
+  @keyframes gira {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .boia {
+    animation: boia 6s ease-in-out infinite;
+    will-change: transform;
+  }
+  .gira {
+    animation: gira 40s linear infinite;
+    will-change: transform;
+  }
+
+  /* Gaivotas atravessando o céu do hero. Lentas de propósito: quem olhar
+     direto vê um pássaro, quem não olhar não vê nada. */
+  @keyframes voa {
+    from {
+      transform: translate3d(-12vw, 0, 0);
+    }
+    to {
+      transform: translate3d(112vw, -14px, 0);
+    }
+  }
+  .voa {
+    animation: voa var(--duracao, 52s) linear infinite;
+    animation-delay: var(--atraso, 0s);
+    will-change: transform;
+  }
+
+  /* Luzes da orla, na versão noturna do horizonte. Cada uma com o próprio
+     atraso, senão a orla inteira pisca junto e vira pisca-pisca de Natal. */
+  @keyframes luz {
+    0%,
+    100% {
+      opacity: 0.22;
+    }
+    50% {
+      opacity: 0.75;
+    }
+  }
+  .luz {
+    animation: luz var(--duracao, 4s) ease-in-out infinite;
+    animation-delay: var(--atraso, 0s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ondas-correm,
+  .bondinho,
+  .boia,
+  .gira,
+  .voa,
+  .luz {
+    animation: none !important;
+  }
+}
