@@ -22,7 +22,8 @@
   --color-void: #06111f; /* fundo base */
   --color-navy: #0b1a2e; /* seções alternadas */
   --color-card: #12233b; /* cards */
-  --color-card-alto: #16293f; /* card em hover */
+  --color-card-alto: #16293f; /* topo da rampa do card, e base no hover */
+  --color-card-luz: #1c3350; /* topo da rampa no hover */
 
   /* Hairline. Todo contorno da página é este 1px. */
   --color-line: rgba(255, 255, 255, 0.08);
@@ -156,15 +157,76 @@ body {
      Peças
      ============================================================ */
 
-  /* Card. Borda de 1px, highlight interno de 1px no topo e nenhuma sombra:
-     a elevação é sugerida pela luz que bate na aresta de cima. */
+  /* ------------------------------------------------------------
+     Card, versão vidro.
+
+     A chapa lisa deixava o card indistinguível do fundo em monitor de
+     brilho baixo, que foi a reclamação do cliente em set/2026. O
+     destaque veio de três camadas que imitam vidro grosso sobre o navy,
+     e NENHUMA delas usa cor nova: a página continua com navy, azul de
+     acento, areia e o verde exclusivo do botão.
+
+     1. SUPERFÍCIE em gradiente, do tom mais claro no canto superior
+        esquerdo para o tom de card na diagonal. É o que dá a leitura de
+        painel de vidro pegando a luz, em vez de retângulo pintado. Os
+        dois tons vão em variáveis para o hover do spotlight conseguir
+        deslocar a rampa inteira; `background-color` sozinho não venceria
+        um `background-image`, e o hover teria sumido.
+     2. ARESTA em gradiente (o `::after`), 1px branco a 26% no topo
+        sumindo antes da metade. É a quina do vidro, e é ela que faz o
+        card "recortar" do fundo. Só a moldura é pintada: a máscara
+        subtrai a área de dentro, então nenhum texto é tingido.
+     3. ESPESSURA, com o fio de luz no topo e um fio escuro na base, mais
+        uma sombra ambiente larga e PRETA por baixo.
+
+     Sobre a invariante da sombra: ela continua valendo onde importa. A
+     sombra daqui é preta e ambiente, para levantar do fundo. Glow
+     COLORIDO segue exclusivo do CTA e do card da oferta, que continuam
+     sendo as únicas coisas da página que emitem luz.
+     ------------------------------------------------------------ */
   .card {
-    background: var(--color-card);
+    --sup-topo: var(--color-card-alto);
+    --sup-base: var(--color-card);
+
+    background: linear-gradient(155deg, var(--sup-topo) 0%, var(--sup-base) 46%);
     border: 1px solid var(--color-line);
     /* 1rem era o raio de painel de dashboard. 1.25rem tira a dureza que o
        cliente chamou de "quadrado" sem virar cápsula. */
     border-radius: 1.25rem;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+      0 18px 40px -26px rgba(0, 0, 0, 0.9);
+    /* O ::after é posicionado contra o card. Sem isto ele se prenderia ao
+       primeiro ancestral posicionado e a moldura apareceria fora do card. */
+    position: relative;
+    transition: background 0.4s ease;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      155deg,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(255, 255, 255, 0.07) 30%,
+      transparent 58%
+    );
+    /* Pinta SÓ a moldura de 1px: a máscara de fora menos a de dentro
+       (content-box) deixa o miolo transparente. Sem o `exclude`, o card
+       inteiro ficaria coberto por um véu branco. */
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   /* Spotlight: o gradiente segue o mouse através de --mx/--my, e a borda
@@ -174,7 +236,7 @@ body {
     isolation: isolate;
     transition:
       border-color 0.4s ease,
-      background-color 0.4s ease;
+      background 0.4s ease;
   }
   .spot::before {
     content: "";
@@ -190,9 +252,13 @@ body {
       transparent 65%
     );
   }
+  /* No hover a rampa inteira sobe um degrau, em vez de trocar a cor de
+     fundo: contra o gradiente do .card, um background-color sozinho
+     ficaria POR BAIXO da imagem de fundo e o hover não apareceria. */
   .spot:hover {
     border-color: rgba(79, 163, 255, 0.36);
-    background-color: var(--color-card-alto);
+    --sup-topo: var(--color-card-luz);
+    --sup-base: var(--color-card-alto);
   }
   .spot:hover::before {
     opacity: 1;

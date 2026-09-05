@@ -59,9 +59,21 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
 4. **Foto na cor real.** Sem duotone, `filter`, `grayscale`, `mix-blend-mode`
    ou véu colorido. O cliente reprovou o duotone. Só `mask-image` para fundir
    na base, e escurecimento PRETO onde houver texto por cima.
-5. **Profundidade por tom, não por sombra.** Card é `--color-card` + borda 1px
-   `--color-line` + highlight inset no topo. `box-shadow` só como glow do CTA
-   e do card da oferta.
+5. **Profundidade por tom, e só o CTA emite luz.** O card é vidro: superfície
+   em gradiente entre `--color-card-alto` e `--color-card`, borda 1px
+   `--color-line`, uma aresta de 1px em gradiente branco no `::after` (a
+   máscara `exclude` pinta só a moldura, nunca o miolo) e espessura por fio
+   de luz no topo, fio escuro na base e sombra ambiente PRETA. A chapa lisa
+   sumia no fundo em monitor de brilho baixo, reprovada em set/2026.
+
+   O que continua proibido é **glow colorido** fora do CTA e do card da
+   oferta: são as únicas peças da página que emitem luz, e é isso que faz o
+   botão ser o ponto mais quente da tela. Sombra preta e ambiente para
+   levantar do fundo é outra coisa, e pode.
+
+   Quem NÃO deve avançar não usa `.card`: a coluna "não é pra você" do filtro
+   é `bg-void` chapado com borda tracejada, mais escura que a seção, para
+   afundar. Ver `components/Publico.tsx`.
 6. **Emenda entre seções é um fio de 1px.** Nada de troca brusca de fundo,
    elipse ou onda.
 7. **O estado escondido das animações mora no CSS, atrás da classe `.js`.**
