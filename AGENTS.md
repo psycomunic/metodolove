@@ -98,13 +98,22 @@ Caixa alta sempre com `letter-spacing` (classe `.mono`). Nunca use emoji como í
 
 ## Conteúdo sensível
 
-**Depoimentos.** A página NÃO tem seção de depoimentos, e `depoimentos` em
+**Depoimentos.** O carrossel de vídeo existe em `components/Depoimentos.tsx` e está na
+página, entre o autor e o filtro. Ele **não aparece**, porque `depoimentos` em
 `lib/content.ts` está vazio de propósito: não há nenhum real autorizado ainda, e a barra
 de urgência no topo diz exatamente isso ("quando entrarem os depoimentos, o preço sobe").
+A seção inteira retorna `null` com a lista vazia, e é esse o estado correto da página
+hoje, não uma pendência.
+
 Não preencha com exemplos inventados, nem "só para visualizar". Depoimento fabricado é
-propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Quando existirem
-depoimentos reais com autorização, crie a seção; até lá, a ausência deles é parte do
-argumento da página.
+propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Para verificar o carrossel
+no navegador, popule a lista, olhe, e **desfaça antes de commitar**.
+
+Um item só entra na lista com as três coisas juntas: vídeo real gravado pelo professor,
+autorização de uso por escrito guardada fora deste repo, e fala que descreve o que
+aconteceu, sem promessa de resultado escrita por nós na legenda. Item sem `video` é
+filtrado fora da fita de propósito: card de texto no meio de vídeos lê como vídeo que não
+carregou. E quando o primeiro entrar, o preço sobe, porque é o que a barra promete.
 
 **Promessas de resultado.** O produto é treinamento esportivo. Nenhum texto pode prometer
 desempenho, classificação em campeonato, renda ou retorno financeiro. O aviso legal no

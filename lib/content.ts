@@ -485,6 +485,59 @@ export type Depoimento = {
   tempo: string;
   texto: string;
   foto?: string;
+  /**
+   * Depoimento em vídeo, que é o formato que o carrossel mostra. Sem `video`,
+   * o item não entra no carrossel: um card de texto no meio de uma fita de
+   * vídeos lê como o vídeo que não carregou.
+   *
+   * `src` sai de public/videos/ e precisa terminar em `-web.mp4`, porque é
+   * só esse sufixo que o .gitignore versiona. `poster` é o quadro parado que
+   * aparece antes do play, e ele é obrigatório: sem poster o card é um
+   * retângulo preto e ninguém clica em retângulo preto.
+   *
+   * Vertical (9:16), que é como o professor grava no celular.
+   */
+  video?: {
+    src: string;
+    poster: string;
+  };
 };
 
+/**
+ * VAZIO DE PROPÓSITO. Não é lista a preencher: é o estado correto da página
+ * hoje. `components/Depoimentos.tsx` some por inteiro enquanto isto estiver
+ * vazio, e é isso que sustenta a barra de urgência do topo.
+ *
+ * Antes de colocar um item aqui, o depoimento precisa de:
+ *   1. vídeo real, gravado pelo professor;
+ *   2. autorização de uso de imagem por escrito, guardada fora deste repo;
+ *   3. o que a pessoa diz precisa ser o que aconteceu com ela, sem promessa
+ *      de resultado ("agora eu cobro X", "minha agenda encheu") escrita por
+ *      nós na legenda.
+ *
+ * Faltando qualquer um dos três, o item não entra. Depoimento inventado é
+ * propaganda enganosa (CDC art. 37) e derruba conta de anúncio no Meta.
+ *
+ * E quando o primeiro entrar aqui, o preço sobe: é o que `urgencia` promete
+ * lá em cima, e essa promessa é o argumento da página inteira.
+ */
 export const depoimentos: Depoimento[] = [];
+
+/**
+ * Cabeçalho do carrossel. Só aparece quando existe depoimento de verdade.
+ *
+ * "Quem já fez" e não "depoimentos": a palavra depoimento virou sinônimo de
+ * print forjado, e a manchete aqui precisa dizer que são professores reais
+ * falando, com o rosto na tela.
+ */
+export const depoimentosSecao = {
+  olho: "Quem já fez",
+  linhas: ["Professores que"],
+  linhaDestaque: "aplicaram",
+  linhasFim: ["o método."],
+  texto:
+    "Cada vídeo aqui foi gravado pelo próprio professor, com autorização de uso. Nenhum é ator, nenhum foi escrito por nós.",
+  /** Rótulo do controle de rolagem, lido por leitor de tela. */
+  anterior: "Ver depoimento anterior",
+  proximo: "Ver próximo depoimento",
+};

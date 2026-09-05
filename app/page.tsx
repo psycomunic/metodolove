@@ -1,6 +1,7 @@
 import Autor from "@/components/Autor";
 import BarraUrgencia from "@/components/BarraUrgencia";
 import CtaFinal from "@/components/CtaFinal";
+import Depoimentos from "@/components/Depoimentos";
 import Dor from "@/components/Dor";
 import Faq from "@/components/Faq";
 import Hero from "@/components/Hero";
@@ -26,6 +27,12 @@ import StickyCta from "@/components/StickyCta";
  * A oferta vem depois do filtro (pra quem é / não é) de propósito: a última
  * coisa que a pessoa lê antes do preço é o convite para desistir. Quem passa
  * por esse filtro e chega no botão compra com muito menos reembolso.
+ *
+ * Os depoimentos entram entre o autor e o filtro, e não colados na oferta,
+ * justamente para não furar essa regra: prova social logo depois de quem
+ * ensina, e o convite para desistir seguindo como a última coisa antes do
+ * preço. Hoje a seção não aparece, porque não há depoimento real autorizado
+ * ainda (ver `depoimentos` em lib/content.ts).
  */
 export default function Home() {
   return (
@@ -41,6 +48,7 @@ export default function Home() {
         <Mecanismo />
         <Modulos />
         <Autor />
+        <Depoimentos />
         <Publico />
         <Oferta />
         <Faq />

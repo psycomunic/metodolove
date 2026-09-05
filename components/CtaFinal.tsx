@@ -1,6 +1,6 @@
 import { ctaFinal, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
-import RioSkyline from "./rio/RioSkyline";
+import AquarelaRio from "./rio/AquarelaRio";
 import { Botao, Manchete } from "./ui";
 
 /**
@@ -10,10 +10,15 @@ import { Botao, Manchete } from "./ui";
  * última coisa que a pessoa lê, e o botão embaixo dela é o único elemento
  * verde da tela: não há mais nada abaixo competindo com ele.
  *
- * O horizonte volta aqui, agora de NOITE: luzes acesas na orla, cada uma no
- * próprio ritmo, e o reflexo dos morros na água. A página abre com o Rio de
- * fim de tarde e fecha com o Rio à noite, o que dá a ela um começo e um fim
- * no mesmo lugar.
+ * O horizonte volta aqui, e é a MESMA aquarela do hero, no mesmo tratamento:
+ * a página abre e fecha com o mesmo desenho do Rio. Antes fechava com a
+ * silhueta em SVG na versão noturna (`rio/RioSkyline`, que segue no
+ * repositório e não é mais usada em lugar nenhum): duas artes diferentes de
+ * morro nas duas pontas liam como duas cidades.
+ *
+ * A aquarela não leva `prioridade` aqui, ao contrário do hero. É o mesmo
+ * arquivo, já baixado lá em cima, e esta seção está no fim da rolagem: pedir
+ * prioridade de novo só disputaria banda com a primeira dobra.
  */
 export default function CtaFinal() {
   return (
@@ -35,7 +40,7 @@ export default function CtaFinal() {
         />
       </div>
 
-      <RioSkyline noturno className="absolute inset-x-0 bottom-0 -z-10" />
+      <AquarelaRio className="absolute inset-x-0 bottom-0 -z-10" />
 
       <div className="mx-auto max-w-[54rem] text-center">
         <Manchete
