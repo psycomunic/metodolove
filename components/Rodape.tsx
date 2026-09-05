@@ -1,6 +1,5 @@
 import { marca, menu } from "@/lib/content";
-import CalcadaoWaves from "./rio/CalcadaoWaves";
-import Monograma from "./rio/Monograma";
+import Image from "next/image";
 import RelogioRio from "./rio/RelogioRio";
 
 /**
@@ -13,20 +12,29 @@ import RelogioRio from "./rio/RelogioRio";
  * O padding de baixo é maior no celular por causa da barra fixa de compra,
  * que cobriria a última linha.
  *
- * O monograma e as coordenadas fecham a página como estúdio assina projeto:
+ * O logo e as coordenadas fecham a página como estúdio assina projeto:
  * discreto, no pé, e sem explicar. Quem é do Rio reconhece a latitude.
+ *
+ * Sem faixa de calçadão aqui. Ela ficava dentro do contêiner com padding, o
+ * recorte comia a barriga da onda e o que sobrava lia como uma fileira de
+ * "V". A emenda do rodapé é o fio de areia, e o calçadão inteiro aparece no
+ * divisor entre seções, onde tem altura para a onda fechar.
  */
 export default function Rodape() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-fio-areia bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
-      <CalcadaoWaves className="absolute inset-x-0 top-0" opacidade={0.14} />
-
+    <footer className="escuro border-t border-fio-areia bg-navy px-5 pt-20 pb-32 text-center sm:px-8 sm:pt-24 sm:pb-16 sm:text-left">
       <div className="mx-auto max-w-[80rem]">
         <div className="flex flex-col gap-8 border-b border-line pb-9 sm:gap-10 sm:pb-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <Monograma className="mx-auto h-16 w-auto text-areia sm:mx-0" />
+            <Image
+              src="/logo-llove.png"
+              alt="Método LLOVE"
+              width={360}
+              height={64}
+              className="mx-auto h-10 w-auto sm:mx-0"
+            />
             <p className="mx-auto mt-4 max-w-[24rem] text-[1rem] leading-relaxed text-mute sm:text-[0.9rem]">
               {marca.resumo}
             </p>

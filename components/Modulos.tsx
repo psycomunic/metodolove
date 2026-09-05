@@ -21,10 +21,7 @@ import { CardSpot, Manchete, Olho } from "./ui";
  */
 export default function Modulos() {
   return (
-    <section
-      id="modulos"
-      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
-    >
+    <section id="modulos" className="escuro bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32">
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[50rem] sm:text-left">
           <Reveal>
@@ -41,7 +38,7 @@ export default function Modulos() {
         <ul className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {modulos.itens.map((item, i) => (
             <Reveal as="li" key={item.n} atraso={(i % 3) * 80}>
-              <CardSpot className="flex h-full flex-col rounded-2xl p-6 text-left sm:p-7">
+              <CardSpot className="flex h-full flex-col rounded-2xl border-areia/22 p-6 text-left sm:p-7">
                 <p className="mono text-[0.8125rem] text-areia sm:text-[0.66rem]">
                   Módulo {item.n}
                 </p>

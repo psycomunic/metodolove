@@ -87,6 +87,18 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
     olho com a manchete ou com o botão, ele está forte demais. Verde não
     entra em nenhum deles.
 
+13. **Seção clara usa `.claro`, que REMAPEIA tokens.** Nunca duplique um
+    componente numa versão clara, e **nunca escreva hex solto num
+    componente**: `text-[#E9D8B4]` para de acompanhar a família da seção e
+    vira bug invisível na próxima troca de fundo. Ver `docs/DESIGN.md`
+    §Verão.
+14. **Contraste é medido, não estimado.** A auditoria por CDP percorre todo
+    texto dentro de `.claro` e compara com o piso AA. Zero reprovações é
+    condição de merge; foi ela que definiu a terracota em #8F4529.
+15. **Toda troca de família passa por uma `Emenda`** de 64px com o calçadão,
+    e ela vive em `app/page.tsx`, na fronteira, nunca dentro de uma das duas
+    seções.
+
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula
 ou dois-pontos, nunca apenas apague o traço. Vale para `lib/content.ts` e para qualquer

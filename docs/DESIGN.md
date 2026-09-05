@@ -198,6 +198,78 @@ linhas por manchete e piso de corpo de fonte.
 
 ---
 
+## Verão: o ritmo claro/escuro
+
+A página deixou de ser toda navy em set/2026. O cliente foi direto: "muito,
+muito escuro, sem vida. É futevôlei: tem que passar VERÃO." O que resolveu não
+foi clarear tudo, foi **alternar**.
+
+| Seção     | Fundo               | Família |
+| --------- | ------------------- | ------- |
+| Hero      | céu de fim de tarde | escura  |
+| Marquee   | areia               | clara   |
+| Dor       | creme               | clara   |
+| Mercado   | areia               | clara   |
+| Mecanismo | creme               | clara   |
+| Módulos   | navy                | escura  |
+| Autor     | creme               | clara   |
+| Público   | areia               | clara   |
+| Oferta    | void, card em creme | escura  |
+| FAQ       | creme               | clara   |
+| CTA final | void                | escura  |
+| Rodapé    | navy                | escura  |
+
+### `.claro` remapeia, não duplica
+
+A seção clara recebe a classe `.claro`, que **remapeia os tokens que os
+componentes já usam**: `--color-ink`, `--color-mute`, `--color-card`,
+`--color-line`, `--color-accent` e `--color-rotulo`. `Olho`, `Manchete`,
+`Reveal`, `.card`, `.spot` e o accordion do FAQ servem às duas famílias sem
+uma linha de condicional e sem uma variante clara de cada um.
+
+Isso só funciona porque o Tailwind 4 emite as utilidades de cor como
+`var(--color-*)` e não como valor literal. **A regra que sustenta tudo: nunca
+escreva hex solto num componente.** Um `text-[#E9D8B4]` para de acompanhar a
+família da seção e vira bug invisível na próxima troca de fundo.
+
+O que NÃO é remapeado, de propósito: `--color-verde` e `--color-void`, porque
+o botão de compra é o mesmo nas duas famílias (verde com texto navy passa em
+AA sobre creme e sobre navy).
+
+### Contraste, medido e não estimado
+
+Auditoria por CDP percorre todo texto dentro de `.claro`, acha o fundo
+realmente pintado atrás dele e compara com o piso AA (4,5:1, ou 3:1 em texto
+grande). Zero reprovações é condição de merge.
+
+Foi essa medição que definiu a terracota: `#C96F4A` dá 2,8:1 sobre areia e
+`#A85536` dá 3,9:1, os dois reprovam. `--color-terracota-forte` é `#8F4529`,
+que dá 4,9:1. A terracota clara sobrou só para o que não é texto nem ícone.
+
+### Emenda entre famílias
+
+Toda troca de família passa pelo `Emenda`: uma faixa de 64px com o calçadão,
+navy sobre creme quando a seção que chega é clara, areia sobre navy quando é
+escura. Corte reto entre claro e escuro lê como duas páginas coladas.
+
+A emenda vive na FRONTEIRA, em `app/page.tsx`, e não dentro de uma das duas
+seções. No rodapé ela foi removida: dentro de um contêiner com padding o
+recorte comia a barriga da onda e o que sobrava lia como uma fileira de "V".
+
+### Grão só no escuro
+
+`.escuro` traz o grão de filme como `::after`. Sobre creme ele lê como papel
+sujo, não como fotografia, e por isso deixou de ser uma camada fixa sobre o
+documento inteiro.
+
+### Sombra quente
+
+No escuro a profundidade vem da luz na aresta de cima do card. No claro vem de
+`--sombra-card`, que é **quente** (`rgba(201,111,74,.1)`). Sombra neutra sobre
+creme acinzenta o papel e desmancha o fim de tarde.
+
+---
+
 ## Rio de Janeiro
 
 O professor é do Rio e o esporte nasceu em Copacabana. A cidade aparece na

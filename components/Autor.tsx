@@ -3,7 +3,7 @@
 import { autor, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
 import CalcadaoWaves from "./rio/CalcadaoWaves";
-import CristoSilhouette from "./rio/CristoSilhouette";
+import Image from "next/image";
 import { useParallax } from "./rio/parallax";
 import { Foto, Manchete, Olho } from "./ui";
 
@@ -29,13 +29,14 @@ export default function Autor() {
     <section
       id="charllove"
       ref={raiz}
-      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="claro relative isolate overflow-hidden bg-creme px-5 py-16 pb-28 sm:px-8 sm:py-28 sm:pb-36 lg:py-32 lg:pb-40"
     >
-      {/* Faixa de calçadão no terço de baixo, atrás da FOTO e não do texto. */}
+      {/* Calçadão navy fechando a seção, na largura toda: é a emenda para a
+          faixa escura que vem depois. */}
       <CalcadaoWaves
-        className="absolute inset-x-0 bottom-0 -z-20"
-        opacidade={0.09}
-        altura={420}
+        className="absolute inset-x-0 bottom-0 text-navy"
+        opacidade={0.85}
+        altura={64}
       />
 
       {/* O Cristo fica na borda direita da seção, fora da coluna de texto, que
@@ -44,13 +45,19 @@ export default function Autor() {
       <div
         ref={coleta(0)}
         aria-hidden="true"
-        className="pointer-events-none absolute top-12 right-[-4%] -z-10 hidden lg:block lg:h-[31rem] lg:w-[20rem]"
+        className="pointer-events-none absolute top-12 right-[-2%] -z-10 hidden overflow-hidden rounded-3xl shadow-[0_24px_60px_-20px_rgba(60,40,20,0.45)] lg:block lg:h-[31rem] lg:w-[20rem]"
       >
-        <CristoSilhouette />
+        <Image
+          src="/basecristo.webp"
+          alt=""
+          fill
+          sizes="320px"
+          className="object-cover object-[78%_center]"
+        />
       </div>
       <div className="mx-auto grid max-w-[80rem] gap-9 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-20">
         <Reveal className="lg:sticky lg:top-28">
-          <div className="mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden rounded-2xl border border-line lg:max-w-none">
+          <div className="mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden rounded-2xl border-[6px] border-[#FFFDF8] shadow-[0_18px_50px_rgba(201,111,74,0.18)] lg:max-w-none">
             <Foto
               src={autor.foto}
               alt={`${autor.nome}, criador do ${marca.nome}`}
@@ -58,7 +65,7 @@ export default function Autor() {
               desbota={false}
             />
           </div>
-          <p className="mono mt-4 text-center text-[0.8125rem] text-mute sm:mt-5 sm:text-left sm:text-[0.7rem]">
+          <p className="mono mt-4 text-center text-[0.8125rem] text-tinta-suave sm:mt-5 sm:text-left sm:text-[0.7rem]">
             {marca.instagramHandle}
           </p>
         </Reveal>
@@ -89,18 +96,22 @@ export default function Autor() {
             {/* A citação é a tese do produto em uma linha. Em areia, não em
                 branco: é a única fala do Charllove na página e merece um tom
                 próprio, sem virar mais um parágrafo. */}
-            <blockquote className="mt-9 border-l-2 border-areia/50 pl-5 text-left sm:mt-10 sm:pl-6">
-              <p className="display text-[clamp(1.25rem,5.5vw,1.9rem)] text-areia">
-                “{autor.citacao}”
+            {/* Citação em navy, para ler; aspas em dourado, para respirar.
+                A cor quente fica só no sinal, nunca na frase. */}
+            <blockquote className="mt-9 border-l-2 border-dourado pl-5 text-left sm:mt-10 sm:pl-6">
+              <p className="display text-[clamp(1.25rem,5.5vw,1.9rem)] text-tinta">
+                <span className="text-dourado">“</span>
+                {autor.citacao}
+                <span className="text-dourado">”</span>
               </p>
-              <cite className="mono mt-4 block text-[0.8125rem] text-areia/55 not-italic sm:text-[0.66rem]">
+              <cite className="mono mt-4 block text-[0.8125rem] text-tinta-suave not-italic sm:text-[0.66rem]">
                 {autor.nome}
               </cite>
             </blockquote>
           </Reveal>
 
           <Reveal atraso={120}>
-            <ul className="mono mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-line pt-6 text-[0.8125rem] text-areia/65 sm:mt-10 sm:justify-start sm:text-[0.62rem]">
+            <ul className="mono mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-line pt-6 text-[0.8125rem] text-tinta-suave sm:mt-10 sm:justify-start sm:text-[0.62rem]">
               {autor.credenciais.map((c, i) => (
                 <li key={c} className="flex items-center gap-3">
                   {i > 0 ? <span aria-hidden="true">·</span> : null}
@@ -113,8 +124,17 @@ export default function Autor() {
           {/* Celular: o Cristo entra DEPOIS do texto, centralizado, como
               fechamento da seção. Atrás dos parágrafos ele só atrapalharia a
               leitura numa coluna de 350px. */}
-          <div aria-hidden="true" className="mt-10 h-48 w-full lg:hidden">
-            <CristoSilhouette opacidade={0.55} />
+          <div
+            aria-hidden="true"
+            className="relative mt-10 aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-[0_18px_40px_-16px_rgba(60,40,20,0.4)] lg:hidden"
+          >
+            <Image
+              src="/basecristo.webp"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover object-[70%_center]"
+            />
           </div>
         </div>
       </div>

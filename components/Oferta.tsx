@@ -1,6 +1,5 @@
 import { investimento, marca, oferta } from "@/lib/content";
 import { Reveal } from "./movimento";
-import CalcadaoWaves from "./rio/CalcadaoWaves";
 import { Botao, Check, Escudo, Olho } from "./ui";
 
 /**
@@ -18,20 +17,16 @@ export default function Oferta() {
   return (
     <section
       id="oferta"
-      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="escuro relative isolate overflow-hidden bg-void px-5 py-20 sm:px-8 sm:py-28 lg:py-32"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[24rem] w-[24rem] -translate-x-1/2 opacity-[0.16] sm:h-[38rem] sm:w-[38rem]"
         style={{
-          background: "radial-gradient(circle, #4FA3FF 0%, transparent 68%)",
+          background: "radial-gradient(circle, #E3B86A 0%, transparent 68%)",
           filter: "blur(140px)",
         }}
       />
-
-      {/* Só o fio de calçadão no topo. Aqui nada pode disputar o olho com o
-          preço e com o botão. */}
-      <CalcadaoWaves className="absolute inset-x-0 top-0" opacidade={0.12} />
 
       <div className="mx-auto max-w-[42rem]">
         <Reveal className="text-center">
@@ -43,18 +38,23 @@ export default function Oferta() {
 
         {/* Fio de areia de 2px no topo do card: marca a entrada do bloco de
             conversão sem acrescentar mais um contorno aceso em volta dele. */}
+        {/* O card é a única peça CLARA sobre fundo escuro da página, e é de
+            propósito: papel creme sobre navy é o contraste mais alto que o
+            sistema tem, e ele fica reservado para o bloco onde a pessoa
+            decide. A classe `.claro` remapeia os tokens dentro dele, então
+            check, texto e fio vêm certos sem nenhuma variante de componente. */}
         <Reveal
           atraso={100}
-          className="card relative mt-8 overflow-hidden border-accent/45 p-6 shadow-[0_0_80px_-30px_rgba(79,163,255,0.5)] sm:mt-10 sm:p-10"
+          className="claro card relative mt-8 overflow-hidden rounded-2xl border-areia-quente p-6 shadow-[0_30px_80px_-30px_rgba(227,184,106,0.35)] sm:mt-10 sm:p-10"
         >
           <span
             aria-hidden="true"
-            className="absolute inset-x-0 top-0 h-[2px] bg-areia/70"
+            className="absolute inset-x-0 top-0 h-[3px] bg-dourado"
           />
           <ul className="space-y-4 text-left">
             {investimento.inclusos.map((item) => (
               <li key={item} className="flex gap-3.5">
-                <Check className="mt-1 h-5 w-5 text-accent" />
+                <Check className="mt-1 h-5 w-5 text-fundo-verde" />
                 <span className="text-[1rem] leading-[1.55] text-ink">{item}</span>
               </li>
             ))}
@@ -64,7 +64,7 @@ export default function Oferta() {
             <p className="mono text-[0.8125rem] text-fraco line-through sm:text-[0.7rem]">
               de {oferta.precoCheio}
             </p>
-            <p className="placar mt-3 text-[clamp(2.5rem,13vw,4.5rem)] text-ink">
+            <p className="placar mt-3 text-[clamp(2.75rem,13vw,4.5rem)] text-tinta">
               {oferta.parcelasQtd} de {oferta.parcelasValor}
             </p>
             <p className="mt-2 text-[1rem] text-mute">ou {oferta.preco} à vista</p>
@@ -85,7 +85,7 @@ export default function Oferta() {
 
         <Reveal atraso={140} className="card mt-4 p-6 sm:p-9">
           <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-start sm:gap-5 sm:text-left">
-            <Escudo className="h-8 w-8 shrink-0 text-accent sm:mt-0.5" />
+            <Escudo className="h-8 w-8 shrink-0 text-dourado sm:mt-0.5" />
             <div>
               <h3 className="display text-[1.35rem] text-ink sm:text-[1.6rem]">
                 {investimento.garantia.titulo}

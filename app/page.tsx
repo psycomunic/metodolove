@@ -12,6 +12,7 @@ import { BarraProgresso } from "@/components/movimento";
 import Nav from "@/components/Nav";
 import Oferta from "@/components/Oferta";
 import Publico from "@/components/Publico";
+import Emenda from "@/components/rio/Emenda";
 import Rodape from "@/components/Rodape";
 import StickyCta from "@/components/StickyCta";
 
@@ -38,12 +39,24 @@ export default function Home() {
         <Marquee />
         <Dor />
         <Mercado />
+        {/* Areia para creme: o calçadão navy faz a passagem. */}
+        <Emenda fundo="bg-areia" tom="text-navy" />
         <Mecanismo />
+        {/* Creme para navy: o mesmo desenho, agora em areia sobre o escuro. */}
+        <Emenda fundo="bg-navy" tom="text-areia" opacidade={0.5} />
         <Modulos />
+        <Emenda fundo="bg-navy" tom="text-areia" opacidade={0.5} />
         <Autor />
         <Publico />
+        {/* Areia para o escuro da oferta. */}
+        <Emenda fundo="bg-areia" tom="text-navy" />
         <Oferta />
+        {/* Escuro para o creme do FAQ, e o creme de volta para o escuro do
+            fechamento. Toda troca de família passa pelo calçadão: corte reto
+            entre claro e escuro lê como duas páginas coladas. */}
+        <Emenda fundo="bg-void" tom="text-areia" opacidade={0.5} />
         <Faq />
+        <Emenda fundo="bg-creme" tom="text-navy" />
         <CtaFinal />
       </main>
       <Rodape />

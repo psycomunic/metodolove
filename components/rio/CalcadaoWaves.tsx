@@ -64,7 +64,7 @@ export default function CalcadaoWaves({
   return (
     <div
       aria-hidden="true"
-      className={`pointer-events-none overflow-hidden text-areia ${className}`}
+      className={`pointer-events-none overflow-hidden ${className}`}
       style={{ opacity: opacidade, height: altura }}
     >
       <div className="ondas-correm">
