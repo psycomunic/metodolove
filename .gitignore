@@ -22,3 +22,5 @@ next-env.d.ts
 # Fonte do recorte do Cristo: 1,7 MB. A pagina usa a derivada crisnovo.webp,
 # de 374 KB, que E versionada.
 /public/crisnovo.png
+# Aquarela original do Rio, 1 MB. A pagina usa a derivada fundo-hero.webp.
+/public/fundo hero.jpg

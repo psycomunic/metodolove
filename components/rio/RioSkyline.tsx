@@ -216,20 +216,7 @@ export default function RioSkyline({
           />
           <path fill={`url(#${g("m2")})`} d={`M690,230 ${CORCOVADO}${CORCOVADO_FECHA}`} />
 
-          {/* Cristo Redentor no cume do Corcovado */}
-          <g
-            transform="translate(816,60)"
-            fill={ESCURO}
-            stroke={LUZ}
-            strokeOpacity="0.95"
-            strokeWidth="1.2"
-            strokeLinejoin="round"
-          >
-            <path d="M-6,0 L-6,-11 L6,-11 L6,0 Z" />
-            <path d="M-4.5,-11 L-2.6,-33 L2.6,-33 L4.5,-11 Z" />
-            <path d="M-18,-28.5 L-2.6,-32.5 L2.6,-32.5 L18,-28.5 L18,-25.8 L2.6,-29 L-2.6,-29 L-18,-25.8 Z" />
-            <circle cx="0" cy="-36.6" r="2.3" />
-          </g>
+          {/* (o Cristo em traço saiu do cume: em 12px virava boneco) */}
 
           {/* Arcos da Lapa */}
           <g transform="translate(860,230)">

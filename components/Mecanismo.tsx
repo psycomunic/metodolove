@@ -2,6 +2,7 @@ import { mecanismo } from "@/lib/content";
 import { Reveal } from "./movimento";
 import CalcadaoWaves from "./rio/CalcadaoWaves";
 import { CardSpot, Manchete, Olho } from "./ui";
+import VideoMetodo from "./VideoMetodo";
 
 /**
  * O mecanismo: por que método e não mais um curso de fundamento.
@@ -21,23 +22,28 @@ export default function Mecanismo() {
           demais para alguém ver acontecer, e é essa a intenção. */}
       <CalcadaoWaves className="absolute inset-x-0 top-0" />
       <div className="mx-auto max-w-[80rem]">
-        <header className="text-center sm:max-w-[48rem] sm:text-left">
-          <Reveal>
-            <Olho>{mecanismo.olho}</Olho>
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+          <header className="text-center sm:max-w-[48rem] sm:text-left">
+            <Reveal>
+              <Olho>{mecanismo.olho}</Olho>
+            </Reveal>
+            <Manchete
+              linhas={mecanismo.linhas}
+              destaque={mecanismo.linhaDestaque}
+              fim={mecanismo.linhasFim}
+              flui
+              className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
+            />
+            <Reveal atraso={140}>
+              <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-7 sm:text-[1.05rem]">
+                {mecanismo.texto}
+              </p>
+            </Reveal>
+          </header>
+          <Reveal atraso={200}>
+            <VideoMetodo />
           </Reveal>
-          <Manchete
-            linhas={mecanismo.linhas}
-            destaque={mecanismo.linhaDestaque}
-            fim={mecanismo.linhasFim}
-            flui
-            className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
-          />
-          <Reveal atraso={140}>
-            <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-7 sm:text-[1.05rem]">
-              {mecanismo.texto}
-            </p>
-          </Reveal>
-        </header>
+        </div>
 
         <ol className="mt-10 flex flex-col gap-4 sm:mt-14">
           {mecanismo.pilares.map((pilar, i) => (

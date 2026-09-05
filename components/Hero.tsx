@@ -1,7 +1,7 @@
 import { hero, marca } from "@/lib/content";
 import { Reveal } from "./movimento";
 import GaivotasLoop from "./rio/GaivotasLoop";
-import RioSkyline from "./rio/RioSkyline";
+import AquarelaRio from "./rio/AquarelaRio";
 import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
 
 /**
@@ -20,24 +20,14 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
  * A altura desconta a barra de urgência e a pílula da nav, que estão no fluxo
  * acima: 100svh cheios empurrariam o CTA para fora da primeira dobra.
  *
- * O RIO. O horizonte é o elemento de identidade da página inteira e fica na
- * base da seção, acima da foto e abaixo do texto. Gaivotas cruzam o céu em
- * 45 s. O sol se pondo vem dentro do próprio horizonte, com disco e reflexo na
- * água: não há mais nenhum sol de gradiente por aqui.
+ * O RIO. O horizonte é o elemento de identidade da página e fica na base da
+ * seção, acima da foto e abaixo do texto. Agora é a AQUARELA do cliente,
+ * entrando como marca d'água azul (ver AquarelaRio), e não mais a silhueta
+ * desenhada em SVG. Gaivotas cruzam o céu em 45 s.
  *
- * ALTURA DO HORIZONTE. Não é fixa, e não pode ser. O desenho usa
- * `xMidYMax slice`, que ancora a base e corta o excedente EM CIMA quando a
- * tela é mais achatada que o viewBox de 1600x300. Com 240px fixos num monitor
- * de 1440, o corte come 30px e decapita o Cristo, que é o ponto mais alto do
- * desenho. A regra que resolve é manter a altura acima de 17,4% da largura,
- * e é isso que o clamp abaixo faz, dos 1280px para cima.
+ * A silhueta desenhada em SVG continua viva no CTA final, na versão noturna.
  */
 
-/**
- * 200px no mínimo, 18,5% da largura no meio, 360px no teto. Ver a nota sobre
- * enquadramento acima: abaixo de 17,4% da largura, o recorte come o Cristo.
- */
-const ALTURA_HORIZONTE = "h-[108px] sm:h-[clamp(200px,18.5vw,360px)]";
 export default function Hero() {
   return (
     <section id="topo" className="relative isolate overflow-hidden">
@@ -68,18 +58,20 @@ export default function Hero() {
           direita da orla ficava escondida e o Corcovado era cortado ao meio
           pela borda da imagem. À frente, o horizonte cruza justamente o terço
           de baixo da foto, que já está desbotado no navy. */}
-      <RioSkyline
-        altura={ALTURA_HORIZONTE}
-        className="absolute inset-x-0 bottom-0 -z-[5]"
-      />
+      <AquarelaRio prioridade className="absolute inset-x-0 bottom-0 -z-[5]" />
 
       {/* Alvo do Cristo, para o rótulo aparecer no hover.
 
-          Fica FORA do horizonte e depois do conteúdo, com z positivo: o
-          horizonte está em -z-5, atrás da coluna de texto, e um alvo lá embaixo
-          nunca receberia o ponteiro. A posição espelha o desenho: o Cristo está
-          a 51% da largura e a 80% da altura da faixa, acima da base dela. */}
-      <div className="group absolute bottom-[86px] left-[51%] z-20 hidden h-14 w-14 -translate-x-1/2 lg:bottom-[clamp(192px,14.8vw,288px)] lg:block">
+          Fica FORA da aquarela e depois do conteúdo, com z positivo: a
+          aquarela está em -z-5, atrás da coluna de texto, e um alvo lá embaixo
+          nunca receberia o ponteiro.
+
+          A posição sai da própria arte: no arquivo, o cume do Corcovado está a
+          70,7% da largura e a 4,5% da altura. A faixa tem proporção de 2,977,
+          então a altura dela é 0,336 da largura da tela, e o cume fica a
+          0,955 x 0,336 = 32,1vw acima da base. Como a imagem nunca é
+          recortada (é sempre w-full), essa conta vale em qualquer largura. */}
+      <div className="group absolute bottom-[32.08vw] left-[70.7%] z-20 hidden h-16 w-16 -translate-x-1/2 translate-y-1/2 lg:block">
         <span className="mono pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 rounded-full border border-fio-areia bg-void/92 px-3 py-1.5 text-[0.6rem] whitespace-nowrap text-areia opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
           Corcovado · 710 m
         </span>

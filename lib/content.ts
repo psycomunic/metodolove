@@ -198,6 +198,13 @@ export const mecanismo = {
   linhasFim: ["e não mais um curso", "de fundamento?"],
   texto:
     "Todo curso de futevôlei ensina toque, cabeceio e shark. O Método LLOVE não é sobre o que você já sabe fazer. É sobre o que ninguém te ensinou: como transformar o que você sabe em uma aula que o aluno paga, sente e recomenda.",
+  // Vídeo ao lado da manchete. Coloque o arquivo em public/videos/ e ajuste o
+  // nome aqui; `poster` é o quadro que aparece antes do play.
+  video: {
+    src: "/videos/metodo.mp4",
+    poster: "/HERO-DESKTOP.jpg",
+    legenda: "Charllove explica o método em 2 minutos",
+  },
   pilares: [
     {
       n: "01",
