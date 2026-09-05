@@ -41,13 +41,13 @@
   --color-sol-400: #ff7f2e;
   --color-sol-300: #ffa05c;
 
-  /* --- Areia. O 200 é o creme EXATO do lettering do logo. --- */
-  --color-areia-50: #fff8ec;
-  --color-areia-100: #f7ebd6;
-  --color-areia-200: #f0e0b8;
-  --color-areia-300: #dfc894;
-  --color-areia-400: #c0a268;
-  --color-areia-500: #8a7440;
+  /* --- Areia -> Clean White/Slate (SaaS Premium) --- */
+  --color-areia-50: #ffffff;
+  --color-areia-100: #f8fafc;
+  --color-areia-200: #e2e8f0;
+  --color-areia-300: #cbd5e1;
+  --color-areia-400: #94a3b8;
+  --color-areia-500: #64748b;
 
   /* --- Bruma: texto de apoio sobre marinho. --- */
   --color-bruma-200: #bcd0f2;
@@ -131,17 +131,15 @@ li {
    ============================================================ */
 
 /**
- * Bloco de manchete: impacto extremo, inclinação sutil de alta precisão.
+ * Bloco de manchete: destaque sólido e moderno, sem inclinação amadora.
  */
 .bloco {
   display: inline-block;
-  transform: rotate(var(--inclina, -0.8deg));
-  transform-origin: left center;
 }
 .bloco > span {
   display: inline-block;
-  transform: rotate(calc(var(--inclina, -0.8deg) * -1));
-  padding: 0.08em 0.28em 0.12em;
+  padding: 0.12em 0.3em;
+  border-radius: 6px;
 }
 
 /* Pílula vazada: dado secundário. Contorno, nunca preenchimento.

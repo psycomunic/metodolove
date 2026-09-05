@@ -57,24 +57,20 @@ export function Reveal({
 export function Destaque({
   children,
   cor = "creme",
-  inclina = -0.8,
 }: {
   children: ReactNode;
   cor?: "creme" | "sol" | "noite";
-  inclina?: number;
 }) {
-  const tons = {
-    creme: "bg-areia-200 text-noite-900",
-    sol: "bg-sol-500 text-white",
-    noite: "bg-noite-800 text-white",
-  } as const;
+  const bg =
+    cor === "creme"
+      ? "bg-areia-200 text-noite-900"
+      : cor === "sol"
+        ? "bg-sol-500 text-white"
+        : "bg-noite-900 text-areia-100";
 
   return (
-    <span
-      className="bloco"
-      style={{ "--inclina": `${inclina}deg` } as React.CSSProperties}
-    >
-      <span className={tons[cor]}>{children}</span>
+    <span className="bloco">
+      <span className={bg}>{children}</span>
     </span>
   );
 }
@@ -190,7 +186,7 @@ export function Botao({
       target="_blank"
       rel="noopener noreferrer"
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 bg-sol-500 font-extrabold tracking-[0.06em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 rounded-md bg-sol-500 font-extrabold tracking-[0.06em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
     >
       <span>{children}</span>
       <svg

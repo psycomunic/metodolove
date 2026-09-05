@@ -42,7 +42,7 @@ export default function CtaFinal() {
               // A última linha fecha em bloco chapado: é o eco do hero e o
               // último empurrão antes do botão.
               i === 2 ? (
-                <Destaque key={linha} cor="sol" inclina={-1.1}>
+                <Destaque key={linha} cor="sol">
                   {linha}
                 </Destaque>
               ) : (
