@@ -14,33 +14,34 @@ export default function Mercado() {
   return (
     <section
       id="mercado"
-      className="border-t border-line bg-navy px-5 py-20 sm:px-8 sm:py-28 lg:py-32"
+      className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-[80rem]">
-        <header className="max-w-[46rem]">
+        <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
             <Olho>{mercado.olho}</Olho>
           </Reveal>
           <Manchete
             linhas={mercado.linhas}
             destaque={mercado.linhaDestaque}
-            className="mt-6 text-[clamp(2.25rem,5.4vw,4rem)] text-ink"
+            flui
+            className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
           />
         </header>
 
-        <dl className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:mt-14 sm:grid-cols-2 lg:grid-cols-4">
           {mercado.numeros.map((n, i) => (
             <Reveal
               key={n.fonte + n.valor}
               atraso={i * 90}
-              className="bg-card p-7 sm:p-8"
+              className="bg-card p-6 text-left sm:p-8"
             >
-              <dt className="placar text-[clamp(2.6rem,6vw,3.6rem)] text-glow">
+              <dt className="placar text-[clamp(2.5rem,12vw,3.6rem)] text-accent">
                 <Contador valor={n.valor} prefixo={n.prefixo} sufixo={n.sufixo} />
               </dt>
-              <dd className="mt-4 text-[0.92rem] leading-[1.6] text-mute">
+              <dd className="mt-3 text-[1rem] leading-[1.55] text-mute sm:mt-4 sm:text-[0.92rem]">
                 {n.rotulo}
-                <span className="mono mt-4 block text-[0.6rem] text-fraco">
+                <span className="mono mt-3 block text-[0.8125rem] text-fraco sm:mt-4 sm:text-[0.6rem]">
                   {n.fonte}
                 </span>
               </dd>
@@ -49,7 +50,7 @@ export default function Mercado() {
         </dl>
 
         <Reveal atraso={120}>
-          <p className="leitura mt-12 text-[1rem] text-mute sm:text-[1.05rem]">
+          <p className="mx-auto mt-10 max-w-[38rem] text-center text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-12 sm:text-left sm:text-[1.05rem]">
             {mercado.texto}
           </p>
         </Reveal>

@@ -33,30 +33,40 @@ condensada. O que essas referências têm em comum, e que é o coração deste s
 | `--color-ink`         | `#E8EEF5`               | texto                                  |
 | `--color-mute`        | `#9AA8BB`               | texto de apoio, label mono             |
 | `--color-fraco`       | `#64748B`               | metadado, fonte do dado, preço riscado |
-| `--color-verde`       | `#22C55E`               | CTA, e nada além disso                 |
-| `--color-glow`        | `#7CFF6B`               | palavra destacada, dot ao vivo, glow   |
-| `--color-fundo-verde` | `#15803D`               | hover do CTA                           |
+| `--color-verde`       | `#22C55E`               | **só** o botão de compra               |
+| `--color-fundo-verde` | `#15803D`               | hover do botão de compra               |
+| `--color-accent`      | `#4FA3FF`               | palavra destacada, check, dot, borda   |
+| `--color-accent-soft` | `#7CC4FF`               | glow, hover leve                       |
 | `--color-areia`       | `#E9D8B4`               | herança da marca, só no logo           |
 
-### A regra do acento
+### Duas cores, dois papéis que não se cruzam
 
-O verde aparece em **cinco** lugares, e em nenhum outro:
+**Verde é exclusivo do botão de compra.** Não existe verde em texto, ícone,
+borda, número, glow ou fundo. A regra tem uma razão prática: quando o acento
+ocupa cinco papéis, ele para de significar "clique aqui". Foi assim que o
+laranja da direção anterior morreu, e o verde não vai pelo mesmo caminho.
 
-1. CTA (fundo chapado);
-2. uma palavra por manchete, em `--color-glow`;
-3. o ponto pulsante de "turma aberta";
-4. os checks da coluna "é pra você se…" e da lista da oferta;
-5. o glow das auroras (hero, oferta, CTA final) e a borda do card de bônus.
+**Azul claro (`--accent`) é todo o resto do destaque:** a palavra realçada da
+manchete (uma por manchete, nunca duas), os checks, o dot de turma aberta, a
+borda do card de bônus, o glow das auroras, o fio de progresso de leitura e o
+spotlight dos cards.
 
-Verde em título de card, ícone repetido, fundo de seção ou texto corrido vira néon, e o
-botão de compra deixa de ser o ponto mais quente da tela. Foi exatamente por isso que o
-laranja caiu: ele estava em botão, arco, régua e rótulo ao mesmo tempo.
+Teste rápido: aponte para qualquer coisa verde na tela. Se ela não for
+clicável e não levar ao checkout, é bug.
 
 ### Contraste do CTA
 
-Repouso: texto `#06111F` sobre `#22C55E` = **8:1** (AAA). No hover o fundo vai para
-`#15803D` **e o texto vira branco**: navy sobre `#15803D` daria 3,8:1 e reprovaria AA
-justamente no estado em que a pessoa está olhando para o botão.
+Repouso: texto `#06111F` sobre `#22C55E` = **8:1** (AAA). No hover o fundo vai
+para `#15803D` **e o texto vira branco**: navy sobre `#15803D` daria 3,8:1 e
+reprovaria AA justamente no estado em que a pessoa está olhando para o botão.
+
+### Nenhum botão diz "entrar"
+
+A página não tem login nem área de aluno. Todo botão leva ao checkout, e os
+rótulos dizem isso: "Garantir minha vaga" (nav), "Quero dar aula com método"
+(hero), "Quero minha vaga no método" (oferta), "Garantir minha vaga agora"
+(CTA final), "Garantir vaga" (barra fixa). Rótulo que promete uma porta que
+não existe fura a expectativa de quem clica.
 
 ---
 
@@ -133,22 +143,58 @@ que o próprio `prefers-reduced-motion` já desarma.
 
 ## Fotografia
 
-Todas as fotos entram em **duotone navy**, por cadeia de filtro:
+**Nenhum tratamento de cor.** Sem duotone, sem grayscale, sem `filter`, sem
+`mix-blend-mode`, sem véu azul ou navy por cima. As fotos ficam na cor real
+delas.
 
-```
-grayscale(1) sepia(1) hue-rotate(186deg) saturate(1.9) brightness(0.8) contrast(1.06)
-```
+O duotone navy chegou a existir aqui e o cliente reprovou, com razão: o
+Charllove precisa parecer uma pessoa de verdade numa quadra de verdade, não um
+recorte de identidade visual. Foto tratada em cima da paleta é decisão de
+marca de refrigerante, não de quem vende a própria credibilidade.
 
-Filtro e não `mix-blend-mode`: blend depende do contexto de empilhamento do pai, e basta a
-foto entrar num elemento com `isolation`, `filter` ou z-index próprio (metade dos lugares
-onde ela é usada aqui) para a camada de cor sumir sem erro nenhum e a foto voltar a cinza.
-O filtro viaja com a imagem.
+O que sobra é recorte e máscara, que mexem em enquadramento e opacidade e
+nunca em matiz:
 
-Máscara de gradiente na base para fundir no fundo, sem aresta reta de foto no meio do navy.
+- `mask-image` na base, para a foto fundir no fundo em vez de terminar numa
+  aresta reta.
+- Onde há texto por cima da imagem, o escurecimento é **preto** (40%), nunca
+  colorido, e vive em quem posiciona o texto, não dentro do componente.
+- `object-position` à esquerda no banner do hero: a arte original é 2:1 com o
+  Charllove à esquerda e o lettering MÉTODO LLOVE à direita, e qualquer
+  recorte que passe de ~46% da largura traz junto a faixa creme do lettering.
 
-Quando o arquivo não existe, `Foto` cai num placeholder honesto com a direção de arte
-escrita e o caminho marcado como `TODO asset`. **Mantenha esse comportamento** em qualquer
-componente novo que dependa de mídia.
+Quando o arquivo não existe, `Foto` cai num placeholder honesto com a direção
+de arte escrita e o caminho marcado como `TODO asset`. **Mantenha esse
+comportamento** em qualquer componente novo que dependa de mídia.
+
+---
+
+## Celular
+
+O alvo é 360px, não 390: se fecha no iPhone SE, fecha em tudo. Testado em 360,
+390 e 430 a cada mudança, com auditoria de rolagem horizontal, contagem de
+linhas por manchete e piso de corpo de fonte.
+
+- **Centralizado**: hero inteiro, cabeçalho de todas as seções, preço, CTA e
+  footer. Dentro dos cards o texto continua alinhado à esquerda: cabeçalho
+  centralizado organiza a entrada da seção, parágrafo centralizado atrapalha
+  a leitura.
+- **Manchete curta em uma linha** (`umaLinha`): a largura do texto vai em `em`
+  para o CSS na variável `--em`, e o corpo da fonte encolhe até caber
+  (`min(3rem, calc((100vw - 3rem) / var(--em)))`). Resolve em CSS puro o que
+  normalmente exigiria medir texto em JavaScript. O fator de 0,415em por
+  caractere foi medido no navegador, na própria Barlow Condensed 800.
+- **Manchete longa fluindo** (`flui`): abaixo de 640px as quebras escritas à
+  mão são ignoradas e o texto corre natural. Mantê-las faria cada linha do
+  desktop quebrar de novo, e a manchete de três linhas viraria cinco.
+- **Pisos de tipografia**: 16px no corpo, 13px em label mono. Exceções
+  conscientes: a barra de urgência (14px, é aviso de topo) e o aviso legal do
+  rodapé (13px, é letra miúda por definição).
+- **Botão** de largura total, teto de 420px, centralizado. No tamanho `sm` a
+  seta some: ela custa 28px, e é esse tanto que falta para a pílula da nav
+  caber em 360px sem empurrar a página para o lado.
+- **Barra fixa de compra**: 64px, preço à esquerda, botão à direita,
+  `safe-area-inset-bottom`, e some quando a seção de oferta entra na tela.
 
 ---
 

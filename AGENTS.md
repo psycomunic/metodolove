@@ -46,30 +46,38 @@ Antes de dar qualquer tarefa por concluída: `npm run lint && npm run typecheck 
 A direção visual está documentada em `docs/DESIGN.md`, com o raciocínio por trás de cada
 escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
 
-1. **ZERO laranja.** O acento cromático da página é o VERDE, e ele existe em cinco
-   lugares: CTA, uma palavra por manchete, o dot de "turma aberta", os checks e o glow
-   das auroras. Verde em título de card, ícone repetido ou fundo de seção vira néon e o
-   botão de compra deixa de ser o ponto mais quente da tela.
-2. **Uma palavra verde por manchete, nunca duas.** Com duas o olho não sabe qual é a
-   promessa e o destaque vira zebra.
-3. **Profundidade por tom, não por sombra.** Card é `--color-card` + borda 1px
-   `--color-line` + highlight inset no topo. `box-shadow` só existe como glow verde do
-   CTA e do card da oferta.
-4. **Emenda entre seções é um fio de 1px.** Nada de troca brusca de fundo, elipse ou onda.
-5. **O estado escondido das animações mora no CSS, atrás da classe `.js`.** Nunca em
-   `style` inline vindo do servidor: sem essa trava a página inteira fica invisível
-   quando o JavaScript falha ou demora, e é isso que o crawler enxerga. Ver
-   `docs/DESIGN.md` §A trava do `.js`.
-6. **Três faces, três funções.** Barlow Condensed na manchete e no placar, Manrope no
-   corpo, JetBrains Mono só em label e metadado. Se trocar a face de display, releia
-   `docs/DESIGN.md` §Tipografia: a largura da condensada amarra as escalas `clamp()`.
-7. **Foto entra em duotone navy por FILTRO**, nunca por `mix-blend-mode` (blend some
-   dentro de elemento com isolation/filter/z-index, e ninguém percebe até ver no
-   navegador). O filtro está em `DUOTONE`, em `components/ui.tsx`.
-8. **Numeração é mono e nua.** Nada de quadrado, chapa ou caixa em volta do número: o
-   cliente reprovou essa direção em set/2026, duas vezes.
-9. **Sem contador regressivo, sem escassez falsa.** A barra do topo diz por que o preço
-   é o que é, e essa honestidade é o argumento da página inteira.
+1. **ZERO laranja**, e o verde é **só do botão de compra**. Nada de verde em
+   texto, ícone, borda, número, glow ou fundo. Teste: se algo verde na tela
+   não for clicável e não levar ao checkout, é bug. O destaque de leitura é o
+   azul `--accent` (#4FA3FF).
+2. **Uma palavra destacada por manchete, nunca duas.** Com duas o olho não
+   sabe qual é a promessa e o destaque vira zebra.
+3. **Nenhum botão diz "entrar".** A página não tem login nem área de aluno:
+   todo CTA leva ao checkout e o rótulo diz isso. Rótulos em `lib/content.ts`.
+4. **Foto na cor real.** Sem duotone, `filter`, `grayscale`, `mix-blend-mode`
+   ou véu colorido. O cliente reprovou o duotone. Só `mask-image` para fundir
+   na base, e escurecimento PRETO onde houver texto por cima.
+5. **Profundidade por tom, não por sombra.** Card é `--color-card` + borda 1px
+   `--color-line` + highlight inset no topo. `box-shadow` só como glow do CTA
+   e do card da oferta.
+6. **Emenda entre seções é um fio de 1px.** Nada de troca brusca de fundo,
+   elipse ou onda.
+7. **O estado escondido das animações mora no CSS, atrás da classe `.js`.**
+   Nunca em `style` inline vindo do servidor: sem essa trava a página inteira
+   fica invisível quando o JavaScript falha ou demora, e é isso que o crawler
+   enxerga. Ver `docs/DESIGN.md`.
+8. **Três faces, três funções.** Barlow Condensed na manchete e no placar,
+   Manrope no corpo, JetBrains Mono só em label e metadado. Se trocar a face
+   de display, releia `docs/DESIGN.md`: a largura da condensada amarra as
+   escalas `clamp()` E o fator de 0,415em por caractere que faz as manchetes
+   curtas caberem numa linha no celular.
+9. **Numeração é mono e nua.** Nada de quadrado, chapa ou caixa em volta do
+   número: o cliente reprovou essa direção em set/2026, duas vezes.
+10. **Sem contador regressivo, sem escassez falsa.** A barra do topo diz por
+    que o preço é o que é, e essa honestidade é o argumento da página inteira.
+11. **Celular fecha em 360px**, não em 390. Toda manchete usa `umaLinha`
+    (curta, cabe em uma linha) ou `flui` (longa, corre natural em até três
+    linhas). Corpo com piso de 16px, label mono com piso de 13px.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula

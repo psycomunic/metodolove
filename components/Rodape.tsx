@@ -14,9 +14,9 @@ export default function Rodape() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-line bg-navy px-5 pt-16 pb-36 sm:px-8 sm:pb-16">
+    <footer className="border-t border-line bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
       <div className="mx-auto max-w-[80rem]">
-        <div className="flex flex-col gap-10 border-b border-line pb-10 md:flex-row md:items-start md:justify-between">
+        <div className="flex flex-col gap-8 border-b border-line pb-9 sm:gap-10 sm:pb-10 md:flex-row md:items-start md:justify-between">
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -24,14 +24,14 @@ export default function Rodape() {
               alt={marca.nome}
               width={360}
               height={64}
-              className="h-9 w-auto"
+              className="mx-auto h-9 w-auto sm:mx-0"
             />
-            <p className="mt-4 max-w-[24rem] text-[0.9rem] leading-relaxed text-mute">
+            <p className="mx-auto mt-4 max-w-[24rem] text-[1rem] leading-relaxed text-mute sm:text-[0.9rem]">
               {marca.resumo}
             </p>
           </div>
 
-          <nav className="flex flex-col gap-3 text-[0.85rem] text-mute md:items-end">
+          <nav className="flex flex-col gap-3 text-[1rem] text-mute sm:text-[0.85rem] md:items-end">
             {menu.map((item) => (
               <a
                 key={item.href}
@@ -59,7 +59,7 @@ export default function Rodape() {
         </div>
 
         {/* Aviso legal. Exigido pelo Meta e recomendado pelo CDC. */}
-        <div className="mt-8 space-y-4 text-[0.74rem] leading-relaxed text-fraco">
+        <div className="mt-8 space-y-4 text-left text-[0.8125rem] leading-relaxed text-fraco sm:text-[0.74rem]">
           <p>
             <strong className="font-semibold text-mute">Aviso sobre resultados.</strong> O{" "}
             {marca.nome} é um curso de treinamento esportivo. Os resultados dependem da
@@ -76,7 +76,7 @@ export default function Rodape() {
             Este site não é afiliado ao Facebook, ao Instagram ou à Meta Platforms, Inc.
           </p>
 
-          <div className="mono flex flex-col gap-3 border-t border-line pt-6 text-[0.6rem] sm:flex-row sm:items-center sm:justify-between">
+          <div className="mono flex flex-col gap-3 border-t border-line pt-6 text-[0.75rem] sm:flex-row sm:items-center sm:justify-between sm:text-[0.6rem]">
             <p>
               © {ano} {marca.razaoSocial} · CNPJ {marca.cnpj}
             </p>

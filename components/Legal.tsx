@@ -39,7 +39,7 @@ export default function Legal({
           {new Date().toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}
         </p>
 
-        <div className="mt-12 space-y-5 text-[0.98rem] leading-[1.75] text-mute [&_a]:font-semibold [&_a]:text-verde [&_a]:underline [&_a]:underline-offset-2 [&_h2]:mt-11 [&_h2]:mb-3 [&_h2]:text-[1.15rem] [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-ink [&_li]:pl-1 [&_strong]:text-ink [&_ul]:list-disc [&_ul]:space-y-2.5 [&_ul]:pl-5">
+        <div className="mt-12 space-y-5 text-[0.98rem] leading-[1.75] text-mute [&_a]:font-semibold [&_a]:text-accent [&_a]:underline [&_a]:underline-offset-2 [&_h2]:mt-11 [&_h2]:mb-3 [&_h2]:text-[1.15rem] [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-ink [&_li]:pl-1 [&_strong]:text-ink [&_ul]:list-disc [&_ul]:space-y-2.5 [&_ul]:pl-5">
           {children}
         </div>
 

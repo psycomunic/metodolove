@@ -14,10 +14,10 @@ export default function Publico() {
   return (
     <section
       id="filtro"
-      className="border-t border-line bg-navy px-5 py-20 sm:px-8 sm:py-28 lg:py-32"
+      className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-[80rem]">
-        <header className="max-w-[46rem]">
+        <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
             <Olho>{publico.olho}</Olho>
           </Reveal>
@@ -25,33 +25,40 @@ export default function Publico() {
             linhas={publico.linhas}
             destaque={publico.linhaDestaque}
             fim={publico.linhasFim}
-            className="mt-6 text-[clamp(2.25rem,5.4vw,4rem)] text-ink"
+            umaLinha
+            className="mt-5 text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
           />
           <Reveal atraso={140}>
-            <p className="leitura mt-7 text-[1rem] text-mute">{publico.texto}</p>
+            <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-7">
+              {publico.texto}
+            </p>
           </Reveal>
         </header>
 
-        <div className="mt-14 grid gap-4 lg:grid-cols-2">
-          <Reveal className="card p-7 sm:p-9">
-            <h3 className="mono text-[0.7rem] text-glow">É pra você se…</h3>
-            <ul className="mt-6 space-y-4">
+        <div className="mt-10 grid gap-4 sm:mt-14 lg:grid-cols-2">
+          <Reveal className="card p-6 text-left sm:p-9">
+            <h3 className="mono text-[0.8125rem] text-accent sm:text-[0.7rem]">
+              É pra você se…
+            </h3>
+            <ul className="mt-5 space-y-4 sm:mt-6">
               {publico.eh.map((item) => (
-                <li key={item} className="flex gap-4">
-                  <Check className="mt-0.5 h-5 w-5 text-verde" />
-                  <span className="text-[0.97rem] leading-[1.6] text-ink">{item}</span>
+                <li key={item} className="flex gap-3.5">
+                  <Check className="mt-1 h-5 w-5 text-accent" />
+                  <span className="text-[1rem] leading-[1.55] text-ink">{item}</span>
                 </li>
               ))}
             </ul>
           </Reveal>
 
-          <Reveal atraso={90} className="card border-dashed p-7 sm:p-9">
-            <h3 className="mono text-[0.7rem] text-fraco">Não é pra você se…</h3>
-            <ul className="mt-6 space-y-4">
+          <Reveal atraso={90} className="card border-dashed p-6 text-left sm:p-9">
+            <h3 className="mono text-[0.8125rem] text-fraco sm:text-[0.7rem]">
+              Não é pra você se…
+            </h3>
+            <ul className="mt-5 space-y-4 sm:mt-6">
               {publico.naoEh.map((item) => (
-                <li key={item} className="flex gap-4">
-                  <Xis className="mt-0.5 h-5 w-5 text-fraco" />
-                  <span className="text-[0.97rem] leading-[1.6] text-mute">{item}</span>
+                <li key={item} className="flex gap-3.5">
+                  <Xis className="mt-1 h-5 w-5 text-fraco" />
+                  <span className="text-[1rem] leading-[1.55] text-mute">{item}</span>
                 </li>
               ))}
             </ul>
@@ -59,7 +66,7 @@ export default function Publico() {
         </div>
 
         <Reveal atraso={80}>
-          <p className="mt-10 max-w-[42rem] text-[0.97rem] leading-[1.6] text-mute italic">
+          <p className="mx-auto mt-8 max-w-[42rem] text-center text-[1rem] leading-[1.6] text-mute italic sm:mx-0 sm:mt-10 sm:text-left">
             {publico.remate}
           </p>
         </Reveal>

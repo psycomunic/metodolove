@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { marca, oferta } from "@/lib/content";
+import { ctaBarraFixa, marca, oferta } from "@/lib/content";
 import { Botao } from "./ui";
 
 /**
- * Barra fixa de compra, só no celular.
+ * Barra fixa de compra, só no celular. 64px de altura, preço à esquerda,
+ * botão de compra à direita.
  *
  * Aparece depois do hero (antes disso o CTA do hero está na tela, e duas
  * chamadas iguais competindo é ruído) e some enquanto a seção de oferta está
@@ -41,20 +42,28 @@ export default function StickyCta() {
   return (
     <div
       aria-hidden={!mostra}
-      className={`fixed inset-x-0 bottom-0 z-50 flex items-center justify-between gap-3 border-t border-line bg-void/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-[16px] transition-transform duration-400 ease-out sm:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-50 border-t border-line bg-void/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-[16px] transition-transform duration-400 ease-out sm:hidden ${
         mostra ? "translate-y-0" : "translate-y-full"
       }`}
     >
-      <p className="leading-tight">
-        <span className="placar block text-[1.35rem] text-ink">
-          {oferta.parcelasQtd} {oferta.parcelasValor}
-        </span>
-        <span className="mono text-[0.6rem] text-mute">ou {oferta.preco} à vista</span>
-      </p>
+      {/* `min-w-0` no preço: sem ele o bloco de texto se recusa a encolher e
+          empurra o botão para fora da tela num iPhone SE de 360px, criando
+          rolagem horizontal na página inteira. */}
+      <div className="flex h-16 items-center justify-between gap-3 px-4">
+        <p className="min-w-0 leading-tight">
+          <span className="placar block text-[1.15rem] text-ink">
+            {oferta.parcelasQtd} {oferta.parcelasValor}
+          </span>
+          {/* Só "ou R$ 297,90": a barra tem 64px e uns 146px de texto úteis
+              num aparelho de 360px, e "à vista" não cabe a 13px sem espremer
+              o rótulo abaixo do piso de legibilidade. */}
+          <span className="mono text-[0.8125rem] text-mute">ou {oferta.preco}</span>
+        </p>
 
-      <Botao href={marca.checkout} tamanho="md" className="shrink-0">
-        Quero entrar
-      </Botao>
+        <Botao href={marca.checkout} tamanho="sm" className="shrink-0">
+          {ctaBarraFixa}
+        </Botao>
+      </div>
     </div>
   );
 }

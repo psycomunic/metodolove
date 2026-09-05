@@ -3,12 +3,18 @@
 /* ============================================================
    MÉTODO LLOVE — sistema visual
    ------------------------------------------------------------
-   Direção: navy quase preto, hairlines de 1px no lugar de sombra,
-   e UM acento cromático só. O verde aparece em cinco lugares e em
-   nenhum outro: CTA, uma palavra por manchete, o ponto de "turma
-   aberta", os checks e o glow do hero. Se o verde vazar para fundo
-   de seção, ícone repetido ou texto corrido, ele vira néon e o
-   botão de compra deixa de ser o ponto mais quente da tela.
+   Direção: navy quase preto e hairlines de 1px no lugar de sombra.
+
+   DUAS cores, com papéis que não se cruzam:
+
+   · VERDE (--color-verde) é EXCLUSIVO do botão de compra. Não existe
+     verde em texto, ícone, borda, número, glow ou fundo. Se o verde
+     aparecer em qualquer lugar que não seja clicável e não leve ao
+     checkout, o botão deixa de ser o ponto mais quente da tela e a
+     página converte menos.
+   · AZUL CLARO (--color-accent) é o destaque de leitura: a palavra
+     realçada da manchete, os checks, o dot de turma aberta, a borda
+     do card de bônus, o glow das auroras e o fio de progresso.
    ============================================================ */
 
 @theme {
@@ -26,10 +32,13 @@
   --color-mute: #9aa8bb; /* texto de apoio e labels mono */
   --color-fraco: #64748b; /* metadado, fonte de dado, riscado */
 
-  /* --- O acento. Um só. --- */
-  --color-verde: #22c55e; /* CTA */
-  --color-glow: #7cff6b; /* palavra destacada, glow, dot ao vivo */
+  /* --- Verde: SÓ o botão de compra, em nenhum outro lugar. --- */
+  --color-verde: #22c55e; /* fundo do CTA */
   --color-fundo-verde: #15803d; /* hover do CTA */
+
+  /* --- Azul claro: todo o resto do destaque. --- */
+  --color-accent: #4fa3ff; /* palavra destacada, check, dot, borda */
+  --color-accent-soft: #7cc4ff; /* glow, hover leve, aurora */
 
   /* Areia: herança da marca. Só em fio divisor e eyebrow, nunca em área. */
   --color-areia: #e9d8b4;
@@ -43,6 +52,10 @@
   color-scheme: dark;
   /* Grão de filme. Uma textura só, servida como data URI para não custar
      requisição — ela cobre a página inteira em position:fixed. */
+  /* Apelidos com o nome do briefing, para CSS cru fora do Tailwind. */
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+
   --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -69,7 +82,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-glow);
+  background: var(--accent);
   color: var(--color-void);
 }
 
@@ -168,22 +181,22 @@ body {
     transition: opacity 0.4s ease;
     background: radial-gradient(
       320px circle at var(--mx, 50%) var(--my, 50%),
-      rgba(34, 197, 94, 0.12),
+      rgba(79, 163, 255, 0.14),
       transparent 65%
     );
   }
   .spot:hover {
-    border-color: rgba(34, 197, 94, 0.34);
+    border-color: rgba(79, 163, 255, 0.36);
     background-color: var(--color-card-alto);
   }
   .spot:hover::before {
     opacity: 1;
   }
 
-  /* Contorno vazado para o marquee: metade das palavras é vazada em verde,
+  /* Contorno vazado para o marquee: metade das palavras é vazada em azul,
      metade é branca. Alternar dá ritmo sem acrescentar cor. */
   .contorno {
-    -webkit-text-stroke: 1.5px var(--color-verde);
+    -webkit-text-stroke: 1.5px var(--accent);
     color: transparent;
   }
 
@@ -260,6 +273,49 @@ body {
   .js .linha[data-visivel="true"] > span {
     opacity: 1;
     transform: none;
+  }
+
+  /* Manchete curta que cabe em UMA linha no celular.
+     
+     A largura do texto vem medida em `em` e chega pelo componente na
+     variável --em (ver Manchete, em components/ui.tsx). Com ela dá para
+     resolver em CSS puro o que normalmente exigiria medir o texto em
+     JavaScript: o corpo da fonte encolhe até o título caber na coluna.
+     
+     Só vale abaixo de sm. No desktop essas manchetes voltam a quebrar em
+     linhas, porque lá elas dividem a largura com uma segunda coluna e o
+     nowrap estouraria a grade. */
+  @media (width < 40rem) {
+    /* `.flui`: no celular as quebras escritas à mão somem e o texto corre
+       natural, achando sozinho onde quebrar.
+
+       Serve às manchetes LONGAS. As quebras autorais foram pensadas para a
+       largura do desktop; repetidas numa coluna de 320px, cada uma delas
+       ainda quebra por conta própria e a manchete vira cinco linhas. Correndo
+       solto, o mesmo texto fecha em três. */
+    .flui .linha,
+    .flui .linha > span {
+      display: inline;
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+    }
+
+    .curta {
+      white-space: nowrap;
+      /* 3rem = os 20px de padding de cada lado, mais 8px de folga. */
+      font-size: min(3rem, calc((100vw - 3rem) / var(--em)));
+    }
+    /* Na versão de uma linha os blocos de máscara viram texto corrido.
+       Transform não se aplica a elemento inline, então a entrada degrada
+       para fade, que é o comportamento correto aqui. */
+    .curta .linha,
+    .curta .linha > span {
+      display: inline;
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   /* Marquee dos pilares. Duas cópias da lista, uma translação de -50%: o

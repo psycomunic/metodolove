@@ -14,7 +14,7 @@ import { urgencia } from "@/lib/content";
 export default function BarraUrgencia() {
   return (
     <div className="border-b border-line bg-card">
-      <p className="mono mx-auto max-w-[74rem] px-5 py-2.5 text-center text-[0.66rem] leading-[1.7] text-mute normal-case sm:px-8 sm:text-[0.72rem]">
+      <p className="mx-auto max-w-[74rem] px-5 py-2.5 text-center text-[0.875rem] leading-[1.6] text-mute sm:px-8 sm:text-[0.82rem]">
         {urgencia}
       </p>
     </div>

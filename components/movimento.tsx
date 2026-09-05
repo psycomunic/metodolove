@@ -114,6 +114,10 @@ export function LinhasReveal({
           style={{ "--atraso": `${atrasoBase + i * passo}ms` } as React.CSSProperties}
         >
           <span>{linha}</span>
+          {/* O espaço só aparece no modo de uma linha do celular (.curta), onde
+              os blocos viram texto corrido e as palavras colariam. Enquanto
+              cada linha é um bloco, ele não ocupa nada. */}
+          {i < linhas.length - 1 ? " " : null}
         </span>
       ))}
     </span>
@@ -231,7 +235,7 @@ export function BarraProgresso() {
     <div className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[2px]">
       <div
         ref={ref}
-        className="h-full origin-left bg-verde"
+        className="h-full origin-left bg-accent"
         style={{ transform: "scaleX(0)" }}
       />
     </div>

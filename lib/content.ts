@@ -64,8 +64,9 @@ export const hero = {
   /**
    * Manchete, opção A (no ar).
    *
-   * A palavra em verde é a promessa, e é a ÚNICA da manchete. Duas palavras
-   * destacadas viram zebra e nenhuma destaca.
+   * A palavra em azul é a promessa, e é a ÚNICA destacada da manchete. Duas
+   * viram zebra e nenhuma destaca. Verde não entra aqui: verde na página é só
+   * o botão de compra.
    *
    * Variantes guardadas para teste A/B, não apague:
    *   B: linhas ["Tem professor que dá aula.", "E tem professor que tem"] +
@@ -422,7 +423,7 @@ export const ctaFinal = {
   linhaDestaque: "método.",
   texto:
     "A areia vai continuar crescendo. Arena nova vai continuar abrindo. A pergunta é se, daqui a um ano, você vai ser o professor que a cidade conhece pelo nome ou o cara que ainda improvisa. O Charllove levou anos e três escolas pra organizar isso. Você leva um fim de semana.",
-  cta: "Entrar no Método LLOVE",
+  cta: "Garantir minha vaga agora",
   microcopy:
     "12x de R$ 30,81 ou R$ 297,90 à vista · 7 dias de garantia · 12 meses de acesso",
 };
@@ -430,6 +431,14 @@ export const ctaFinal = {
 /* ------------------------------------------------------------------ */
 /*  NAVEGAÇÃO                                                          */
 /* ------------------------------------------------------------------ */
+/**
+ * A página não tem login nem área de aluno: TODO botão daqui leva ao
+ * checkout. Nenhum rótulo pode sugerir "entrar", "acessar" ou "login", que
+ * prometem uma porta que não existe e furam a expectativa de quem clica.
+ */
+export const ctaNav = "Garantir minha vaga";
+export const ctaBarraFixa = "Garantir vaga";
+
 export const menu = [
   { rotulo: "O método", href: "#metodo" },
   { rotulo: "Quem ensina", href: "#charllove" },

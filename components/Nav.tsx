@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { marca, menu } from "@/lib/content";
+import { ctaNav, marca, menu } from "@/lib/content";
 import { Botao } from "./ui";
 
 /**
@@ -15,6 +15,11 @@ import { Botao } from "./ui";
  *
  * Translúcida no topo, sólida ao rolar: sobre o hero ela some no fundo, e
  * sobre texto ela ganha corpo para não deixar palavra passando por baixo.
+ *
+ * No celular ela é só logo mais botão de compra. Sem hambúrguer: o menu tem
+ * quatro âncoras da própria página, e numa landing de rolagem única um menu
+ * escondido atrás de um ícone só acrescenta um toque para chegar onde a
+ * rolagem já leva.
  */
 export default function Nav() {
   const [rolou, setRolou] = useState(false);
@@ -29,18 +34,18 @@ export default function Nav() {
   return (
     <div className="sticky top-3 z-50 px-3 sm:top-4 sm:px-5">
       <div
-        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-4 rounded-full border border-line px-3 py-2 backdrop-blur-[16px] transition-colors duration-500 sm:px-4 ${
+        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border border-line px-3 py-2 backdrop-blur-[16px] transition-colors duration-500 sm:gap-4 sm:px-4 ${
           rolou ? "bg-navy/92" : "bg-navy/55"
         }`}
       >
-        <a href="#topo" className="shrink-0 pl-1.5" aria-label={marca.nome}>
+        <a href="#topo" className="shrink-0 pl-1" aria-label={marca.nome}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo-llove.png"
             alt={marca.nome}
             width={360}
             height={64}
-            className="h-6 w-auto sm:h-7"
+            className="h-5 w-auto sm:h-7"
           />
         </a>
 
@@ -57,8 +62,7 @@ export default function Nav() {
         </nav>
 
         <Botao href={marca.checkout} tamanho="sm" className="shrink-0">
-          <span className="hidden sm:inline">Entrar no método</span>
-          <span className="sm:hidden">Entrar</span>
+          {ctaNav}
         </Botao>
       </div>
     </div>
