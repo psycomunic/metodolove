@@ -8,12 +8,17 @@ import { Manchete, Olho } from "./ui";
 /**
  * Carrossel de depoimentos em vídeo.
  *
- * A SEÇÃO SOME QUANDO NÃO HÁ DEPOIMENTO. Não é degradação, é o estado
- * correto: hoje `depoimentos` em lib/content.ts está vazio de propósito, e a
- * barra de urgência do topo vende exatamente essa ausência ("quando entrarem
- * os depoimentos, o preço sobe"). Uma fita de cards vazios, ou com nome
- * inventado "só para visualizar", desmentiria a barra na mesma tela e
- * derrubaria o único argumento que essa página tem de diferente.
+ * DUAS COLUNAS no desktop, texto à esquerda e fita à direita, como a seção do
+ * mecanismo. Empilhado, o card 9:16 empurrava o "filtro" para quase uma tela
+ * inteira abaixo da manchete, e a fita chegava sem o texto que a explica.
+ * Abaixo de lg vira uma coluna só, porque duas não cabem em 360px.
+ *
+ * SEM DEPOIMENTO, a fita mostra QUADROS VAZIOS e a seção troca de manchete.
+ * Hoje `depoimentos` em lib/content.ts está vazio de propósito, e a barra de
+ * urgência do topo vende exatamente essa ausência ("quando entrarem os
+ * depoimentos, o preço sobe"). Um card com nome inventado "só para
+ * visualizar" desmentiria a barra na mesma tela e derrubaria o único
+ * argumento que essa página tem de diferente.
  *
  * ROLAGEM NATIVA, sem biblioteca. `overflow-x` com `scroll-snap` no CSS faz o
  * arrasto no celular de graça, funciona com teclado e com leitor de tela, e
@@ -26,6 +31,19 @@ import { Manchete, Olho } from "./ui";
  * Vertical (9:16) porque é como o professor grava no celular, e `preload`
  * fica em "none": o vídeo só baixa quando alguém escolhe assistir.
  */
+
+/**
+ * Largura de um item da fita, igual para o card de vídeo e para o quadro
+ * vazio: se os dois divergirem, o scroll-snap passa a parar em lugares
+ * diferentes conforme a lista esteja cheia ou vazia.
+ *
+ * No desktop a fita divide a seção com o texto, então o card encolhe de
+ * 19rem para 15rem: em 19rem, a 9:16 daria 540px de altura numa coluna de
+ * meia largura, e o card sozinho ficaria mais alto que a manchete inteira
+ * ao lado dele.
+ */
+const LARGURA_CARD =
+  "w-[78vw] max-w-[19rem] shrink-0 snap-start sm:w-[17rem] lg:w-[15rem] xl:w-[16rem]";
 
 /**
  * Um card.
@@ -65,7 +83,7 @@ function CardDepoimento({
   };
 
   return (
-    <li className="w-[78vw] max-w-[19rem] shrink-0 snap-start sm:w-[17rem] lg:w-[19rem]">
+    <li className={LARGURA_CARD}>
       <figure className="card flex h-full flex-col overflow-hidden p-0">
         <div className="relative aspect-[9/16] w-full bg-void">
           <video
@@ -124,10 +142,7 @@ function CardDepoimento({
  */
 function QuadroVazio({ n }: { n: number }) {
   return (
-    <li
-      aria-hidden="true"
-      className="w-[78vw] max-w-[19rem] shrink-0 snap-start sm:w-[17rem] lg:w-[19rem]"
-    >
+    <li aria-hidden="true" className={LARGURA_CARD}>
       <div className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-dashed border-line-forte bg-card p-6">
         <div className="flex aspect-[9/16] w-full flex-col items-center justify-center gap-4 text-center">
           <svg
@@ -260,7 +275,10 @@ export default function Depoimentos() {
       id="depoimentos"
       className="border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
-      <div className="mx-auto max-w-[80rem]">
+      {/* `lg:items-center` e não `items-start`: a fita é bem mais alta que o
+          texto, e alinhada pelo topo ela deixaria um buraco embaixo da
+          manchete do tamanho de meia coluna. */}
+      <div className="mx-auto grid max-w-[80rem] gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
         <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
             <Olho>{copy.olho}</Olho>
@@ -280,10 +298,14 @@ export default function Depoimentos() {
         </header>
 
         <Reveal atraso={200}>
-          <div className="mt-10 sm:mt-14">
+          {/* A margem de cima é só do empilhado. Em duas colunas o `gap` do
+              grid já separa, e um `mt` aqui empurraria a fita para fora do
+              alinhamento com o texto ao lado. */}
+          <div className="mt-0 sm:mt-4 lg:mt-0">
             {/* `-mx-5` e o padding de volta: a fita sangra até a borda da tela
                 no celular, senão o card seguinte fica escondido e ninguém
-                descobre que dá para arrastar. */}
+                descobre que dá para arrastar. Some no lg, onde a fita passa a
+                viver dentro da própria coluna. */}
             <ul
               ref={fita}
               className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
