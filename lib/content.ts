@@ -348,6 +348,14 @@ export const publico = {
   linhasFim: ["é pra todo mundo."],
   texto:
     "Se você se reconhecer na lista da esquerda, o método foi feito pra você. Se se reconhecer na da direita, economize seu dinheiro.",
+  /* Rótulos das duas colunas. Estavam escritos dentro do componente, o que
+     tirava do cliente a chance de mudá-los sem abrir código. */
+  ehRotulo: "É pra você se…",
+  naoEhRotulo: "Não é pra você se…",
+  /* Sufixo do contador de cada coluna: "5 sinais", "3 sinais". O número sai
+     do tamanho da lista, nunca escrito à mão, senão vira mentira na primeira
+     vez que alguém acrescentar um item. */
+  contagem: "sinais",
   eh: [
     "Já dá aula e sente que está improvisando a cada turma",
     "Joga bem, vai começar a ensinar e não quer aprender na marra",
@@ -362,8 +370,12 @@ export const publico = {
     "Procura promessa de “R$ 10 mil no primeiro mês”. Não existe, e a gente não vende isso.",
     "Quer só assistir vídeo. O método funciona pra quem aplica na próxima aula.",
   ],
+  /* A frase mais humana da página, e por isso vira citação assinada, com o
+     traço de areia do lado. A assinatura não inventa nada: a página inteira
+     é escrita na primeira pessoa dele. */
   remate:
     "Prefiro perder a venda a te vender uma expectativa que a areia não vai cumprir.",
+  remateAssinatura: "Charllove",
 };
 
 /* ------------------------------------------------------------------ */
