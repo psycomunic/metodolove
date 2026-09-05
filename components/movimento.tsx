@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 /* ------------------------------------------------------------------ *
- *  Regras de movimento (ver .agents/skills/refero-design/references/motion.md)
+ *  Regras de movimento
  *  — Toda animação serve a feedback, continuidade ou hierarquia.
  *  — Nada passa de 900ms; nada usa easing linear.
- *  — prefers-reduced-motion desliga parallax por completo.
+ *  — prefers-reduced-motion desliga máscara, ímã, contador e marquee.
+ *    Sobra o fade, que o CSS já resolve sozinho.
  * ------------------------------------------------------------------ */
 
 export function useMovimentoReduzido() {
@@ -22,133 +23,97 @@ export function useMovimentoReduzido() {
 }
 
 /**
- * Progresso do elemento pela viewport, de 0 (entrando por baixo)
- * a 1 (saindo por cima). Atualiza dentro de rAF, num único listener.
- *
- * O hook cria o próprio ref e devolve junto: passar um ref como argumento
- * durante o render deixa o React sem garantia de quando ele será lido.
+ * Dispara uma vez quando o elemento entra na viewport.
+ * Devolve o próprio ref: passar um ref por argumento durante o render deixa
+ * o React sem garantia de quando ele será lido.
  */
-function useProgresso<T extends HTMLElement>(ativo: boolean) {
+function useNaTela<T extends HTMLElement>(threshold = 0.05) {
   const ref = useRef<T>(null);
-  const [progresso, setProgresso] = useState(0);
-
-  useEffect(() => {
-    if (!ativo) return;
-    const el = ref.current;
-    if (!el) return;
-
-    let quadro = 0;
-    const medir = () => {
-      quadro = 0;
-      const r = el.getBoundingClientRect();
-      const alcance = window.innerHeight + r.height;
-      const p = (window.innerHeight - r.top) / alcance;
-      setProgresso(Math.min(1, Math.max(0, p)));
-    };
-    const agendar = () => {
-      if (!quadro) quadro = requestAnimationFrame(medir);
-    };
-
-    medir();
-    window.addEventListener("scroll", agendar, { passive: true });
-    window.addEventListener("resize", agendar);
-    return () => {
-      if (quadro) cancelAnimationFrame(quadro);
-      window.removeEventListener("scroll", agendar);
-      window.removeEventListener("resize", agendar);
-    };
-  }, [ativo]);
-
-  return { ref, progresso };
-}
-
-export function Deriva({
-  children,
-  velocidade = 40,
-  className = "",
-}: {
-  children: ReactNode;
-  velocidade?: number;
-  className?: string;
-}) {
-  const reduzido = useMovimentoReduzido();
-  const { ref, progresso } = useProgresso<HTMLDivElement>(!reduzido);
-
-  return (
-    <div
-      ref={ref}
-      className={`will-change-transform ${className}`}
-      style={
-        reduzido
-          ? undefined
-          : {
-              transform: `translate3d(0, ${((progresso - 0.5) * velocidade).toFixed(2)}px, 0)`,
-            }
-      }
-    >
-      {children}
-    </div>
-  );
-}
-
-/**
- * Manchete revelada linha a linha, cada uma subindo de dentro da própria
- * caixa. Serve a hierarquia: a ordem de leitura fica explícita.
- */
-export function LinhasReveal({
-  linhas,
-  className = "",
-  atrasoBase = 80,
-  passo = 110,
-}: {
-  linhas: ReactNode[];
-  className?: string;
-  atrasoBase?: number;
-  passo?: number;
-}) {
-  const ref = useRef<HTMLHeadingElement>(null);
   const [dentro, setDentro] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
           setDentro(true);
           obs.disconnect();
         }
       },
-      { threshold: 0.15 },
+      { rootMargin: "0px 0px -8% 0px", threshold },
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [threshold]);
+
+  return { ref, dentro };
+}
+
+/**
+ * Entrada de bloco: desfoca e sobe até ficar nítido. O blur é o que
+ * diferencia de um fade comum, porque o bloco "entra em foco" em vez de
+ * simplesmente aparecer. A regra visual mora em .reveal, no globals.css.
+ */
+export function Reveal({
+  children,
+  atraso = 0,
+  className = "",
+  as: Tag = "div",
+}: {
+  children: ReactNode;
+  atraso?: number;
+  className?: string;
+  as?: "div" | "section" | "li" | "article" | "header" | "p" | "figure";
+}) {
+  const { ref, dentro } = useNaTela<HTMLElement>();
+  const Comp = Tag as React.ElementType;
+
+  return (
+    <Comp
+      ref={ref as React.Ref<never>}
+      className={`reveal ${className}`}
+      data-visivel={dentro}
+      style={{ "--atraso": `${atraso}ms` } as React.CSSProperties}
+    >
+      {children}
+    </Comp>
+  );
+}
+
+/**
+ * Manchete revelada linha a linha, cada uma subindo de dentro da própria
+ * caixa. Serve a hierarquia: a ordem de leitura fica explícita.
+ *
+ * O estado escondido NÃO é escrito aqui em style inline, e sim em CSS atrás
+ * da classe `.js` (ver .linha em globals.css). Se ele viesse daqui, o HTML
+ * que sai do servidor já traria a manchete com opacity 0, e qualquer falha de
+ * hidratação deixaria a página de vendas em branco. O que fica inline é só o
+ * atraso de cada linha, que é inofensivo sem JavaScript.
+ */
+export function LinhasReveal({
+  linhas,
+  className = "",
+  atrasoBase = 60,
+  passo = 80,
+}: {
+  linhas: ReactNode[];
+  className?: string;
+  atrasoBase?: number;
+  passo?: number;
+}) {
+  const { ref, dentro } = useNaTela<HTMLSpanElement>(0.15);
 
   return (
     <span ref={ref} className={className}>
-      {/*
-        A máscara precisa de folga em cima (acentos de VOCÊ/JÁ, que ficam acima
-        da altura de caixa alta) e embaixo (o rabisco laranja). As margens
-        negativas devolvem o espaço para o fluxo do texto.
-      */}
       {linhas.map((linha, i) => (
         <span
           key={i}
-          className="-mt-[0.2em] -mb-[0.42em] block overflow-hidden pt-[0.2em] pb-[0.42em]"
+          className="linha"
+          data-visivel={dentro}
+          style={{ "--atraso": `${atrasoBase + i * passo}ms` } as React.CSSProperties}
         >
-          <span
-            className="block will-change-transform"
-            style={{
-              transform: dentro ? "translateY(0)" : "translateY(105%)",
-              opacity: dentro ? 1 : 0,
-              transition:
-                "transform 780ms cubic-bezier(0.16,1,0.3,1), opacity 500ms ease-out",
-              transitionDelay: `${atrasoBase + i * passo}ms`,
-            }}
-          >
-            {linha}
-          </span>
+          <span>{linha}</span>
         </span>
       ))}
     </span>
@@ -156,25 +121,26 @@ export function LinhasReveal({
 }
 
 /**
- * Placar que sobe até o valor. Só faz sentido em número —
- * dá a sensação de marcador de quadra girando.
+ * Número que sobe até o valor ao entrar na tela. Só faz sentido em dado de
+ * mercado: dá a sensação de contador de placar girando e prende o olho no
+ * número, que é o argumento da seção.
  */
 export function Contador({
   valor,
-  decimais = 0,
-  pad = 0,
-  duracao = 1100,
+  prefixo = "",
+  sufixo = "",
+  duracao = 1200,
 }: {
   valor: number;
-  decimais?: number;
-  pad?: number;
+  prefixo?: string;
+  sufixo?: string;
   duracao?: number;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const reduzido = useMovimentoReduzido();
   const [animado, setAnimado] = useState(0);
 
-  // Com movimento reduzido o número já sai pronto — derivado, não gravado
+  // Com movimento reduzido o número já sai pronto, derivado e não gravado
   // dentro de um efeito, que dispararia um render em cascata.
   const atual = reduzido ? valor : animado;
 
@@ -191,7 +157,7 @@ export function Contador({
         const inicio = performance.now();
         const passo = (agora: number) => {
           const t = Math.min(1, (agora - inicio) / duracao);
-          // desaceleração — o placar chega e para, não bate e volta
+          // desaceleração: o placar chega e para, não bate e volta
           setAnimado(valor * (1 - Math.pow(1 - t, 3)));
           if (t < 1) quadro = requestAnimationFrame(passo);
         };
@@ -206,67 +172,126 @@ export function Contador({
     };
   }, [valor, duracao, reduzido]);
 
-  const texto = atual.toLocaleString("pt-BR", {
-    minimumFractionDigits: decimais,
-    maximumFractionDigits: decimais,
-  });
-
-  return <span ref={ref}>{pad ? texto.padStart(pad, "0") : texto}</span>;
+  return (
+    <span ref={ref}>
+      {prefixo}
+      {Math.round(atual).toLocaleString("pt-BR")}
+      {sufixo}
+    </span>
+  );
 }
 
 /**
- * Foto que se abre por máscara ao entrar na tela, em vez de só surgir.
- * Continuidade: a imagem "chega" no lugar dela.
+ * Spotlight do card: devolve o handler que grava a posição do cursor em
+ * --mx/--my. O gradiente e a borda que acendem moram em .spot, no CSS, então
+ * sem JS o card continua legível: ele só não acende.
  */
-export function Desmascara({
-  children,
-  className = "",
-  atraso = 0,
-}: {
-  children: ReactNode;
-  className?: string;
-  atraso?: number;
-}) {
+export function useSpotlight() {
+  return useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const alvo = e.currentTarget;
+    const r = alvo.getBoundingClientRect();
+    alvo.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    alvo.style.setProperty("--my", `${e.clientY - r.top}px`);
+  }, []);
+}
+
+/**
+ * Fio de progresso de leitura, 2px no topo. Numa página longa de vendas ele
+ * responde a "quanto falta", que é a pergunta que faz a pessoa desistir no
+ * meio. Escala em X, sem layout: só compositing.
+ */
+export function BarraProgresso() {
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let quadro = 0;
+    const medir = () => {
+      quadro = 0;
+      const el = ref.current;
+      if (!el) return;
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const p = total > 0 ? Math.min(1, Math.max(0, window.scrollY / total)) : 0;
+      el.style.transform = `scaleX(${p})`;
+    };
+    const agendar = () => {
+      if (!quadro) quadro = requestAnimationFrame(medir);
+    };
+
+    medir();
+    window.addEventListener("scroll", agendar, { passive: true });
+    window.addEventListener("resize", agendar);
+    return () => {
+      if (quadro) cancelAnimationFrame(quadro);
+      window.removeEventListener("scroll", agendar);
+      window.removeEventListener("resize", agendar);
+    };
+  }, []);
+
+  return (
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-[70] h-[2px]">
+      <div
+        ref={ref}
+        className="h-full origin-left bg-verde"
+        style={{ transform: "scaleX(0)" }}
+      />
+    </div>
+  );
+}
+
+/**
+ * Ímã do CTA: o botão persegue o cursor dentro de um raio curto e volta
+ * sozinho ao sair. Serve a feedback, e só existe onde há cursor. Em toque o
+ * evento nunca dispara, e com movimento reduzido nem os handlers são presos.
+ *
+ * A transformação é escrita direto no nó, fora do React: um setState por
+ * mousemove derrubaria o quadro numa página com quatro seções animadas.
+ */
+export function useIma<T extends HTMLElement>(forca = 0.28) {
+  const ref = useRef<T>(null);
   const reduzido = useMovimentoReduzido();
-  const [dentro, setDentro] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setDentro(true);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.12 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+    if (!el || reduzido) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
 
-  // Movimento reduzido: sem máscara, só a imagem no lugar.
-  if (reduzido) return <div className={className}>{children}</div>;
+    let quadro = 0;
+    let alvoX = 0;
+    let alvoY = 0;
 
-  return (
-    /*
-      O observador fica NO ELEMENTO DE FORA, sem recorte.
-      O clip-path vai no filho: um elemento recortado a 100% tem área
-      visível zero, e o IntersectionObserver nunca dispararia nele.
-    */
-    <div ref={ref} className={className}>
-      <div
-        className="h-full w-full will-change-[clip-path]"
-        style={{
-          clipPath: dentro ? "inset(0 0 0% 0)" : "inset(0 0 100% 0)",
-          transition: "clip-path 900ms cubic-bezier(0.16,1,0.3,1)",
-          transitionDelay: `${atraso}ms`,
-        }}
-      >
-        {children}
-      </div>
-    </div>
-  );
+    const aplicar = () => {
+      quadro = 0;
+      el.style.transform = `translate3d(${alvoX.toFixed(2)}px, ${alvoY.toFixed(2)}px, 0)`;
+    };
+    const agendar = () => {
+      if (!quadro) quadro = requestAnimationFrame(aplicar);
+    };
+
+    const mover = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      alvoX = (e.clientX - (r.left + r.width / 2)) * forca;
+      alvoY = (e.clientY - (r.top + r.height / 2)) * forca;
+      el.style.transition = "transform 120ms ease-out";
+      agendar();
+    };
+    const sair = () => {
+      alvoX = 0;
+      alvoY = 0;
+      // volta em mola: overshoot curto, sem balançar duas vezes
+      el.style.transition = "transform 520ms cubic-bezier(0.34,1.56,0.64,1)";
+      agendar();
+    };
+
+    el.addEventListener("mousemove", mover);
+    el.addEventListener("mouseleave", sair);
+    return () => {
+      if (quadro) cancelAnimationFrame(quadro);
+      el.removeEventListener("mousemove", mover);
+      el.removeEventListener("mouseleave", sair);
+      el.style.transform = "";
+      el.style.transition = "";
+    };
+  }, [forca, reduzido]);
+
+  return ref;
 }

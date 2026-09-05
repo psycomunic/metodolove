@@ -1,80 +1,76 @@
 import { autor, marca } from "@/lib/content";
-import { LinhaDagua } from "./art";
-import { Desmascara, Deriva } from "./movimento";
-import { Foto, Reveal, Rotulo } from "./ui";
+import { Reveal } from "./movimento";
+import { Foto, Manchete, Olho } from "./ui";
 
+/**
+ * Quem ensina.
+ *
+ * A foto ocupa a coluna esquerda inteira e é tratada em duotone navy, como
+ * toda imagem da página, para não abrir um buraco colorido no meio do
+ * sistema. A citação é a tese do produto em uma linha e por isso vem em
+ * display, não em itálico de blockquote.
+ */
 export default function Autor() {
   return (
     <section
       id="charllove"
-      className="grao relative overflow-hidden bg-noite-950 py-11 text-areia-100 sm:py-20"
+      className="border-t border-line px-5 py-20 sm:px-8 sm:py-28 lg:py-32"
     >
-      <Deriva velocidade={50} className="absolute inset-x-0 top-12">
-        <LinhaDagua className="balanca h-6 w-full text-noite-600" />
-      </Deriva>
+      <div className="mx-auto grid max-w-[80rem] gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-20">
+        <Reveal className="lg:sticky lg:top-28">
+          <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-line">
+            <Foto
+              src={autor.foto}
+              alt={`${autor.nome}, criador do ${marca.nome}`}
+              arte={autor.fotoArte}
+              desbota={false}
+            />
+          </div>
+          <p className="mono mt-5 text-[0.7rem] text-mute">{marca.instagramHandle}</p>
+        </Reveal>
 
-      <div className="relative z-10 mx-auto max-w-[80rem] px-5 sm:px-8">
-        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-end lg:gap-20">
-          <Reveal className="mx-auto w-full max-w-[21rem] lg:max-w-none">
-            {/* Colagem fornecida pelo cliente: DECA 7, pódio, quadra e aula.
-                Vale mais que um retrato porque mostra o percurso, que é
-                exatamente o que o texto ao lado conta. */}
-            <Desmascara className="elevado relative aspect-2/3 overflow-hidden">
-              <Foto
-                src={autor.foto}
-                alt={`${autor.nome}, criador do ${marca.nome}`}
-                arte={autor.fotoArte}
-              />
-            </Desmascara>
-            <p className="rotulo mt-5 text-noite-500">{marca.instagramHandle}</p>
+        <div>
+          <Reveal>
+            <Olho>{autor.olho}</Olho>
           </Reveal>
 
-          <div>
-            <Reveal>
-              <Rotulo tom="claro">{autor.olho}</Rotulo>
-            </Reveal>
-            <Reveal atraso={70}>
-              <h2 className="display mt-6 text-[clamp(2.34rem,7.02vw,4.06rem)] text-areia-50">
-                {autor.nome}
-              </h2>
-              <p className="mt-3 text-[0.88rem] font-semibold text-bruma-300">
-                {autor.cargo}
-              </p>
-            </Reveal>
+          <Manchete
+            linhas={autor.linhas}
+            destaque={autor.linhaDestaque}
+            className="mt-6 text-[clamp(2.25rem,5.4vw,4rem)] text-ink"
+          />
 
-            <div className="mt-7 max-w-[38rem] space-y-4 sm:mt-9 sm:space-y-5">
-              {autor.paragrafos.map((p, i) => (
-                <Reveal as="p" key={i} atraso={120 + i * 70}>
-                  <span
-                    className={
-                      i === 0
-                        ? "block text-[1.04rem] leading-[1.5] font-medium text-areia-100 sm:text-[1.16rem] sm:leading-[1.58]"
-                        : "block text-[0.93rem] leading-[1.58] text-areia-200/72 sm:text-[0.99rem] sm:leading-[1.72]"
-                    }
-                  >
-                    {p}
-                  </span>
-                </Reveal>
-              ))}
-            </div>
-
-            {/* A tese do produto na voz dele. Fica DEPOIS da história porque
-                só faz sentido depois de saber de onde ele veio: é a conclusão
-                da trajetória, não uma frase de efeito solta. */}
-            <Reveal atraso={330}>
-              <blockquote className="mt-8 border-l-[3px] border-sol-500 pl-4 sm:mt-10 sm:pl-5">
-                <p className="display text-[clamp(1.3rem,3vw,1.85rem)] text-areia-50">
-                  {autor.citacao}
-                </p>
-              </blockquote>
-            </Reveal>
-
-            <Reveal atraso={400}>
-              <p className="display mt-8 border-t border-noite-800 pt-6 text-[1.6rem] text-noite-500">
-                {autor.assinatura}
-              </p>
-            </Reveal>
+          <div className="mt-8 space-y-5">
+            {autor.paragrafos.map((p, i) => (
+              <Reveal key={i} atraso={i * 60} as="p">
+                <span className="block max-w-[40rem] text-[1rem] leading-[1.66] text-mute">
+                  {p}
+                </span>
+              </Reveal>
+            ))}
           </div>
+
+          <Reveal atraso={80}>
+            <blockquote className="mt-10 border-l-2 border-verde pl-6">
+              <p className="display text-[clamp(1.3rem,2.8vw,1.9rem)] text-ink">
+                “{autor.citacao}”
+              </p>
+              <cite className="mono mt-4 block text-[0.66rem] text-mute not-italic">
+                {autor.nome}
+              </cite>
+            </blockquote>
+          </Reveal>
+
+          <Reveal atraso={120}>
+            <ul className="mono mt-10 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-6 text-[0.62rem] text-fraco">
+              {autor.credenciais.map((c, i) => (
+                <li key={c} className="flex items-center gap-3">
+                  {i > 0 ? <span aria-hidden="true">·</span> : null}
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </div>
     </section>

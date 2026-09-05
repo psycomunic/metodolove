@@ -1,39 +1,53 @@
 import Autor from "@/components/Autor";
-import Bonus from "@/components/Bonus";
+import BarraUrgencia from "@/components/BarraUrgencia";
 import CtaFinal from "@/components/CtaFinal";
-import Depoimentos from "@/components/Depoimentos";
-import Faixa from "@/components/Faixa";
+import Dor from "@/components/Dor";
 import Faq from "@/components/Faq";
 import Hero from "@/components/Hero";
-import Metodo from "@/components/Metodo";
+import Marquee from "@/components/Marquee";
+import Mecanismo from "@/components/Mecanismo";
+import Mercado from "@/components/Mercado";
+import Modulos from "@/components/Modulos";
+import { BarraProgresso } from "@/components/movimento";
 import Nav from "@/components/Nav";
 import Oferta from "@/components/Oferta";
-import Problema from "@/components/Problema";
 import Publico from "@/components/Publico";
 import Rodape from "@/components/Rodape";
+import StickyCta from "@/components/StickyCta";
 
 /**
- * Ordem da página: o problema e a história vêm ANTES do conteúdo do curso.
- * Quem chega do Instagram precisa se reconhecer antes de ver módulos.
+ * Ordem da página.
+ *
+ * Dor antes de mercado, mercado antes de mecanismo, mecanismo antes de
+ * módulos: quem chega do Instagram precisa se reconhecer no problema, ver que
+ * ele tem tamanho de mercado e entender POR QUE este produto resolve, antes
+ * de olhar a lista do que vem na caixa. Índice não vende; reconhecimento sim.
+ *
+ * A oferta vem depois do filtro (pra quem é / não é) de propósito: a última
+ * coisa que a pessoa lê antes do preço é o convite para desistir. Quem passa
+ * por esse filtro e chega no botão compra com muito menos reembolso.
  */
 export default function Home() {
   return (
     <>
+      <BarraProgresso />
+      <BarraUrgencia />
       <Nav />
       <main>
         <Hero />
-        <Problema />
+        <Marquee />
+        <Dor />
+        <Mercado />
+        <Mecanismo />
+        <Modulos />
         <Autor />
-        <Faixa />
-        <Metodo />
         <Publico />
-        <Bonus />
-        <Depoimentos />
         <Oferta />
         <Faq />
         <CtaFinal />
       </main>
       <Rodape />
+      <StickyCta />
     </>
   );
 }

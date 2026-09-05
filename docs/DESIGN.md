@@ -1,325 +1,176 @@
 # Método LLOVE — direção de design
 
-Pesquisa: o MCP da Refero (`api.refero.design/mcp`) foi adicionado ao projeto, mas exige
-login OAuth interativo, indisponível numa sessão remota. Seguimos o caminho de fallback
-previsto na própria skill: craft references empacotadas + briefing do cliente, com o mesmo
-workflow de _reference lock_.
+Redesign de set/2026. Substitui a direção anterior ("cartaz de torneio": areia clara,
+marinho saturado, arcos concêntricos, laranja no CTA, verde-lima como terceira voz).
+O que motivou a troca está em [Por que a direção mudou](#por-que-a-direção-mudou).
 
 ## Briefing
 
-    Landing page de venda do Método LLOVE (curso de futevôlei) para jogadores brasileiros
-    amadores e semiprofissionais, em web.
-    Objetivo: comprar o curso (R$ 297,90).
-    Tom: atlético, solar, direto. Suor e areia, não sala de aula.
-    Objeção principal: "já jogo há anos, isso vai ser básico" / "vídeo não me faz evoluir".
-    Precisa lembrar: o Rio — Pão de Açúcar, mar, areia de Copacabana.
-    Restrições do cliente: azul + cor de areia; referências do Rio; não pode parecer IA.
+    Landing page de venda do Método LLOVE, formação para PROFESSORES de futevôlei.
+    Objetivo: comprar o curso (12x de R$ 30,81 ou R$ 297,90 à vista).
+    Público: quem já dá aula e improvisa, e quem joga bem e vai começar a ensinar.
+    Tom: direto, honesto, coloquial. Sem promessa de renda, sem contador falso.
+    Objeção principal: "eu já jogo bem, o que é que esse curso me acrescenta?"
+    Restrição inegociável: ZERO laranja. O acento cromático é verde, e só ele.
 
 ## Reference lock
 
-**Referência travada pelo cliente (set/2026).** O cliente reprovou a primeira execução —
-areia clara, azul contido, laranja racionado — e entregou como referência um cartaz de
-campeonato de vôlei de praia: marinho saturado, arcos concêntricos irradiando dos cantos,
-manchete em blocos de cor chapada levemente inclinados, verde-lima elétrico como terceira
-voz e laranja em área grande. A direção ("cartaz de torneio") estava certa; **a saturação e
-o vocabulário de forma estavam tímidos demais**. É isso que esta revisão corrige.
+Dark SaaS premium cruzado com esporte: Linear, Mercury e Auros para a superfície e a
+disciplina de hairline; WHOOP e Nike para a energia esportiva e o peso da manchete
+condensada. O que essas referências têm em comum, e que é o coração deste sistema:
+**profundidade por tom, não por sombra**, e **um acento cromático só**.
 
-Traduzir cartaz para página exige um ajuste que a referência não resolve sozinha: o cartaz é
-lido num golpe de olho, a página tem doze seções de leitura. Por isso o sistema tem **ritmo** —
-a intensidade máxima aparece no hero, na faixa, na oferta e no CTA final; as seções de leitura
-usam papel quente e recebem a cor só na manchete. Aplicar o cartaz inteiro em toda seção
-torna o texto ilegível e apaga o botão de compra, que é o oposto do objetivo.
+---
 
-**Direção primária — cartaz de torneio / transmissão esportiva.** Nada de "calm editorial".
-O produto é treino físico vendido a quem pisa na areia; o vocabulário visual desse mundo é
-pôster de campeonato, placar, número de peito, lower-third de transmissão, foto estourada de
-sol e tipografia condensada em caixa alta.
+## Paleta
 
-_Teste editorial:_ se trocássemos o logo por um hotel-butique e a página continuasse
-plausível, a direção estaria genérica. Com placar, número de peito e horizonte do Rio, não
-continua — é dessa marca.
+| Token                 | Valor                   | Papel                                  |
+| --------------------- | ----------------------- | -------------------------------------- |
+| `--color-void`        | `#06111F`               | fundo base, navy quase preto           |
+| `--color-navy`        | `#0B1A2E`               | seções alternadas                      |
+| `--color-card`        | `#12233B`               | cards                                  |
+| `--color-line`        | `rgba(255,255,255,.08)` | Todo contorno da página, sempre 1px    |
+| `--color-ink`         | `#E8EEF5`               | texto                                  |
+| `--color-mute`        | `#9AA8BB`               | texto de apoio, label mono             |
+| `--color-fraco`       | `#64748B`               | metadado, fonte do dado, preço riscado |
+| `--color-verde`       | `#22C55E`               | CTA, e nada além disso                 |
+| `--color-glow`        | `#7CFF6B`               | palavra destacada, dot ao vivo, glow   |
+| `--color-fundo-verde` | `#15803D`               | hover do CTA                           |
+| `--color-areia`       | `#E9D8B4`               | herança da marca, só no logo           |
 
-### Preservar (traços que não podem ser suavizados)
+### A regra do acento
 
-1. **Display condensado em caixa alta, escala extrema, entrelinha travada** (0.86). Energia de
-   cartaz, não respiro editorial.
-2. **Marinho como campo dominante, areia como papel das seções de leitura, e duas vozes
-   de acento — laranja e lima — que nunca gritam no mesmo bloco.** O laranja pode ocupar
-   área grande (arcos, bloco de preço), mas o **preenchimento sólido de laranja continua
-   sendo do CTA**: se um bloco laranja chapado não for clicável, ele compete com o botão.
-   Arcos são vazados (contorno), botão é chapado — é assim que os dois convivem.
-3. **Numeração de placar** como dispositivo organizador — números grandes e tabulares em
-   pilares, objeções e módulos. É o gesto memorável da página.
-4. **Horizonte do Rio** (Corcovado, Morro da Urca, Pão de Açúcar, cabo do bondinho) como
-   dispositivo recorrente na fronteira das seções — sempre na linha do horizonte, nunca como
-   ornamento solto.
-5. **Assimetria com trilho à esquerda.** Nenhuma seção centralizada, exceto a oferta e o
-   CTA final.
-6. **Os arcos concêntricos JÁ ESTÃO nas artes do hero.** Não desenhe arcos por cima da
-   foto — brigam com os dela e a composição vira ruído. O componente `Arcos` só entra em
-   seção SEM foto (hoje, o CTA final), e ali irradia de um ponto com significado.
-7. **A inclinação é privilégio da manchete.** Bloco de título inclina até 1.5°, com o texto
-   contra-rotacionado para a linha de base ficar no prumo. Botão, card e pílula nunca
-   inclinam — elemento clicável torto lê como enfeite e perde o affordance.
+O verde aparece em **cinco** lugares, e em nenhum outro:
 
-### Rejeitar explicitamente
+1. CTA (fundo chapado);
+2. uma palavra por manchete, em `--color-glow`;
+3. o ponto pulsante de "turma aberta";
+4. os checks da coluna "é pra você se…" e da lista da oferta;
+5. o glow das auroras (hero, oferta, CTA final) e a borda do card de bônus.
 
-| Rejeitado                                           | Motivo                                                                |
-| --------------------------------------------------- | --------------------------------------------------------------------- |
-| Palavra solta trocada por serifada em itálico / cor | Tell nº4 do guia anti-slop. Removida a família serifada do projeto.   |
-| Grid de cards como container padrão                 | Tell nº2. Pilares e bônus viraram tabela/lista com fios.              |
-| Stripe lateral colorida decorativa                  | Tell nº6. Sem significado = removida.                                 |
-| Hero "texto à esquerda, imagem à direita"           | Sintoma de layout genérico. Hero é imagem-dominante com sobreposição. |
-| Raio grande e sombra em tudo                        | Suaviza a direção. Fios de 1px substituem sombras.                    |
-| Indigo/violeta                                      | Tell nº1 (e o cliente pediu azul do mar, não roxo).                   |
+Verde em título de card, ícone repetido, fundo de seção ou texto corrido vira néon, e o
+botão de compra deixa de ser o ponto mais quente da tela. Foi exatamente por isso que o
+laranja caiu: ele estava em botão, arco, régua e rótulo ao mesmo tempo.
 
-### Papéis dos tokens
+### Contraste do CTA
 
-| Token  | Valor             | Papel — e só ele                                         |
-| ------ | ----------------- | -------------------------------------------------------- |
-| Campo  | `#002F73` marinho | fundo do hero e das faixas de energia                    |
-| Papel  | `#FDECD5` areia   | fundo das seções de leitura longa                        |
-| Tinta  | `#001736`         | texto sobre areia                                        |
-| Acento | `#FC6000` laranja | CTA chapado, bloco de preço, números de placar           |
-| Voz 2  | `#009C30` verde   | bloco de manchete. **Nunca em texto corrido**            |
-| Apoio  | `#8AA6DE` bruma   | texto secundário sobre marinho                           |
-| Rio    | `#0A3D80`         | silhueta: mais clara que o céu, menos saturada que o CTA |
-| Raio   | 0, canto vivo     | única exceção: a pílula vazada de dado secundário        |
+Repouso: texto `#06111F` sobre `#22C55E` = **8:1** (AAA). No hover o fundo vai para
+`#15803D` **e o texto vira branco**: navy sobre `#15803D` daria 3,8:1 e reprovaria AA
+justamente no estado em que a pessoa está olhando para o botão.
 
-**Os três primeiros acentos foram amostrados das artes do hero**, não escolhidos: `#002F73`
-é o rodapé EXATO das duas imagens (é por ele que a foto emenda com a página), `#FC6000` é o
-laranja dos arcos e `#009C30` é o verde do top da atleta. Cor que não sai das artes cria
-emenda visível.
+---
 
-O verde é o mais fácil de estragar: ótimo num bloco de manchete, péssimo num parágrafo. Se
-aparecer em texto corrido, ícone repetido ou fundo de seção, a página vira néon e o laranja
-do botão morre.
+## Tipografia
 
-**Areia translúcida sobre marinho compõe em cinza.** Foi defeito real, achado em navegador:
-`bg-areia-200/45` era um tom sutil quando o `body` era claro e virou uma faixa cinza-lodo
-quando o fundo passou a marinho. Seção de leitura usa areia OPACA.
+| Face                 | Onde                                       | Ajuste                                              |
+| -------------------- | ------------------------------------------ | --------------------------------------------------- |
+| **Barlow Condensed** | manchete, placar, número de stat           | 800, caixa alta, tracking -0.02em, line-height 0.95 |
+| **Manrope**          | corpo, UI                                  | 400–700, 16–18px, line-height 1.6                   |
+| **JetBrains Mono**   | label, `01/04`, `MÓDULO 03`, fonte do dado | 12–13px, caixa alta, tracking 0.12em                |
 
-### Tipografia
+H1 em `clamp(3rem, 7.4vw, 6.5rem)`. O teto é 104px e não os 120px do briefing porque a
+manchete divide a linha com a foto do Charllove: acima disso "Pare de improvisar aula."
+atravessa a coluna e encosta no rosto dele.
 
-Duas famílias, justificadas por direção de arte real (display de cartaz vs. texto funcional):
+Medida de leitura: `.leitura`, 38rem. Linha mais longa faz o olho perder o retorno.
 
-- **Archivo Black** — display, caixa alta. Manchetes, números de placar, o logo.
-- **Archivo** — texto, rótulos, interface. 400/500/600/700.
+Mono em label é o que faz `01/04` ler como referência e não como número solto de
+parágrafo. Não troque por sans "só para uniformizar".
 
-As duas são a MESMA superfamília. A distinção entre manchete e texto vem de peso, escala e
-caixa — não de uma face importada de fora, que é o atalho que faz página parecer template.
+---
 
-A Archivo Black substituiu a Anton em set/2026, a pedido do cliente. **Ela é 1,617× mais
-larga que a Anton no mesmo corpo** (medido em navegador, não estimado), o que obrigou a
-recalibrar duas coisas. Se você trocar a face de display de novo, refaça as duas:
+## Superfície
 
-1. Todas as escalas `clamp()` de manchete caíram para 78% do valor anterior. O hero foi
-   calibrado à parte: "AGORA APRENDA" a 4,4rem ocupa 680px no contêiner de 704px.
-2. `.display` ganhou `letter-spacing: -0.022em` e `line-height: 0.94`. A Anton era
-   condensada e dispensava tracking negativo; a Black, sem ele, abre demais e perde o
-   bloco. A entrelinha subiu de 0.86 porque a altura-x da Black é maior e as linhas
-   colidiam.
-
-Escala: terça maior (1.25) para marketing, `clamp()` fluido nas manchetes.
-
-### Estratégia de mídia
-
-O hero é conduzido por imagem — a foto do atleta na areia é o que carrega a direção. Os slots
-de foto têm proporção fixa e direção de arte escrita; enquanto o arquivo não existe, aparece
-um placeholder honesto com a instrução, nunca uma "foto falsa" feita de CSS.
-
-| Slot                    | Proporção    | Direção de arte                                                           |
-| ----------------------- | ------------ | ------------------------------------------------------------------------- |
-| `/images/hero.jpg`      | 3:4 vertical | Charllove em quadra, sol baixo, areia visível, espaço negativo à esquerda |
-| `/images/charllove.jpg` | 3:4 vertical | Retrato, contato visual, quadra ao fundo desfocada                        |
-| `/images/og.jpg`        | 1200×630     | Foto de quadra + logo, texto grande legível em miniatura                  |
-
-## Ledger de decisões
-
-| Decisão                                 | Origem                                                     | Papel preservado                 | Por quê                                                                        |
-| --------------------------------------- | ---------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------ |
-| Areia como papel, azul como campo       | briefing do cliente                                        | acento fica fora do papel        | pedido explícito: "as cores são azul e cor de areia"                           |
-| Laranja pôr do sol como acento          | craft `color.md` (dominante + acento afiado)               | CTA e ativo apenas               | maior contraste possível contra o azul profundo; disciplina de acento único    |
-| Archivo Black em caixa alta             | cliente reprovou a Anton (set/2026)                        | display apenas                   | grotesca larga e pesada como a referência; mesma superfamília do texto do site |
-| Paleta amostrada da arte do hero        | artes `FUNDO-HERO-*.jpg` (set/2026)                        | nenhuma cor inventada            | o hero é uma FOTO: cor que não sai dela cria emenda visível                    |
-| Hero = foto no topo, texto no azul      | mapa de luminância das duas artes                          | texto sempre sobre área escura   | o topo das artes passa de 170 de luminância; branco ali seria ilegível         |
-| Placar numerado nos pilares             | briefing (esporte) + `anti-ai-slop` "um detalhe memorável" | organiza conteúdo, não decora    | tira o conteúdo do grid de cards e devolve vocabulário de torneio              |
-| Horizonte do Rio nas bordas             | briefing ("Pão de Açúcar")                                 | dispositivo de transição         | referência geográfica pedida, usada com função estrutural                      |
-| Fios de 1px em vez de sombras           | `anti-ai-slop` teste do card                               | separação, não elevação          | tirar borda/sombra não prejudicava interação — logo, não era card              |
-| Seção de depoimentos que se auto-oculta | `copywriting.md` "prova vence hype" + CDC art. 37          | prova social real apenas         | depoimento inventado é propaganda enganosa e derruba conta de anúncio          |
-| Um único rabisco à mão no hero          | `anti-ai-slop` (destaque precisa de papel de conteúdo)     | uma ocorrência na página inteira | é o gesto assinatura, desenhado à mão, não troca de fonte — e não se repete    |
-
-## QA visual
-
-Checklist do guia anti-slop rodado antes da entrega — ver seção final do README.
+- **Grão** de filme sobre a página inteira: `feTurbulence` em data URI, 4,5% de opacidade,
+  `mix-blend-mode: overlay`, `position: fixed`. Fixo porque é o papel, não a textura de um
+  bloco; se rolasse junto, viraria papel de parede.
+- **Aurora**: dois blobs radiais com `blur(140px)`, verde a 18% e azul `#1E3A8A` a 25%.
+  Só no hero, na oferta e no CTA final. É o que dá volume ao navy sem acender uma cor.
+- **Card**: `--color-card`, borda 1px `--color-line`, highlight `inset 0 1px 0` branco 6%
+  no topo, raio 16px. **Sem sombra**: a elevação vem da luz na aresta de cima e do tom.
+- **Emenda entre seções**: um fio de 1px, nunca troca brusca de fundo.
+- **Spotlight** nos cards: gradiente verde a 12% seguindo o cursor por `--mx/--my`, com a
+  borda acendendo junto. Sem JS o card continua legível, só não acende.
 
 ---
 
 ## Movimento
 
-Referência pedida pelo cliente: [motionsites.ai](https://motionsites.ai). O site em si está
-bloqueado pela política de rede deste ambiente; a pesquisa veio da descrição pública do
-catálogo dele.
+Toda animação serve a feedback, continuidade ou hierarquia. Nada passa de 900ms, nada usa
+easing linear.
 
-**O que foi aproveitado:** as técnicas — parallax em camadas no scroll, revelação de texto
-linha a linha por máscara, abertura de imagem por _clip-path_.
+| Peça             | O que faz                                                    |
+| ---------------- | ------------------------------------------------------------ |
+| `Reveal`         | blur(8px) + y:24 → nítido, `once`, 600ms, ease [.22,1,.36,1] |
+| `LinhasReveal`   | manchete linha a linha, máscara, stagger de 80ms             |
+| `Contador`       | número sobe até o valor ao entrar na viewport                |
+| `useIma`         | CTA persegue o cursor num raio curto e volta em mola         |
+| `useSpotlight`   | gradiente do card segue o cursor                             |
+| `BarraProgresso` | fio verde de 2px no topo, `scaleX` puro                      |
+| `.marquee`       | faixa de pilares, 42s linear, pausa no hover                 |
 
-**O que foi rejeitado:** a estética do catálogo (fundos "Neon Pulse", "Cosmic Ripple",
-heróis 3D de Web3). Ela brigaria com o reference lock e, pior, é justamente o visual de
-"hero animado gerado por IA" que a página precisa evitar.
+### A trava do `.js`
 
-A adaptação: em vez de um efeito genérico de fundo, o parallax move as três camadas reais do
-horizonte do Rio em velocidades diferentes — serra distante quase parada, Morro da Urca no
-meio, Pão de Açúcar na frente. A profundidade vem da geografia, não de um gerador de
-partículas.
+O estado **escondido** de toda animação de entrada mora no CSS, atrás da classe `.js` que
+um script inline põe no `<html>` antes da primeira pintura. Nunca em `style` inline vindo
+do servidor.
 
-| Efeito                | Onde                                         | Serve a                                                     |
-| --------------------- | -------------------------------------------- | ----------------------------------------------------------- |
-| Parallax de 3 camadas | horizonte do Rio no hero, oferta e CTA final | hierarquia — dá fundo ao campo azul                         |
-| Deriva vertical       | sol, linha d'água                            | continuidade                                                |
-| Reveal linha a linha  | todas as manchetes                           | hierarquia — impõe a ordem de leitura                       |
-| Máscara de abertura   | fotos                                        | continuidade — a imagem "chega" no lugar                    |
-| Contador              | placar de números do hero                    | hierarquia — o número é o argumento                         |
-| Faixa correndo        | dizeres entre seções                         | textura de cartaz de torneio                                |
-| Holofote de revelação | dois vídeos empilhados no hero               | hierarquia — a mídia vira o argumento, e o cursor participa |
+Sem essa trava, o HTML servido já sai com `opacity: 0` e a página de vendas inteira fica
+invisível quando o JavaScript falha, demora ou vem bloqueado. É isso que o crawler do
+Google e o robô de preview de link do WhatsApp enxergam. Com JS, o script roda antes da
+pintura e ninguém vê o texto aparecer e sumir.
 
-Regras seguidas de `references/motion.md`: nada com easing linear, nada acima de 900 ms, e
-`prefers-reduced-motion` desliga parallax, contador e máscara por completo.
+O `<html>` leva `suppressHydrationWarning` por causa disso: o className É diferente no
+servidor e no cliente, de propósito.
 
----
+### `prefers-reduced-motion`
 
-## QA visual — o que a verificação em navegador pegou
-
-Rodado com Chromium em 1440×900 e 390×844, seção por seção. Cinco defeitos reais que a
-revisão de código sozinha não teria encontrado:
-
-1. **Acentos sumindo no título.** "VOCÊ JÁ" aparecia como "VOCE JA". A máscara do reveal
-   (`overflow-hidden`) cortava os diacríticos, que em caixa alta ficam acima da altura de
-   caixa. Corrigido com folga interna e margem negativa compensando.
-2. **Fotos presas fechadas.** Um elemento com `clip-path: inset(0 0 100%)` tem área visível
-   zero — e o `IntersectionObserver` nunca dispara nele. O observador passou para o elemento
-   de fora, sem recorte, e o clip-path foi para o filho.
-3. **Placeholder de imagem invisível.** A `<img>` falha antes da hidratação, então o
-   `onError` do React nunca chega a rodar. Passou a conferir `complete && naturalWidth === 0`
-   ao montar.
-4. **O horizonte do Rio não aparecia.** Estava desenhado em `#04192B` sobre um fundo quase
-   da mesma cor. Virou azul de bruma (`#0D4671`) — que é como o morro distante se lê da
-   praia ao entardecer, mais claro que o céu já escuro.
-5. **Papel de token furado.** O preço estava em laranja, competindo com o botão de compra.
-   Voltou para a tinta; o laranja é do CTA e do rabisco do hero, e de mais nada.
-
-## Checklist anti-slop
-
-- [x] Acento não é indigo/violeta
-- [x] Cards só onde há interação (o bloco da oferta) — o resto é fio de 1px
-- [x] Sem stripe lateral decorativa
-- [x] Nenhum emoji como ícone
-- [x] Troca decorativa de palavra em serifada/itálico: removida do projeto (a família serifada nem está instalada)
-- [x] Paleta terrosa vem do briefing do cliente ("azul e cor de areia"), não de default
-- [x] Caixa alta sempre com `letter-spacing`
-- [x] Papéis de mídia preservados: hero é conduzido por foto, com placeholder honesto e direção de arte
-- [x] Um detalhe memorável: o placar numerado + o horizonte da Guanabara em parallax
-- [x] Teste editorial: trocando o logo por um hotel-butique, a página deixa de fazer sentido — logo, é específica
+Desliga máscara de manchete, ímã, contador, marquee, dot e scroll suave. Sobra o conteúdo
+no lugar. Não há Lenis nem scroll hijacking na página: o smooth scroll é o nativo do CSS,
+que o próprio `prefers-reduced-motion` já desarma.
 
 ---
 
-## Holofote do hero
+## Fotografia
 
-Referência trazida pelo cliente: o hero "Cyber Ronin", em que uma imagem base é atravessada
-por uma segunda cena revelada num facho radial que segue o cursor.
+Todas as fotos entram em **duotone navy**, por cadeia de filtro:
 
-**O que foi aproveitado:** a mecânica. Duas camadas empilhadas, a de cima recortada por uma
-`radial-gradient` como `mask-image` que acompanha o ponteiro, com queda suave em cinco
-paradas e raio responsivo (120px abaixo de 480, 160px abaixo de 720, 260px acima).
+```
+grayscale(1) sepia(1) hue-rotate(186deg) saturate(1.9) brightness(0.8) contrast(1.06)
+```
 
-**O que foi rejeitado:** tudo o mais daquele hero — paleta laranja/creme cyberpunk, tipografia
-Orbitron, o vocabulário de "Neural Edges". Nada disso pertence a um curso de futevôlei, e
-adotar aquilo jogaria fora o reference lock.
+Filtro e não `mix-blend-mode`: blend depende do contexto de empilhamento do pai, e basta a
+foto entrar num elemento com `isolation`, `filter` ou z-index próprio (metade dos lugares
+onde ela é usada aqui) para a camada de cor sumir sem erro nenhum e a foto voltar a cinza.
+O filtro viaja com a imagem.
 
-**A adaptação:** em vez de duas imagens, dois vídeos das bolas. A camada base toca sempre; a
-revelada mostra a mesma cena em outro momento. Dois véus azuis diferentes — mais pesado à
-esquerda, onde vive a manchete, mais leve à direita — mantêm o texto legível e a cena dentro
-da paleta de mar e areia.
+Máscara de gradiente na base para fundir no fundo, sem aresta reta de foto no meio do navy.
 
-Duas decisões que o hero original não precisava tomar:
-
-- **Varredura de apresentação.** Numa página de vendas, quem chega pelo Instagram muitas
-  vezes não move o mouse antes de decidir sair. O facho faz uma passada sozinho ao carregar,
-  uma vez só, e devolve o controle no primeiro movimento do ponteiro.
-- **Degradação sem os arquivos.** Se os vídeos não carregarem — arquivo ausente, rede ruim,
-  codec sem suporte — as camadas se apagam e o hero volta ao desenho de gradiente com o
-  painel de foto. Nunca sobra um retângulo preto no lugar mais caro da página.
-
-`prefers-reduced-motion` pausa os dois vídeos e desliga o facho por completo.
+Quando o arquivo não existe, `Foto` cai num placeholder honesto com a direção de arte
+escrita e o caminho marcado como `TODO asset`. **Mantenha esse comportamento** em qualquer
+componente novo que dependa de mídia.
 
 ---
 
-## Revisão set/2026 — placa de peito e os dois lados da quadra
+## Por que a direção mudou
 
-Três correções depois que o cliente viu a página no ar.
+A direção anterior ("cartaz de torneio") tinha três problemas que o redesign resolve:
 
-### A numeração de placar não estava lendo
+1. **O laranja estava em toda parte.** Botão, arco, régua, rótulo e bloco de preço. Quando
+   o acento ocupa cinco papéis, ele deixa de marcar o clique.
+2. **A página parecia um curso para jogador**, não uma formação profissional. Areia clara,
+   sol e arco irradiando falam de praia; quem compra aqui está decidindo sobre a própria
+   profissão.
+3. **Faltava mercado.** Não havia nenhum dado, nenhuma fonte, nenhum argumento de tamanho
+   de oportunidade. A seção de mercado, com fonte visível em cada número, é a peça nova
+   mais importante da página.
 
-O lock diz que a numeração é o gesto memorável da página, mas na execução ela era um
-número bege (`areia-400`) sobre papel bege (`areia-100`). Contraste quase nulo: o
-dispositivo estava no código e não estava na tela. Virou **placa de peito** — chapa
-marinho, número creme, fio interno a 5px da borda. O fio é o que faz ler como placa
-impressa em vez de quadrado colorido.
+O que **não** mudou, e não deve mudar:
 
-A peça é a mesma na lista de objeções e na de frentes do método, porque é o mesmo
-dispositivo. Uma terceira lista numerada usa esta placa, não uma variação — duas
-numerações diferentes na mesma página anulam o gesto.
-
-Não é card: a placa contém só o número e funciona como marcador gráfico, não como
-container de conteúdo. O teste do card continua valendo para o resto da linha, que segue
-separada por fio de 1px.
-
-### A curva entre hero e papel saiu
-
-Havia uma elipse de areia subindo dentro do marinho no pé do hero. Não vinha de lugar
-nenhum: a referência é cartaz de torneio, e cartaz não tem borda ondulada. Emenda reta.
-
-### "Pra quem é" virou os dois lados da quadra
-
-Eram duas listas de texto corrido sobre o mesmo papel, separadas por um fio. O conteúdo
-era bom e a seção não parecia decidida por ninguém.
-
-Agora os dois lados são materialmente diferentes: quem entra fica no papel claro, quem não
-entra fica num bloco marinho. A oposição é o assunto da seção, então precisa ser visível
-antes de qualquer palavra ser lida — e a metáfora dos lados da quadra pertence ao produto.
-
-O remate ("prefiro perder a venda…") desceu para o lado marinho, ancorado no pé do bloco.
-Ele é sobre quem NÃO deve comprar; solto no cabeçalho, boiava.
-
-A contagem de cada lado (05 / 03) aparece no canto como número de placar. Reforça o mesmo
-vocabulário sem gastar mais um acento de cor.
-
----
-
-## Revisão set/2026 (2) — a régua substitui a placa
-
-A placa de peito resolvia o contraste e criava outro problema: quatro chapas marinho
-empilhadas leem como quadrados grudados no texto, e o cliente reprovou duas vezes. Foram
-testadas quatro direções numa página de comparação antes de decidir:
-
-| Variante                                           | Resultado                                    |
-| -------------------------------------------------- | -------------------------------------------- |
-| A: número sólido grande na linha de base do título | Funciona, mas é a correção óbvia             |
-| B: número rebaixado a rótulo, título vira o herói  | Lê muito bem, perde o vocabulário de placar  |
-| C: número vazado com o texto por cima              | Rejeitada: o contorno em areia some no papel |
-| **D: régua de progresso como separador**           | **Escolhida**                                |
-
-**A régua.** O fio que separa os itens deixa de ser enfeite e passa a informar: a parte
-marinho ocupa `atual/total` da largura, então descendo a lista ela enche, e no último item
-está cheia. Junto vem a fração `01/04`, que diz de saída quanto falta.
-
-Numa página de vendas isso não é ornamento. Saber que a lista tem quatro itens, e não
-vinte, muda a decisão de continuar lendo. O dispositivo informa e decora ao mesmo tempo,
-que é o critério para um detalhe entrar.
-
-A peça é a mesma nas duas listas. Em `Metodo` são seis frentes, então a régua enche em
-sextos e fecha em `06/06`.
-
-**Por que não tem caixa.** Sem chapa, sem borda e sem quadrado, o número volta a ser
-tipografia e o título vira o objeto mais pesado do item, que é o certo: quem escaneia a
-página lê os títulos, não os números.
+- Nada de promessa de resultado, renda ou retorno (CDC art. 37, política do Meta Ads).
+- Nada de depoimento inventado. A lista está vazia de propósito, e a barra de urgência
+  no topo diz exatamente isso.
+- Nada de travessão no texto da página. O cliente reprovou duas vezes.
+- Numeração é mono e nua. Nada de quadrado, chapa ou caixa em volta do número: o cliente
+  reprovou essa direção duas vezes.
+- Caixa alta sempre com `letter-spacing`. Emoji nunca é ícone.

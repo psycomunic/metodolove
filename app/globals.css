@@ -1,77 +1,55 @@
 @import "tailwindcss";
 
-/**
- * Variante `deitado`: a arte do hero tem DUAS versões, uma em pé e outra
- * deitada, e quem decide entre elas é a ORIENTAÇÃO da tela, não a largura.
- * Um tablet de 768px em retrato é largo o bastante para `md:`, mas se
- * receber a arte deitada o object-cover descarta 1134px de largura. Por
- * isso todo o hero é chaveado por esta variante.
- */
-@custom-variant deitado (@media (min-width: 768px) and (min-aspect-ratio: 1/1));
-
 /* ============================================================
-   Tokens — os papéis de cada um estão em docs/DESIGN.md
-   Direção: cartaz de torneio. Marinho é o campo, areia é o papel,
-   laranja e lima são os dois gritos — e gritam em turnos, nunca juntos
-   no mesmo bloco.
+   MÉTODO LLOVE — sistema visual
+   ------------------------------------------------------------
+   Direção: navy quase preto, hairlines de 1px no lugar de sombra,
+   e UM acento cromático só. O verde aparece em cinco lugares e em
+   nenhum outro: CTA, uma palavra por manchete, o ponto de "turma
+   aberta", os checks e o glow do hero. Se o verde vazar para fundo
+   de seção, ícone repetido ou texto corrido, ele vira néon e o
+   botão de compra deixa de ser o ponto mais quente da tela.
    ============================================================ */
+
 @theme {
-  /* ============================================================
-     Paleta amostrada das artes do hero (public/FUNDO-HERO-*.jpg).
-     Não invente valores novos aqui: o hero é uma FOTO, e qualquer
-     cor que não saia dela cria uma emenda visível na página.
-     ============================================================ */
+  /* --- Superfícies. A profundidade vem do tom do navy, não de sombra. --- */
+  --color-void: #06111f; /* fundo base */
+  --color-navy: #0b1a2e; /* seções alternadas */
+  --color-card: #12233b; /* cards */
+  --color-card-alto: #16293f; /* card em hover */
 
-  /* --- Marinho. Amostrado do LOGO OFICIAL (public/logo-llove.png), não de
-         foto: #082038 é a cor do símbolo da marca. A rampa antiga vinha das
-         artes de fundo que o banner do hero substituiu, então a razão de ser
-         dela caiu junto. --- */
-  --color-noite-950: #050f1f;
-  --color-noite-900: #082038;
-  --color-noite-800: #0d2f4d;
-  --color-noite-700: #133f66;
-  --color-noite-600: #1b5286;
-  --color-noite-500: #2a6ba8;
+  /* Hairline. Todo contorno da página é este 1px. */
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-forte: rgba(255, 255, 255, 0.16);
 
-  /* --- Laranja: não sai da marca, mas é o único acento com contraste
-         suficiente para o CTA sobre creme E sobre marinho. Dourado sobre
-         creme não passa em contraste. --- */
-  --color-sol-600: #d24e00;
-  --color-sol-500: #fc6000;
-  --color-sol-400: #ff7f2e;
-  --color-sol-300: #ffa05c;
+  --color-ink: #e8eef5; /* texto */
+  --color-mute: #9aa8bb; /* texto de apoio e labels mono */
+  --color-fraco: #64748b; /* metadado, fonte de dado, riscado */
 
-  /* --- Areia -> Clean White/Slate (SaaS Premium) --- */
-  --color-areia-50: #ffffff;
-  --color-areia-100: #f8fafc;
-  --color-areia-200: #e2e8f0;
-  --color-areia-300: #cbd5e1;
-  --color-areia-400: #94a3b8;
-  --color-areia-500: #64748b;
+  /* --- O acento. Um só. --- */
+  --color-verde: #22c55e; /* CTA */
+  --color-glow: #7cff6b; /* palavra destacada, glow, dot ao vivo */
+  --color-fundo-verde: #15803d; /* hover do CTA */
 
-  /* --- Bruma: texto de apoio sobre marinho. --- */
-  --color-bruma-200: #bcd0f2;
-  --color-bruma-300: #8aa6de;
-  --color-bruma-400: #6180bd;
+  /* Areia: herança da marca. Só em fio divisor e eyebrow, nunca em área. */
+  --color-areia: #e9d8b4;
 
-  --color-tinta: #082038;
-
-  --font-display: var(--font-archivo-black), "Arial Black", sans-serif;
-  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-display: var(--font-barlow), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
 }
 
 :root {
   color-scheme: dark;
-  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  /* Grão de filme. Uma textura só, servida como data URI para não custar
+     requisição — ela cobre a página inteira em position:fixed. */
+  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/**
- * A Nav é fixa e cobre o topo da tela. Sem esta margem, clicar num link do
- * menu leva a seção para debaixo da barra e o título fica escondido.
- * 4.5rem ≈ a altura da barra com folga.
- */
+/* A nav é uma pílula flutuante de ~4rem. Sem esta folga, o link do menu
+   entrega a seção por baixo dela e o título fica escondido. */
 section[id] {
-  scroll-margin-top: 4.5rem;
+  scroll-margin-top: 6rem;
 }
 
 html {
@@ -80,222 +58,250 @@ html {
 }
 
 body {
-  background: var(--color-noite-900);
-  color: var(--color-areia-50);
+  background: var(--color-void);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* `clip`, não `hidden`: overflow-x hidden transforma o body em contêiner de
+     rolagem e quebra o position:sticky da nav. */
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-areia-200);
-  color: var(--color-noite-900);
+  background: var(--color-glow);
+  color: var(--color-void);
 }
 
-/* ---------- Display: Premium Sports ---------- */
-.display {
-  font-family: var(--font-display);
-  font-weight: 400;
-  /* Archivo Black tight tracking for high-impact sports look */
-  letter-spacing: -0.035em;
-  line-height: 0.92;
-  text-transform: uppercase;
-  text-wrap: balance;
-}
-
-/* Número de placar: tabular, para as colunas alinharem. */
-.placar {
-  font-family: var(--font-display);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-  line-height: 1;
-}
-
-/* Caixa alta sempre com tracking (checklist anti-slop). */
-.rotulo {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-p,
-li {
-  text-wrap: pretty;
-}
-
-/* ============================================================
-   Vocabulário de forma do cartaz
-   ============================================================ */
-
-/**
- * Bloco de manchete: destaque sólido e moderno, sem inclinação amadora.
- */
-.bloco {
-  display: inline-block;
-}
-.bloco > span {
-  display: inline-block;
-  padding: 0.12em 0.3em;
-  border-radius: 6px;
-}
-
-/* Pílula vazada: dado secundário. Contorno, nunca preenchimento.
-   NÃO declare `display` aqui: esta classe vem depois do Tailwind na cascata
-   e passaria por cima de `hidden`/`flex` nos utilitários. Quem posiciona é
-   o utilitário; a classe cuida só da forma. */
-.pilula {
-  align-items: center;
-  gap: 0.9rem;
-  border: 2px solid currentColor;
-  border-radius: 999px;
-  padding: 0.62rem 1.6rem;
-}
-
-/* Caixa vazada de canto vivo: rótulo sobre bloco de cor. */
-.caixa {
-  display: inline-block;
-  border: 2px solid currentColor;
-  padding: 0.42rem 1.1rem;
-}
-
-/* ---------- Grão de filme ---------- */
-.grao::after {
-  content: "";
-  position: absolute;
+/* Grão global. `fixed` porque ele é a textura do papel, não de um bloco:
+   se rolasse junto com o conteúdo, viraria padrão de fundo. */
+.grao-global {
+  position: fixed;
   inset: 0;
+  z-index: 60;
   background-image: var(--grao);
-  background-size: 180px 180px;
+  background-size: 200px 200px;
   mix-blend-mode: overlay;
-  opacity: 0.17;
+  opacity: 0.045;
   pointer-events: none;
-  z-index: 2;
 }
 
-/* ---------- Entrada por scroll (Premium) ---------- */
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition:
-    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--atraso, 0ms);
-}
-.reveal[data-visivel="true"] {
-  opacity: 1;
-  transform: none;
-}
+/* As peças e a tipografia vivem em @layer components para que qualquer
+   utilitário do Tailwind (uppercase, leading, text-*) consiga sobrepor
+   um caso pontual. Fora de layer elas venceriam sempre, e a exceção
+   viraria !important espalhado pelos componentes. */
+@layer components {
+  /* ============================================================
+     Tipografia
+     ============================================================ */
 
-/* Bloco de manchete que "pinta" da esquerda para a direita ao entrar. */
-.pinta {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 0.72s cubic-bezier(0.65, 0, 0.35, 1);
-  transition-delay: var(--atraso, 0ms);
-}
-.pinta[data-visivel="true"] {
-  clip-path: inset(0 0 0 0);
+  /* Display: Barlow Condensed em caixa alta. A condensada aguenta manchete
+     de 120px sem quebrar em três linhas no celular. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  /* Label e metadado: mono, caixa alta, tracking largo. É o que separa
+     "01/04" de um número solto de parágrafo. */
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Número de placar: tabular, para as colunas de stats alinharem. */
+  .placar {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  /* Medida de leitura. Linha longa demais faz o olho perder o retorno. */
+  .leitura {
+    max-width: 38rem;
+    line-height: 1.6;
+  }
+
+  /* ============================================================
+     Peças
+     ============================================================ */
+
+  /* Card. Borda de 1px, highlight interno de 1px no topo e nenhuma sombra:
+     a elevação é sugerida pela luz que bate na aresta de cima. */
+  .card {
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Spotlight: o gradiente segue o mouse através de --mx/--my, e a borda
+     acende junto. Sem JS o card continua legível, só não acende. */
+  .spot {
+    position: relative;
+    isolation: isolate;
+    transition:
+      border-color 0.4s ease,
+      background-color 0.4s ease;
+  }
+  .spot::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(34, 197, 94, 0.12),
+      transparent 65%
+    );
+  }
+  .spot:hover {
+    border-color: rgba(34, 197, 94, 0.34);
+    background-color: var(--color-card-alto);
+  }
+  .spot:hover::before {
+    opacity: 1;
+  }
+
+  /* Contorno vazado para o marquee: metade das palavras é vazada em verde,
+     metade é branca. Alternar dá ritmo sem acrescentar cor. */
+  .contorno {
+    -webkit-text-stroke: 1.5px var(--color-verde);
+    color: transparent;
+  }
+
+  /* Dot "turma aberta". Pulsa devagar: é sinal de vida, não alarme. */
+  @keyframes bater {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.82);
+    }
+  }
+  .dot-vivo {
+    animation: bater 2.4s ease-in-out infinite;
+  }
+
+  /* ============================================================
+     Movimento
+     ============================================================ */
+
+  /* Reveal padrão: desfoca e sobe. O blur é o que diferencia de um fade
+     comum — o bloco "entra em foco" em vez de só aparecer.
+
+     O estado escondido vive atrás de `.js`, classe que o script inline do
+     layout põe no <html> antes da primeira pintura. Sem essa trava, a página
+     de vendas inteira fica INVISÍVEL quando o JavaScript falha, demora ou vem
+     bloqueado, que é exatamente o que o crawler e o robô de preview de link
+     enxergam. Com JS ninguém vê o texto aparecer e sumir. */
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(8px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--atraso, 0ms);
+  }
+  .js .reveal[data-visivel="true"] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Manchete linha a linha. Mesma trava do reveal: o estado escondido mora
+     no CSS, atrás de `.js`, e não em style inline vindo do servidor.
+
+     A folga em cima e embaixo existe porque em caixa alta o Ê e o Á sobem
+     acima da altura de caixa e o overflow-hidden os decapitaria; as margens
+     negativas devolvem esse espaço ao fluxo do texto. */
+  .linha {
+    display: block;
+    overflow: hidden;
+    margin-top: -0.14em;
+    margin-bottom: -0.14em;
+    padding-top: 0.14em;
+    padding-bottom: 0.14em;
+  }
+  .linha > span {
+    display: block;
+  }
+  .js .linha > span {
+    opacity: 0;
+    transform: translateY(105%);
+    transition:
+      transform 780ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 500ms ease-out;
+    transition-delay: var(--atraso, 0ms);
+    will-change: transform;
+  }
+  .js .linha[data-visivel="true"] > span {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Marquee dos pilares. Duas cópias da lista, uma translação de -50%: o
+     ponto de emenda cai fora da tela e o laço fica invisível. */
+  @keyframes correr {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: correr 42s linear infinite;
+  }
+  .marquee-pai:hover .marquee {
+    animation-play-state: paused;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  .js .reveal,
+  .js .linha > span {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
-  .pinta {
-    clip-path: none;
-    transition: none;
-  }
-  .flutua,
-  .balanca,
-  .faixa-corre,
-  .pulsa {
+  .marquee,
+  .dot-vivo {
     animation: none !important;
   }
 }
 
-/* ---------- Movimento ambiente ---------- */
-@keyframes flutuar {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-.flutua {
-  animation: flutuar 8s ease-in-out infinite;
-}
-
-@keyframes balancar {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-26px);
-  }
-}
-.balanca {
-  animation: balancar 15s ease-in-out infinite;
-}
-
-@keyframes correr {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-.faixa-corre {
-  display: flex;
-  width: max-content;
-  animation: correr 36s linear infinite;
-}
-
-/* Respiração dos arcos: escala mínima, longa. Sugere a onda, não pisca. */
-@keyframes pulsar {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.035);
-    opacity: 1;
-  }
-}
-.pulsa {
-  animation: pulsar 14s ease-in-out infinite;
-  transform-origin: var(--origem, 50% 50%);
-}
-
-/* ---------- Fios (substituem sombras) ---------- */
-.fio {
-  border-color: color-mix(in srgb, var(--color-areia-400) 55%, transparent);
-}
-.fio-claro {
-  border-color: color-mix(in srgb, var(--color-areia-100) 22%, transparent);
-}
-
-/* Sombra só onde há elevação real: bloco da oferta e fotos. */
-.elevado {
-  box-shadow: 0 34px 70px -46px rgba(6, 14, 58, 0.95);
-}
-
-.contorno {
-  -webkit-text-stroke: 2px currentColor;
-  color: transparent;
-}
-
-/* Accordion */
+/* ============================================================
+   Accordion do FAQ
+   ============================================================ */
 details > summary {
   list-style: none;
   cursor: pointer;
@@ -304,5 +310,5 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 details[open] .cruz {
-  transform: rotate(45deg);
+  transform: rotate(135deg);
 }

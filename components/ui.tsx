@@ -2,199 +2,68 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { oferta } from "@/lib/content";
-
-/** Anima o bloco quando ele entra na viewport. */
-export function Reveal({
-  children,
-  atraso = 0,
-  className = "",
-  as: Tag = "div",
-}: {
-  children: ReactNode;
-  atraso?: number;
-  className?: string;
-  as?: "div" | "section" | "li" | "article" | "header" | "p";
-}) {
-  const ref = useRef<HTMLElement>(null);
-  const [visivel, setVisivel] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entrada]) => {
-        if (entrada.isIntersecting) {
-          setVisivel(true);
-          obs.disconnect();
-        }
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const Comp = Tag as React.ElementType;
-
-  return (
-    <Comp
-      ref={ref as React.Ref<never>}
-      className={`reveal ${className}`}
-      data-visivel={visivel}
-      style={{ "--atraso": `${atraso}ms` } as React.CSSProperties}
-    >
-      {children}
-    </Comp>
-  );
-}
+import { LinhasReveal, useIma, useSpotlight } from "./movimento";
 
 /**
- * Destaque de manchete: bloco de cor chapada atrás da palavra.
- * Substituiu o traço à mão — no cartaz o realce é chapado e ocupa área,
- * não é um gesto. A inclinação vive no bloco e o texto volta ao prumo,
- * senão a linha de base entorta e a manchete perde força.
- */
-export function Destaque({
-  children,
-  cor = "creme",
-}: {
-  children: ReactNode;
-  cor?: "creme" | "sol" | "noite";
-}) {
-  const bg =
-    cor === "creme"
-      ? "bg-areia-200 text-noite-900"
-      : cor === "sol"
-        ? "bg-sol-500 text-white"
-        : "bg-noite-900 text-areia-100";
-
-  return (
-    <span className="bloco">
-      <span className={bg}>{children}</span>
-    </span>
-  );
-}
-
-/** Pílula vazada: dado secundário. Contorno, nunca preenchimento. */
-export function Pilula({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  return <span className={`pilula rotulo inline-flex ${className}`}>{children}</span>;
-}
-
-/**
- * Cabeçalho de seção em duas colunas: manchete à esquerda, texto de apoio à
- * direita, alinhados pela base.
+ * CTA primário.
  *
- * A versão anterior empilhava rótulo, manchete e parágrafo num trilho
- * estreito à esquerda, e a metade direita da tela ficava morta em quatro
- * seções seguidas. Com a Archivo Black as manchetes ficaram curtas e o vazio
- * piorou. Aqui o texto de apoio ocupa esse lado em vez de o espaço sobrar.
- */
-export function CabecalhoSecao({
-  rotulo,
-  titulo,
-  texto,
-  tom = "escuro",
-  className = "",
-}: {
-  rotulo: ReactNode;
-  titulo: ReactNode;
-  texto?: ReactNode;
-  tom?: "escuro" | "claro";
-  className?: string;
-}) {
-  return (
-    <header
-      className={`grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-20 ${className}`}
-    >
-      <div>
-        <Reveal>
-          <Rotulo tom={tom}>{rotulo}</Rotulo>
-        </Reveal>
-        {titulo}
-      </div>
-
-      {texto ? (
-        <Reveal atraso={130}>
-          <div
-            className={`text-[1rem] leading-[1.68] lg:pb-2 ${
-              tom === "claro" ? "text-bruma-200" : "text-tinta/70"
-            }`}
-          >
-            {texto}
-          </div>
-        </Reveal>
-      ) : null}
-    </header>
-  );
-}
-
-/** Rótulo de seção. Caixa alta sempre com tracking. */
-export function Rotulo({
-  children,
-  tom = "escuro",
-}: {
-  children: ReactNode;
-  tom?: "escuro" | "claro";
-}) {
-  return (
-    <span
-      className={`rotulo inline-flex items-center gap-3 before:block before:h-[3px] before:w-8 before:content-[''] ${
-        tom === "claro"
-          ? "text-bruma-200 before:bg-areia-200"
-          : "text-noite-700 before:bg-sol-500"
-      }`}
-    >
-      {children}
-    </span>
-  );
-}
-
-/**
- * CTA primário. Bloco laranja de canto vivo — a mesma forma do bloco de
- * preço do cartaz, que é o elemento mais pesado da peça.
- * NÃO recebe inclinação: botão torto lê como enfeite e perde o affordance
- * de clique. A inclinação é privilégio da manchete.
+ * Verde chapado com texto navy: 8:1 de contraste, AAA. No hover ele vai para
+ * o verde fundo E o texto vira branco, senão a combinação navy sobre #15803D
+ * cai para 3,8:1 e reprova AA justamente no estado em que a pessoa está
+ * olhando para o botão.
+ *
+ * O ímã (translate proporcional ao cursor) só existe onde há cursor de
+ * verdade e some com prefers-reduced-motion. Ver useIma.
  */
 export function Botao({
   href,
   children,
   className = "",
   tamanho = "lg",
+  variante = "primario",
+  ima = false,
   id,
 }: {
   href: string;
   children: ReactNode;
   className?: string;
-  tamanho?: "md" | "lg";
+  tamanho?: "sm" | "md" | "lg";
+  variante?: "primario" | "fantasma";
+  ima?: boolean;
   id?: string;
 }) {
+  const refIma = useIma<HTMLAnchorElement>(0.22);
+  const externo = href.startsWith("http");
+
   const medidas =
     tamanho === "lg"
-      ? "px-9 py-5 text-[0.94rem] sm:px-12 sm:text-[1.04rem]"
-      : "px-6 py-3.5 text-[0.78rem]";
+      ? "px-8 py-5 text-[0.9rem] sm:px-11 sm:text-[1rem]"
+      : tamanho === "md"
+        ? "px-6 py-3.5 text-[0.8rem]"
+        : "px-4 py-2.5 text-[0.7rem]";
+
+  const pintura =
+    variante === "primario"
+      ? "bg-verde text-void shadow-[0_0_40px_rgba(34,197,94,0.28)] hover:bg-fundo-verde hover:text-white hover:shadow-[0_0_56px_rgba(34,197,94,0.42)]"
+      : "border border-line-forte text-ink hover:border-verde hover:text-verde";
 
   return (
     <a
       id={id}
+      ref={ima ? refIma : undefined}
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      target={externo ? "_blank" : undefined}
+      rel={externo ? "noopener noreferrer" : undefined}
       data-cta
-      className={`group inline-flex items-center justify-center gap-3 rounded-md bg-sol-500 font-extrabold tracking-[0.06em] whitespace-nowrap text-white uppercase transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-sol-400 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-areia-200 active:translate-y-0 ${medidas} ${className}`}
+      className={`group inline-flex items-center justify-center gap-3 rounded-full font-bold tracking-[0.04em] whitespace-nowrap uppercase transition-[background-color,color,border-color,box-shadow] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-glow ${medidas} ${pintura} ${className}`}
     >
       <span>{children}</span>
       <svg
         viewBox="0 0 24 24"
-        className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1"
+        className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.8"
+        strokeWidth="2.6"
         strokeLinecap="round"
         strokeLinejoin="round"
         aria-hidden="true"
@@ -202,6 +71,70 @@ export function Botao({
         <path d="M4 12h15M13 6l6 6-6 6" />
       </svg>
     </a>
+  );
+}
+
+/** Rótulo mono de seção. Caixa alta sempre com tracking. */
+export function Olho({
+  children,
+  vivo = false,
+  className = "",
+}: {
+  children: ReactNode;
+  vivo?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <p
+      className={`mono flex flex-wrap items-center gap-x-3 gap-y-2 text-mute ${className}`}
+    >
+      <span>{children}</span>
+      {vivo ? (
+        <span className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-glow">
+          <span className="dot-vivo block h-1.5 w-1.5 rounded-full bg-glow" />
+          {vivo}
+        </span>
+      ) : null}
+    </p>
+  );
+}
+
+/**
+ * Manchete de seção.
+ *
+ * Uma palavra por manchete em verde, nunca duas: com duas o olho não sabe
+ * qual é a promessa e o destaque vira zebra. `linhas` vem antes do destaque,
+ * `fim` depois, e cada uma sobe de dentro da própria máscara.
+ */
+export function Manchete({
+  linhas,
+  destaque,
+  fim = [],
+  className = "",
+  as: Tag = "h2",
+}: {
+  linhas: string[];
+  destaque?: string;
+  fim?: string[];
+  className?: string;
+  as?: "h1" | "h2";
+}) {
+  const partes: ReactNode[] = [
+    ...linhas,
+    ...(destaque
+      ? [
+          <span key="d" className="text-glow">
+            {destaque}
+          </span>,
+        ]
+      : []),
+    ...fim,
+  ];
+
+  return (
+    <Tag className={`display ${className}`}>
+      <LinhasReveal linhas={partes} />
+    </Tag>
   );
 }
 
@@ -213,7 +146,7 @@ export function Check({ className = "" }: { className?: string }) {
       className={`shrink-0 ${className}`}
       fill="none"
       stroke="currentColor"
-      strokeWidth="2.8"
+      strokeWidth="2.6"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
@@ -223,148 +156,192 @@ export function Check({ className = "" }: { className?: string }) {
   );
 }
 
+/** Exclusão. Mesmo peso de traço do check, para as duas colunas pesarem igual. */
+export function Xis({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`shrink-0 ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
+/** Escudo da garantia. */
+export function Escudo({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`shrink-0 ${className}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 3l7.5 3v6c0 4.6-3.1 8.2-7.5 9.4C7.6 20.2 4.5 16.6 4.5 12V6z" />
+      <path d="M8.8 12.2l2.2 2.2 4.2-4.4" />
+    </svg>
+  );
+}
+
 /**
- * Slot de foto com proporção fixa.
- * Enquanto o arquivo não existe, mostra a direção de arte do slot em vez de
- * uma imagem quebrada — placeholder honesto, nunca foto falsa em CSS.
+ * Duotone navy por cadeia de filtro, e não por `mix-blend-mode`.
+ *
+ * Blend depende do contexto de empilhamento do pai: basta a foto entrar num
+ * elemento com `isolation`, `filter` ou z-index próprio (metade dos lugares
+ * onde ela é usada aqui) para a camada de cor sumir sem erro nenhum, e a foto
+ * ficar cinza. O filtro viaja com a imagem. `sepia` dá o marrom, o
+ * `hue-rotate` leva ao azul da marca e o `saturate` segura o tom.
+ */
+const DUOTONE =
+  "grayscale(1) sepia(1) hue-rotate(186deg) saturate(1.9) brightness(0.8) contrast(1.06)";
+
+/** Máscara na base, para a foto fundir no fundo em vez de terminar em aresta. */
+const MASCARA = {
+  maskImage:
+    "linear-gradient(to bottom, #000 0%, #000 62%, rgba(0,0,0,0.35) 88%, transparent 100%)",
+  WebkitMaskImage:
+    "linear-gradient(to bottom, #000 0%, #000 62%, rgba(0,0,0,0.35) 88%, transparent 100%)",
+} as const;
+
+/**
+ * Foto tratada em duotone navy.
+ *
+ * Qualquer foto que o cliente mandar cai na paleta da página sem passar pelo
+ * Photoshop: o tratamento é o filtro DUOTONE acima.
+ *
+ * O `onError` do React não resolve sozinho: a imagem pode falhar ANTES da
+ * hidratação e o handler nunca dispara. Por isso conferimos o estado real do
+ * elemento ao montar.
  */
 export function Foto({
   src,
   alt,
   arte,
   className = "",
+  desbota = true,
+  prioridade = false,
 }: {
   src: string;
   alt: string;
   arte?: string;
   className?: string;
+  /** Máscara de gradiente na base, para fundir no fundo. */
+  desbota?: boolean;
+  prioridade?: boolean;
 }) {
   const img = useRef<HTMLImageElement>(null);
   const [falhou, setFalhou] = useState(false);
 
-  // A imagem pode falhar ANTES da hidratação — nesse caso o onError do React
-  // nunca dispara. Por isso conferimos o estado real do elemento ao montar.
   useEffect(() => {
     const el = img.current;
     if (el && el.complete && el.naturalWidth === 0) setFalhou(true);
   }, []);
 
+  if (falhou) {
+    return (
+      <div
+        className={`relative flex h-full w-full flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-line-forte bg-card p-6 text-center ${className}`}
+      >
+        <svg
+          viewBox="0 0 24 24"
+          className="h-8 w-8 text-mute"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden="true"
+        >
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <circle cx="8.6" cy="9.6" r="1.7" />
+          <path d="M3.6 17.4l4.9-4.6a2 2 0 0 1 2.7 0l3.5 3.3a2 2 0 0 0 2.7 0l2.3-2.1" />
+        </svg>
+        {arte ? (
+          <p className="max-w-[17rem] text-[0.82rem] leading-snug font-semibold text-ink">
+            {arte}
+          </p>
+        ) : null}
+        <code className="mono bg-void/70 px-2 py-1 text-[0.62rem] tracking-tight text-mute">
+          TODO asset · public{src}
+        </code>
+      </div>
+    );
+  }
+
   return (
-    <div className={`relative h-full w-full overflow-hidden bg-noite-900 ${className}`}>
-      {!falhou ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          ref={img}
-          src={src}
-          alt={alt}
-          decoding="async"
-          onError={() => setFalhou(true)}
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-4 border border-dashed border-areia-300/35 bg-[repeating-linear-gradient(135deg,#102472_0px,#102472_10px,#16308F_10px,#16308F_20px)] p-6 text-center">
-          <svg
-            viewBox="0 0 24 24"
-            className="h-8 w-8 text-areia-300"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            aria-hidden="true"
-          >
-            <rect x="3" y="4" width="18" height="16" rx="1" />
-            <circle cx="8.6" cy="9.6" r="1.7" />
-            <path d="M3.6 17.4l4.9-4.6a2 2 0 0 1 2.7 0l3.5 3.3a2 2 0 0 0 2.7 0l2.3-2.1" />
-          </svg>
-          {arte ? (
-            <p className="max-w-[17rem] text-[0.82rem] leading-snug font-semibold text-areia-100">
-              {arte}
-            </p>
-          ) : null}
-          <code className="bg-noite-950/80 px-2 py-1 text-[0.66rem] tracking-tight text-areia-300">
-            public{src}
-          </code>
-        </div>
-      )}
+    <div className={`relative h-full w-full overflow-hidden ${className}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        ref={img}
+        src={src}
+        alt={alt}
+        decoding="async"
+        loading={prioridade ? "eager" : "lazy"}
+        fetchPriority={prioridade ? "high" : "auto"}
+        onError={() => setFalhou(true)}
+        className="h-full w-full object-cover"
+        style={{ filter: DUOTONE, ...(desbota ? MASCARA : null) }}
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent"
+      />
     </div>
   );
 }
 
 /**
- * Régua de progresso + fração.
- *
- * O fio que separa os itens deixa de ser enfeite e passa a informar: a parte
- * marinho ocupa `atual/total` da largura, então descendo a lista a régua enche.
- * Junto vem a fração (01/04), que diz de saída quanto falta — numa página de
- * vendas, saber que a lista tem quatro itens e não vinte muda a decisão de
- * continuar lendo.
- *
- * A animação depende de `data-visivel` que o `Reveal` põe no elemento pai, então
- * o item precisa envolver isto num `<Reveal className="group …">`.
+ * Linha de preço. Aparece sob o CTA do hero, na barra fixa do celular e no
+ * bloco da oferta; é uma peça só para os três lugares não divergirem.
  */
-export function Regua({ atual, total }: { atual: number; total: number }) {
-  const dois = (n: number) => String(n).padStart(2, "0");
-
+export function LinhaPreco({ className = "" }: { className?: string }) {
   return (
-    <>
-      <div className="relative h-[2px] w-full bg-areia-300">
-        <span
-          className="absolute inset-y-0 left-0 origin-left scale-x-0 bg-noite-900 transition-transform duration-700 ease-out group-data-[visivel=true]:scale-x-100 motion-reduce:scale-x-100 motion-reduce:transition-none"
-          style={{ width: `${(atual / total) * 100}%` }}
-        />
-      </div>
-
-      <p className="placar mt-4 flex items-baseline gap-1 text-noite-900">
-        <span className="text-[1.7rem] leading-none sm:text-[2rem]">{dois(atual)}</span>
-        <span className="text-[0.95rem] leading-none text-areia-500">/{dois(total)}</span>
-      </p>
-    </>
+    <p
+      className={`mono flex flex-wrap items-center gap-x-2.5 gap-y-1 text-mute ${className}`}
+    >
+      <span className="whitespace-nowrap">
+        {oferta.parcelasQtd} de {oferta.parcelasValor}
+      </span>
+      <span className="h-3 w-px bg-line-forte" aria-hidden="true" />
+      <span className="whitespace-nowrap">{oferta.garantiaDias} dias de garantia</span>
+      <span className="h-3 w-px bg-line-forte" aria-hidden="true" />
+      <span className="whitespace-nowrap">acesso na hora</span>
+    </p>
   );
 }
 
 /**
- * Linha de preço.
- *
- * A informação de preço aparece em três lugares: sob o botão do hero no
- * celular, sobre o banner no desktop e na barra fixa. Estava escrita três
- * vezes, com tamanho e alinhamento diferentes em cada uma, e no celular ficava
- * pequena e encostada na esquerda sob um botão de largura total.
- *
- * Agora é uma peça só. Hierarquia: "12x de" pequeno em caixa alta, o valor da
- * parcela grande em fonte tabular de placar, e a informação de apoio depois de
- * um fio.
+ * Card com spotlight: o gradiente verde segue o cursor e a borda acende. É o
+ * único lugar da página onde o verde aparece sem ser CTA, e ele existe para
+ * dizer "isto aqui responde ao seu toque", não para colorir o card. A regra
+ * visual mora em .spot; sem JS o card só não acende.
  */
-export function LinhaPreco({
-  tom = "claro",
-  cauda = "garantia",
+export function CardSpot({
+  children,
   className = "",
+  as: Tag = "div",
 }: {
-  /** `claro` para fundo marinho, `escuro` para o creme do banner. */
-  tom?: "claro" | "escuro";
-  cauda?: "garantia" | "avista";
+  children: ReactNode;
   className?: string;
+  as?: "div" | "li" | "article";
 }) {
-  const apoio = tom === "claro" ? "text-bruma-300" : "text-noite-800/80";
-  const forte = tom === "claro" ? "text-areia-50" : "text-noite-900";
-  const fio = tom === "claro" ? "bg-white/20" : "bg-noite-900/25";
-
+  const spot = useSpotlight();
+  const Comp = Tag as React.ElementType;
   return (
-    <p
-      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 ${className}`}
-    >
-      <span
-        className={`text-[0.66rem] font-bold tracking-[0.14em] whitespace-nowrap uppercase ${apoio}`}
-      >
-        {oferta.parcelasQtd} de
-      </span>
-      <span className={`placar text-[1.15rem] whitespace-nowrap ${forte}`}>
-        {oferta.parcelasValor}
-      </span>
-      <span className={`h-3.5 w-px ${fio}`} aria-hidden="true" />
-      <span className={`text-[0.72rem] whitespace-nowrap ${apoio}`}>
-        {cauda === "avista"
-          ? `${oferta.preco} à vista`
-          : `${oferta.garantiaDias} dias de garantia`}
-      </span>
-    </p>
+    <Comp onMouseMove={spot} className={`card spot ${className}`}>
+      {children}
+    </Comp>
   );
+}
+
+/** Emenda entre seções: um fio de 1px, nunca troca brusca de fundo. */
+export function Fio({ className = "" }: { className?: string }) {
+  return <div className={`h-px w-full bg-line ${className}`} aria-hidden="true" />;
 }

@@ -1,86 +1,66 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { marca } from "@/lib/content";
-import { Botao, LinhaPreco } from "./ui";
+import { marca, menu } from "@/lib/content";
+import { Botao } from "./ui";
 
+/**
+ * Pílula flutuante.
+ *
+ * É `sticky`, não `fixed`: assim ela entra no fluxo logo abaixo da barra de
+ * urgência e sobe sozinha quando a barra sai de cena, sem eu precisar medir a
+ * altura da barra (que quebra em duas linhas no celular). Para isso o body usa
+ * `overflow-x: clip` e não `hidden`, que criaria um contêiner de rolagem e
+ * mataria o sticky.
+ *
+ * Translúcida no topo, sólida ao rolar: sobre o hero ela some no fundo, e
+ * sobre texto ela ganha corpo para não deixar palavra passando por baixo.
+ */
 export default function Nav() {
-  const [preso, setPreso] = useState(false);
+  const [rolou, setRolou] = useState(false);
 
   useEffect(() => {
-    const aoRolar = () => setPreso(window.scrollY > 700);
+    const aoRolar = () => setRolou(window.scrollY > 240);
     aoRolar();
     window.addEventListener("scroll", aoRolar, { passive: true });
     return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
   return (
-    <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-400 ease-out ${
-          preso ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <div className="border-b border-white/10 bg-noite-900/95 backdrop-blur-md">
-          <div className="mx-auto flex max-w-[80rem] items-center justify-between gap-4 px-5 py-3 sm:px-8">
-            {/* Logo oficial. Antes era o nome em tipografia, que competia com
-                o lettering da marca sem ser ele. */}
-            <a href="#topo" className="shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-llove.png"
-                alt={marca.nome}
-                width={360}
-                height={64}
-                className="h-8 w-auto sm:h-9"
-              />
-            </a>
-
-            <nav className="hidden items-center gap-8 text-[0.82rem] font-semibold text-bruma-200 lg:flex">
-              <a className="transition-colors hover:text-sol-400" href="#metodo">
-                O método
-              </a>
-              <a className="transition-colors hover:text-sol-400" href="#charllove">
-                Quem ensina
-              </a>
-              <a className="transition-colors hover:text-sol-400" href="#oferta">
-                Investimento
-              </a>
-              <a className="transition-colors hover:text-sol-400" href="#duvidas">
-                Dúvidas
-              </a>
-            </nav>
-
-            <Botao href={marca.checkout} tamanho="md" className="shrink-0">
-              <span className="hidden sm:inline">Quero entrar</span>
-              <span className="sm:hidden">Entrar</span>
-            </Botao>
-          </div>
-        </div>
-      </header>
-
-      {/*
-        Barra fixa de compra, celular.
-
-        Era preço encostado na margem esquerda e botão pequeno na direita: o
-        preço lia como sobra e o alvo de toque era metade da tela. Virou duas
-        linhas, preço centralizado em cima e botão de largura total embaixo,
-        que é o maior alvo possível no elemento mais clicado da página.
-
-        O padding de baixo respeita a safe area do iPhone, senão a barra fica
-        atrás do indicador de home.
-      */}
+    <div className="sticky top-3 z-50 px-3 sm:top-4 sm:px-5">
       <div
-        className={`fixed inset-x-0 bottom-0 z-50 border-t border-noite-800 bg-noite-950/97 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-md transition-transform duration-400 ease-out sm:hidden ${
-          preso ? "translate-y-0" : "translate-y-full"
+        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-4 rounded-full border border-line px-3 py-2 backdrop-blur-[16px] transition-colors duration-500 sm:px-4 ${
+          rolou ? "bg-navy/92" : "bg-navy/55"
         }`}
       >
-        <LinhaPreco cauda="avista" />
+        <a href="#topo" className="shrink-0 pl-1.5" aria-label={marca.nome}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-llove.png"
+            alt={marca.nome}
+            width={360}
+            height={64}
+            className="h-6 w-auto sm:h-7"
+          />
+        </a>
 
-        <Botao href={marca.checkout} tamanho="md" className="mt-2.5 w-full">
-          Garantir vaga
+        <nav className="hidden items-center gap-7 text-[0.8rem] font-medium text-mute lg:flex">
+          {menu.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="transition-colors duration-200 hover:text-ink"
+            >
+              {item.rotulo}
+            </a>
+          ))}
+        </nav>
+
+        <Botao href={marca.checkout} tamanho="sm" className="shrink-0">
+          <span className="hidden sm:inline">Entrar no método</span>
+          <span className="sm:hidden">Entrar</span>
         </Botao>
       </div>
-    </>
+    </div>
   );
 }

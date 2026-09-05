@@ -1,44 +1,61 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Archivo_Black } from "next/font/google";
+import { Barlow_Condensed, JetBrains_Mono, Manrope } from "next/font/google";
 import { faq, marca } from "@/lib/content";
 import "./globals.css";
 
-// Display e texto são a MESMA superfamília (Archivo): a manchete e o
-// parágrafo são parentes, e a distinção vem de peso, escala e caixa —
-// não de uma face importada de fora.
-const archivoBlack = Archivo_Black({
-  weight: "400", // a família só tem esse peso, e ele já é o black
+/**
+ * Três faces, três funções que não se confundem:
+ *  · Barlow Condensed carrega a manchete. A condensada aguenta 100px de
+ *    display sem quebrar em três linhas no celular.
+ *  · Manrope é o corpo, com bojo alto: parágrafo longo em fundo escuro
+ *    precisa de x-height generoso para não fechar.
+ *  · JetBrains Mono é só metadado ("01/04", "MÓDULO 03", fonte do dado).
+ *    Mono em rótulo é o que faz o número ler como referência, não como texto.
+ *
+ * Todas via next/font: self-hosted, sem requisição a fonts.googleapis.com em
+ * runtime e sem troca de layout no carregamento.
+ */
+const barlow = Barlow_Condensed({
+  weight: ["700", "800"],
   subsets: ["latin"],
-  variable: "--font-archivo-black",
+  variable: "--font-barlow",
   display: "swap",
 });
 
-const archivo = Archivo({
+const manrope = Manrope({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const jetbrains = JetBrains_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
 const descricao =
-  "O método completo de futevôlei do Charllove: fundamento, leitura de jogo, preparo pra areia e o caminho para transformar o esporte em profissão.";
+  "Formação para professores de futevôlei. Dar aula com começo, meio e fim, segurar turma desnivelada e cobrar como profissional. 6 módulos mais bônus, com o Charllove.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${marca.dominio}`),
   title: {
-    default: "Método LLOVE — transforme sua paixão pelo futevôlei em profissão",
+    default: "Método LLOVE · formação para professores de futevôlei",
     template: "%s · Método LLOVE",
   },
   description: descricao,
   keywords: [
     "futevôlei",
-    "curso de futevôlei",
+    "professor de futevôlei",
+    "formação de professor de futevôlei",
     "método llove",
     "charllove",
-    "aula de futevôlei online",
-    "treino de futevôlei",
+    "dar aula de futevôlei",
   ],
   openGraph: {
-    title: "Método LLOVE — do racha de domingo à quadra profissional",
+    title: "Pare de improvisar aula. Comece a viver de futevôlei.",
     description: descricao,
     url: `https://${marca.dominio}`,
     siteName: "Método LLOVE",
@@ -48,7 +65,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Método LLOVE — futevôlei do fundamento à profissão",
+    title: "Pare de improvisar aula. Comece a viver de futevôlei.",
     description: descricao,
     images: ["/images/og.jpg"],
   },
@@ -57,15 +74,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04192B",
+  themeColor: "#06111F",
   width: "device-width",
   initialScale: 1,
 };
 
-const dadosEstruturados = {
+const dadosCurso = {
   "@context": "https://schema.org",
   "@type": "Course",
-  name: "Método LLOVE",
+  name: marca.nome,
   description: descricao,
   inLanguage: "pt-BR",
   provider: {
@@ -88,7 +105,7 @@ const dadosEstruturados = {
   },
 };
 
-const faqEstruturado = {
+const dadosFaq = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: faq.map((item) => ({
@@ -100,19 +117,41 @@ const faqEstruturado = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${archivoBlack.variable} ${archivo.variable}`}>
+    <html
+      lang="pt-BR"
+      className={`${barlow.variable} ${manrope.variable} ${jetbrains.variable}`}
+      // O script abaixo acrescenta a classe `js` antes da hidratação, então o
+      // className do <html> É diferente no servidor e no cliente, de propósito.
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Marca o documento como "tem JavaScript" ANTES da primeira pintura.
+            Todo estado inicial escondido das animações depende dessa classe,
+            então sem JS a página aparece inteira em vez de ficar em branco, e
+            com JS ninguém vê o texto surgir e sumir. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: 'document.documentElement.classList.add("js")',
+          }}
+        />
+        {/* FAQPage e Course em JSON-LD. Ficam no head porque o rich result do
+            Google lê o documento inicial, e a página é estática. */}
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(dadosCurso) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(dadosFaq) }}
+        />
+      </head>
       <body>
         {children}
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(dadosEstruturados) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqEstruturado) }}
-        />
+        {/* Grão de filme sobre a página inteira. Fixo e sem eventos: é papel,
+            não camada de conteúdo. */}
+        <div className="grao-global" aria-hidden="true" />
       </body>
     </html>
   );

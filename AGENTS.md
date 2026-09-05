@@ -31,10 +31,10 @@ Antes de dar qualquer tarefa por concluída: `npm run lint && npm run typecheck 
 | Cor, tipografia, espaçamento, movimento | `app/globals.css` (os tokens)   |
 | Ordem das seções                        | `app/page.tsx`                  |
 | Uma seção específica                    | `components/<NomeDaSeção>.tsx`  |
-| Ilustrações (arcos, Pão de Açúcar, sol) | `components/art.tsx`            |
-| Parallax, reveal, contador, máscara     | `components/movimento.tsx`      |
-| Fundo do hero (as duas artes)           | `public/FUNDO-HERO-*.jpg`       |
-| Botão, rótulo, foto, rabisco            | `components/ui.tsx`             |
+| Reveal, contador, ímã, spotlight        | `components/movimento.tsx`      |
+| Botão, olho, manchete, foto, check      | `components/ui.tsx`             |
+| Foto do Charllove no hero               | `public/HERO-DESKTOP.jpg`       |
+| Colagem do percurso dele                | `public/colagem-charllove.png`  |
 
 **Nunca escreva texto de interface direto num componente.** Todo conteúdo vem de
 `lib/content.ts`, porque quem edita a página é o cliente, não um programador.
@@ -44,50 +44,51 @@ Antes de dar qualquer tarefa por concluída: `npm run lint && npm run typecheck 
 ## Invariantes de design
 
 A direção visual está documentada em `docs/DESIGN.md`, com o raciocínio por trás de cada
-escolha. Estas cinco regras não podem ser quebradas sem refazer aquele documento:
+escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
 
-1. **Laranja chapado é do CTA.** O laranja pode ocupar área grande em arco vazado, mas
-   preenchimento sólido de laranja é do botão de compra e do bloco de preço. Se um bloco
-   laranja chapado não for clicável, ele compete com o botão e a página converte menos.
-2. **Marinho é o campo, areia é o papel da leitura.** Seções de energia (hero, faixa,
-   oferta, CTA final) usam `noite-*`; seções de texto longo usam `areia-*`. Não invente um
-   quarto fundo.
-3. **Lima (`lima-*`) só em display.** Bloco de manchete e número de placar. Nunca em texto
-   corrido, ícone repetido ou fundo de seção — vira néon e mata o laranja do botão.
-4. **Arco irradia de ponto com significado**: o canto da mídia, o pé da manchete, o centro
-   do bloco de conversão. Arco em posição arbitrária é papel de parede.
-5. **Inclinação é privilégio da manchete** (até 1.5°, texto contra-rotacionado pela classe
-   `.bloco`). Botão, card e pílula nunca inclinam — clicável torto perde o affordance.
-6. **Uma superfamília só.** Archivo Black na manchete e no placar, Archivo no resto. Se
-   trocar a face de display, releia `docs/DESIGN.md` §Tipografia: a largura da face amarra
-   as escalas `clamp()` e o `letter-spacing` da classe `.display`.
-7. **Nunca use areia translúcida sobre o marinho** (`bg-areia-*/NN`) — compõe em cinza.
-   Seção de leitura usa areia opaca.
-8. **Não desenhe arcos por cima do hero**: as artes `FUNDO-HERO-*.jpg` já os trazem.
-9. **Numeração é sempre a régua** (componente `Regua` em `components/ui.tsx`): fio de 3px
-   onde a parte marinho ocupa `atual/total` da largura, mais a fração `01/04` abaixo.
-   Lista numerada nova usa essa peça, não uma variação. Nada de quadrado, chapa ou
-   caixa em volta do número: o cliente reprovou essa direção em set/2026, duas vezes.
-   A animação depende do `data-visivel` que o `Reveal` põe no pai, então o item precisa
-   estar dentro de um `<Reveal className="group …">`.
-10. **Emenda entre seções é reta.** Nada de elipse, onda ou arredondamento na fronteira
-    entre o marinho e o papel. Cartaz de torneio tem corte seco.
+1. **ZERO laranja.** O acento cromático da página é o VERDE, e ele existe em cinco
+   lugares: CTA, uma palavra por manchete, o dot de "turma aberta", os checks e o glow
+   das auroras. Verde em título de card, ícone repetido ou fundo de seção vira néon e o
+   botão de compra deixa de ser o ponto mais quente da tela.
+2. **Uma palavra verde por manchete, nunca duas.** Com duas o olho não sabe qual é a
+   promessa e o destaque vira zebra.
+3. **Profundidade por tom, não por sombra.** Card é `--color-card` + borda 1px
+   `--color-line` + highlight inset no topo. `box-shadow` só existe como glow verde do
+   CTA e do card da oferta.
+4. **Emenda entre seções é um fio de 1px.** Nada de troca brusca de fundo, elipse ou onda.
+5. **O estado escondido das animações mora no CSS, atrás da classe `.js`.** Nunca em
+   `style` inline vindo do servidor: sem essa trava a página inteira fica invisível
+   quando o JavaScript falha ou demora, e é isso que o crawler enxerga. Ver
+   `docs/DESIGN.md` §A trava do `.js`.
+6. **Três faces, três funções.** Barlow Condensed na manchete e no placar, Manrope no
+   corpo, JetBrains Mono só em label e metadado. Se trocar a face de display, releia
+   `docs/DESIGN.md` §Tipografia: a largura da condensada amarra as escalas `clamp()`.
+7. **Foto entra em duotone navy por FILTRO**, nunca por `mix-blend-mode` (blend some
+   dentro de elemento com isolation/filter/z-index, e ninguém percebe até ver no
+   navegador). O filtro está em `DUOTONE`, em `components/ui.tsx`.
+8. **Numeração é mono e nua.** Nada de quadrado, chapa ou caixa em volta do número: o
+   cliente reprovou essa direção em set/2026, duas vezes.
+9. **Sem contador regressivo, sem escassez falsa.** A barra do topo diz por que o preço
+   é o que é, e essa honestidade é o argumento da página inteira.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula
 ou dois-pontos, nunca apenas apague o traço. Vale para `lib/content.ts` e para qualquer
 texto em componente; comentários de código podem manter.
 
-Caixa alta sempre com `letter-spacing` (use a classe `.rotulo`). Nunca use emoji como ícone.
+Caixa alta sempre com `letter-spacing` (classe `.mono`). Nunca use emoji como ícone.
 
 ---
 
 ## Conteúdo sensível
 
-**Depoimentos.** `depoimentos` em `lib/content.ts` começa vazio e a seção se auto-oculta.
+**Depoimentos.** A página NÃO tem seção de depoimentos, e `depoimentos` em
+`lib/content.ts` está vazio de propósito: não há nenhum real autorizado ainda, e a barra
+de urgência no topo diz exatamente isso ("quando entrarem os depoimentos, o preço sobe").
 Não preencha com exemplos inventados, nem "só para visualizar". Depoimento fabricado é
-propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Só entram depoimentos reais
-com autorização.
+propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Quando existirem
+depoimentos reais com autorização, crie a seção; até lá, a ausência deles é parte do
+argumento da página.
 
 **Promessas de resultado.** O produto é treinamento esportivo. Nenhum texto pode prometer
 desempenho, classificação em campeonato, renda ou retorno financeiro. O aviso legal no
@@ -97,21 +98,28 @@ rodapé (`components/Rodape.tsx`) existe por isso e não deve ser removido.
 
 ## Armadilhas já encontradas neste código
 
-Cinco defeitos que passaram batido na revisão de código e só apareceram no navegador. Se
-mexer nessas áreas, verifique no browser, não só no build:
+Defeitos que passaram batido na revisão de código e só apareceram no navegador. Se mexer
+nessas áreas, verifique no browser, não só no build:
 
-1. **Máscara corta acento.** Em caixa alta, `Ê` e `Á` sobem acima da altura de caixa. O
-   reveal por máscara em `LinhasReveal` precisa de folga em cima (`pt-[0.2em]`) e embaixo
-   (`pb-[0.42em]`, para o rabisco), com margem negativa devolvendo o espaço.
-2. **`clip-path` mata o IntersectionObserver.** Um elemento recortado a 100% tem área
-   visível zero e o observador nunca dispara nele. Em `Desmascara`, o observador fica no
-   elemento de fora e o recorte no filho. Não junte os dois.
-3. **`onError` de `<img>` não dispara depois da hidratação.** A imagem falha antes do React
-   anexar o handler. `Foto` em `ui.tsx` confere `complete && naturalWidth === 0` ao montar.
-4. **Silhueta escura sobre fundo escuro some.** O horizonte do Rio é desenhado em azul de
-   bruma (`#0D4671`), mais claro que o céu. Não "corrija" para uma cor mais escura.
-5. **Hook precisa começar com `use`.** `useProgresso` cria e devolve o próprio ref em vez de
-   recebê-lo por argumento — passar ref durante o render é erro de lint e de conceito.
+1. **Página inteira invisível sem JavaScript.** O estado escondido do reveal precisa vir
+   do CSS atrás de `.js` (invariante 5). Se ele voltar para `style` inline, o build passa,
+   o lint passa, e a página servida é uma tela vazia.
+2. **Máscara corta acento.** Em caixa alta, `Ê` e `Á` sobem acima da altura de caixa. A
+   classe `.linha` precisa da folga em cima e embaixo, com margem negativa devolvendo o
+   espaço ao fluxo.
+3. **`overflow-x: hidden` no body mata o `position: sticky`.** Ele transforma o body em
+   contêiner de rolagem e a nav para de grudar. Use `overflow-x: clip`.
+4. **`mix-blend-mode` some sem erro nenhum** dentro de elemento com `isolation`, `filter`
+   ou z-index próprio. Foi por isso que o duotone virou cadeia de filtro.
+5. **`onError` de `<img>` não dispara depois da hidratação.** A imagem falha antes de o
+   React anexar o handler. `Foto` em `ui.tsx` confere `complete && naturalWidth === 0`
+   ao montar.
+6. **Hook precisa começar com `use`.** `useNaTela` cria e devolve o próprio ref em vez de
+   recebê-lo por argumento: passar ref durante o render é erro de lint e de conceito.
+7. **`window.scrollTo` não rola com `scroll-behavior: smooth`** se você pedir a próxima
+   posição antes de a anterior chegar. Em script de screenshot, use
+   `scrollTo({ top, behavior: "instant" })`, senão a captura sai com metade das seções
+   ainda escondidas e parece bug da página.
 
 ---
 
@@ -121,17 +129,25 @@ Arquivos que o cliente ainda vai fornecer. Enquanto não existirem, a página ca
 placeholder honesto com a direção de arte escrita e **nada quebra**. Mantenha esse
 comportamento em qualquer componente novo que dependa de mídia.
 
-- `public/videos/bola-1.mp4` e `bola-2.mp4` — ver `public/videos/LEIA-ME.txt`
-- `public/images/hero.jpg`, `charllove.jpg`, `og.jpg` — ver `public/images/LEIA-ME.txt`
+- `public/images/og.jpg` (1200x630) — miniatura de compartilhamento. Hoje o link
+  compartilhado no WhatsApp e no Instagram não tem imagem.
+- Uma versão do mockup `public/bonus-networking.webp` **com fundo transparente**. O
+  arquivo atual tem fundo branco chapado e nenhum modo de mistura resolve isso sobre
+  navy: multiply come o lettering creme da caixa e screen mantém o branco. Por isso o
+  card de bônus é só tipografia hoje (ver comentário em `components/Modulos.tsx`).
 
 ---
 
 ## Movimento
 
 Regras em `docs/DESIGN.md`. Em resumo: nada com easing linear, nada acima de 900 ms, e
-`prefers-reduced-motion` desliga parallax, contador, máscaras e pausa os vídeos. Toda
-animação nova precisa servir a feedback, continuidade ou hierarquia — se não serve a
-nenhum dos três, não entra.
+`prefers-reduced-motion` desliga máscara de manchete, ímã, contador, marquee e scroll
+suave. Toda animação nova precisa servir a feedback, continuidade ou hierarquia; se não
+serve a nenhum dos três, não entra.
+
+Não há Lenis nem qualquer scroll hijacking, de propósito: o smooth scroll é o nativo do
+CSS, que o próprio `prefers-reduced-motion` já desarma, e a página não paga por uma
+biblioteca de rolagem numa peça que precisa de Lighthouse alto no 4G.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

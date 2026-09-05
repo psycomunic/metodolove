@@ -1,98 +1,89 @@
-import { inclusos, marca, oferta } from "@/lib/content";
-import { Botao, Check, Reveal, Rotulo } from "./ui";
+import { investimento, marca, oferta } from "@/lib/content";
+import { Reveal } from "./movimento";
+import { Botao, Check, Escudo, Olho } from "./ui";
 
 /**
- * Bloco da oferta, em desenho de página de vendas.
+ * Investimento.
  *
- * A versão anterior tinha cabeçalho de seção com manchete de duas linhas,
- * texto de apoio ao lado, card com etiqueta saindo pela borda, lista em duas
- * colunas, bloco de garantia e letra miúda. Muita peça para o momento em que
- * a pessoa só quer saber quanto custa e onde clica.
+ * Coluna única e estreita: no bloco de conversão nada pode disputar o olho
+ * com o preço e o botão. O preço fica COLADO no botão, sem parágrafo entre os
+ * dois, porque a distância entre ler o valor e poder agir é a fricção mais
+ * cara da página.
  *
- * Aqui a ordem é a da decisão, de cima para baixo e em coluna única: o que é,
- * o que vem junto, quanto custa, o botão, e só então a garantia e a letra
- * miúda. Sem manchete conceitual, sem duas colunas, sem etiqueta flutuando.
- *
- * O preço fica junto do botão de propósito. Separá-los obriga a pessoa a subir
- * o olho para conferir o valor antes de clicar, e cada ida e volta dessas é
- * uma chance de desistir.
+ * A garantia vem depois do botão, não antes: ela é o que derruba a última
+ * objeção de quem já leu o preço, e antes do botão só adiaria a decisão.
  */
 export default function Oferta() {
   return (
     <section
       id="oferta"
-      className="relative isolate overflow-hidden bg-noite-900 py-14 text-areia-100 sm:py-20"
+      className="relative isolate overflow-hidden border-t border-line px-5 py-20 sm:px-8 sm:py-28 lg:py-32"
     >
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(110%_72%_at_50%_-10%,#133f66_0%,#0d2f4d_46%,#082038_100%)]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[38rem] w-[38rem] -translate-x-1/2 opacity-[0.16]"
+        style={{
+          background: "radial-gradient(circle, #22C55E 0%, transparent 68%)",
+          filter: "blur(140px)",
+        }}
+      />
 
-      <div className="relative z-10 mx-auto max-w-[46rem] px-5 sm:px-8">
+      <div className="mx-auto max-w-[42rem]">
         <Reveal className="text-center">
-          <div className="flex justify-center">
-            <Rotulo tom="claro">O investimento</Rotulo>
-          </div>
+          <Olho className="justify-center">{investimento.olho}</Olho>
+          <h2 className="display mt-5 text-[clamp(2.5rem,7vw,4.5rem)] text-ink">
+            {investimento.titulo}
+          </h2>
         </Reveal>
 
-        <Reveal atraso={70}>
-          <div className="elevado mt-10 border-t-8 border-sol-500 bg-areia-50 p-8 text-tinta sm:p-12">
-            <p className="rotulo text-noite-600">Você leva</p>
-            <h2 className="display mt-3 text-[clamp(2rem,5vw,2.8rem)]">
-              {marca.nome} completo
-            </h2>
+        <Reveal
+          atraso={100}
+          className="card mt-10 border-verde/45 p-7 shadow-[0_0_80px_-30px_rgba(34,197,94,0.55)] sm:p-10"
+        >
+          <ul className="space-y-4">
+            {investimento.inclusos.map((item) => (
+              <li key={item} className="flex gap-4">
+                <Check className="mt-0.5 h-5 w-5 text-verde" />
+                <span className="text-[0.97rem] leading-[1.6] text-ink">{item}</span>
+              </li>
+            ))}
+          </ul>
 
-            <ul className="mt-7 space-y-3.5">
-              {inclusos.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-[0.97rem] leading-snug text-tinta/80"
-                >
-                  <Check className="mt-0.5 h-4.5 w-4.5 shrink-0 text-noite-600" />
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-10 border-t border-line pt-8 text-center">
+            <p className="mono text-[0.7rem] text-fraco line-through">
+              de {oferta.precoCheio}
+            </p>
+            <p className="placar mt-3 text-[clamp(3rem,10vw,4.5rem)] text-ink">
+              {oferta.parcelasQtd} de {oferta.parcelasValor}
+            </p>
+            <p className="mt-2 text-[0.95rem] text-mute">ou {oferta.preco} à vista</p>
 
-            {/* Preço e botão colados: o valor é a última coisa lida antes do
-                clique, e não pode obrigar a pessoa a subir o olho de novo. */}
-            <div className="fio mt-9 border-t pt-8 text-center">
-              <p className="text-[0.88rem] text-tinta/50">
-                De <span className="line-through">{oferta.precoCheio}</span> por
-              </p>
-              <p className="rotulo mt-3 text-noite-600">
-                {oferta.parcelasQtd} sem juros de
-              </p>
-              <p className="placar mt-2 text-[clamp(3.2rem,11vw,4.8rem)] tracking-tighter text-tinta">
-                {oferta.parcelasValor}
-              </p>
-              <p className="mt-2 text-[0.95rem] text-tinta/60">
-                ou <span className="font-bold text-tinta">{oferta.preco}</span> à vista
-              </p>
+            <Botao href={marca.checkout} ima className="mt-8 w-full" id="cta-oferta">
+              {investimento.cta}
+            </Botao>
 
-              <Botao href={marca.checkout} className="mt-7 w-full">
-                Quero minha vaga
-              </Botao>
+            <p className="mono mt-4 text-[0.62rem] text-fraco">
+              {investimento.microcopy}
+            </p>
+          </div>
 
-              <p className="mt-4 text-[0.76rem] leading-relaxed text-tinta/50">
-                Compra segura · Acesso na hora · {oferta.acesso}
-                <br />
-                Cartão, Pix ou boleto
+          <p className="mt-8 border-t border-line pt-7 text-center text-[0.92rem] leading-[1.6] text-mute">
+            {investimento.ancora}
+          </p>
+        </Reveal>
+
+        <Reveal atraso={140} className="card mt-4 p-7 sm:p-9">
+          <div className="flex gap-5">
+            <Escudo className="mt-0.5 h-8 w-8 shrink-0 text-verde" />
+            <div>
+              <h3 className="display text-[1.4rem] text-ink sm:text-[1.6rem]">
+                {investimento.garantia.titulo}
+              </h3>
+              <p className="mt-3 text-[0.95rem] leading-[1.62] text-mute">
+                {investimento.garantia.texto}
               </p>
             </div>
           </div>
-        </Reveal>
-
-        {/* A garantia fica FORA do card, depois do botão: ela não é argumento
-            de venda, é a rede embaixo de quem já decidiu. */}
-        <Reveal atraso={130}>
-          <p className="mx-auto mt-8 flex max-w-[34rem] items-start gap-4">
-            <span className="placar shrink-0 text-[2.4rem] leading-none text-sol-500">
-              {oferta.garantiaDias}
-              <span className="rotulo mt-1 block text-bruma-300">dias</span>
-            </span>
-            <span className="text-[0.92rem] leading-[1.6] text-bruma-200">
-              Entre, assista tudo e leve para a sua turma. Se achar que não é para você,
-              manda um e-mail e eu devolvo cada centavo. Sem justificativa.
-            </span>
-          </p>
         </Reveal>
       </div>
     </section>
