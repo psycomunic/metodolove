@@ -32,8 +32,19 @@ export default function Mercado() {
             bola entra ~27px no quadro e para acima do "50 mi", e a sombra
             alcança uns 22px além dela. Descer mais escurece o número do
             último tile, que foi exatamente o que aconteceu na primeira
-            tentativa. */}
-        <div className="pointer-events-none absolute top-6 right-4 z-10 hidden lg:block xl:right-8">
+            tentativa.
+
+            O quanto ela anda para a esquerda também. O limite é o teto de 60%
+            da manchete, e a folga é menor quanto mais estreita a tela, porque
+            o container ainda não bateu no max-w:
+
+            · xl, bola de 352px em `right-24`: sobram 38px de folga em 1280 e
+              64px de 1344 para cima. Em `right-32` a folga cai para 6px em
+              1280 e a bola encosta na manchete.
+            · lg, bola de 320px em `right-4`: já são só 48px de folga em 1024,
+              o ponto mais apertado da página inteira. Por isso o lg fica onde
+              está: aqui a bola JÁ está perto do texto. */}
+        <div className="pointer-events-none absolute top-6 right-4 z-10 hidden lg:block xl:right-24">
           <BolaTroca className="h-80 w-80 xl:h-[22rem] xl:w-[22rem]" />
         </div>
 
