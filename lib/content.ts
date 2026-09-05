@@ -540,4 +540,27 @@ export const depoimentosSecao = {
   /** Rótulo do controle de rolagem, lido por leitor de tela. */
   anterior: "Ver depoimento anterior",
   proximo: "Ver próximo depoimento",
+
+  /**
+   * O que a seção mostra ENQUANTO não há depoimento, que é hoje.
+   *
+   * Manchete e texto próprios, e não os de cima: "professores que aplicaram o
+   * método" com três quadros vazios embaixo seria uma frase falsa com a prova
+   * da falsidade logo abaixo dela. Aqui a seção diz o que ela é, e diz a mesma
+   * coisa que a barra de urgência do topo, que é o que sustenta o preço.
+   *
+   * Nenhum nome, nenhuma aspa, nenhum rosto: o quadro vazio é vazio mesmo.
+   */
+  vazio: {
+    olho: "Depoimentos",
+    linhas: ["Os primeiros"],
+    linhaDestaque: "ainda",
+    linhasFim: ["vão ser gravados."],
+    texto:
+      "O curso é novo e nenhum professor terminou a formação ainda. Quando os primeiros depoimentos entrarem aqui, o preço sobe. Enquanto esses quadros estiverem vazios, é porque não há nada real para mostrar, e nós não vamos inventar.",
+    /** Direção de arte de cada quadro, para quem for gravar. */
+    arte: "Professor falando do que mudou na aula dele. Celular na vertical, som limpo, sem roteiro nosso.",
+    /** Quantos quadros vazios a fita mostra. Três dão a leitura de carrossel. */
+    quadros: 3,
+  },
 };

@@ -98,15 +98,23 @@ Caixa alta sempre com `letter-spacing` (classe `.mono`). Nunca use emoji como í
 
 ## Conteúdo sensível
 
-**Depoimentos.** O carrossel de vídeo existe em `components/Depoimentos.tsx` e está na
-página, entre o autor e o filtro. Ele **não aparece**, porque `depoimentos` em
-`lib/content.ts` está vazio de propósito: não há nenhum real autorizado ainda, e a barra
-de urgência no topo diz exatamente isso ("quando entrarem os depoimentos, o preço sobe").
-A seção inteira retorna `null` com a lista vazia, e é esse o estado correto da página
-hoje, não uma pendência.
+**Depoimentos.** O carrossel de vídeo é `components/Depoimentos.tsx`, entre o autor e o
+filtro. Ele tem DOIS estados, e os dois são estados de produção:
+
+- Com `depoimentos` preenchido: a fita de vídeos, manchete "professores que aplicaram o
+  método", setas no desktop.
+- Com a lista vazia, que é hoje: três quadros tracejados, sem nome, sem aspa e sem play,
+  e manchete própria dizendo que os primeiros ainda vão ser gravados. Mesmo desenho de
+  placeholder da `Foto` em `ui.tsx` e do vídeo do método.
+
+O estado vazio não é falha nem pendência: é o mesmo argumento da barra de urgência do
+topo ("quando entrarem os depoimentos, o preço sobe"), agora visível na altura da página
+onde a pessoa procuraria prova social. A manchete do estado vazio é separada de propósito;
+"professores que aplicaram o método" com três quadros vazios embaixo seria uma frase falsa
+com a prova da falsidade logo abaixo dela.
 
 Não preencha com exemplos inventados, nem "só para visualizar". Depoimento fabricado é
-propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Para verificar o carrossel
+propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Para conferir a fita cheia
 no navegador, popule a lista, olhe, e **desfaça antes de commitar**.
 
 Um item só entra na lista com as três coisas juntas: vídeo real gravado pelo professor,

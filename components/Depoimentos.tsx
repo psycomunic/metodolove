@@ -112,6 +112,47 @@ function CardDepoimento({
   );
 }
 
+/**
+ * Um quadro da fita enquanto não há depoimento nenhum.
+ *
+ * Tracejado e sem play, igual ao placeholder da `Foto` em ui.tsx e ao do
+ * vídeo do método: a página inteira usa esse mesmo desenho para dizer "a
+ * mídia ainda não existe", e quem lê é o cliente.
+ *
+ * Sem nome, sem aspa, sem rosto, sem play que não toca. O quadro é vazio de
+ * verdade, porque é isso que ele está dizendo.
+ */
+function QuadroVazio({ n }: { n: number }) {
+  return (
+    <li
+      aria-hidden="true"
+      className="w-[78vw] max-w-[19rem] shrink-0 snap-start sm:w-[17rem] lg:w-[19rem]"
+    >
+      <div className="flex h-full flex-col justify-between gap-6 rounded-2xl border border-dashed border-line-forte bg-card p-6">
+        <div className="flex aspect-[9/16] w-full flex-col items-center justify-center gap-4 text-center">
+          <svg
+            viewBox="0 0 24 24"
+            className="h-8 w-8 text-mute"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            aria-hidden="true"
+          >
+            <rect x="7" y="3" width="10" height="18" rx="2.5" />
+            <path d="M10.8 10.2v3.6l3.2-1.8z" />
+          </svg>
+          <p className="max-w-[15rem] text-[0.82rem] leading-snug font-semibold text-ink">
+            {depoimentosSecao.vazio.arte}
+          </p>
+        </div>
+        <code className="mono self-center bg-void/70 px-2 py-1 text-[0.62rem] tracking-tight text-mute">
+          TODO asset · depoimento-{n}-web.mp4
+        </code>
+      </div>
+    </li>
+  );
+}
+
 function Seta({
   sentido,
   rotulo,
@@ -207,7 +248,12 @@ export default function Depoimentos() {
     el.scrollBy({ left: passo * direcao, behavior: reduzido ? "instant" : "smooth" });
   };
 
-  if (itens.length === 0) return null;
+  /* Sem depoimento, a fita mostra QUADROS VAZIOS, não some. A seção some
+     seria mais discreta, mas some também a resposta para "cadê os
+     depoimentos?", e o vazio aqui é argumento, não falha: é a mesma coisa
+     que a barra de urgência do topo diz para justificar o preço. */
+  const vazia = itens.length === 0;
+  const copy = vazia ? depoimentosSecao.vazio : depoimentosSecao;
 
   return (
     <section
@@ -217,18 +263,18 @@ export default function Depoimentos() {
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
-            <Olho>{depoimentosSecao.olho}</Olho>
+            <Olho>{copy.olho}</Olho>
           </Reveal>
           <Manchete
-            linhas={depoimentosSecao.linhas}
-            destaque={depoimentosSecao.linhaDestaque}
-            fim={depoimentosSecao.linhasFim}
+            linhas={copy.linhas}
+            destaque={copy.linhaDestaque}
+            fim={copy.linhasFim}
             umaLinha
             className="mt-5 text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
           />
           <Reveal atraso={140}>
             <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-7">
-              {depoimentosSecao.texto}
+              {copy.texto}
             </p>
           </Reveal>
         </header>
@@ -242,23 +288,27 @@ export default function Depoimentos() {
               ref={fita}
               className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
             >
-              {itens.map((item) => {
-                const id = `${item.nome}-${item.video.src}`;
-                return (
-                  <CardDepoimento
-                    key={id}
-                    item={item}
-                    ativo={tocandoId === id}
-                    aoTocar={() => setTocandoId(id)}
-                    aoParar={() => parar(id)}
-                  />
-                );
-              })}
+              {vazia
+                ? Array.from({ length: depoimentosSecao.vazio.quadros }, (_, i) => (
+                    <QuadroVazio key={i} n={i + 1} />
+                  ))
+                : itens.map((item) => {
+                    const id = `${item.nome}-${item.video.src}`;
+                    return (
+                      <CardDepoimento
+                        key={id}
+                        item={item}
+                        ativo={tocandoId === id}
+                        aoTocar={() => setTocandoId(id)}
+                        aoParar={() => parar(id)}
+                      />
+                    );
+                  })}
             </ul>
 
             {/* As setas são conforto de desktop. No celular o dedo arrasta, e
                 uma seta ali só rouba espaço do card. */}
-            {itens.length > 1 ? (
+            {!vazia && itens.length > 1 ? (
               <div className="mt-6 hidden justify-end gap-3 sm:flex">
                 <Seta
                   sentido="anterior"
