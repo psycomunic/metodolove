@@ -15,11 +15,11 @@ export default function Mecanismo() {
   return (
     <section
       id="metodo"
-      className="relative border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       {/* Calçadão como divisor, em cima e embaixo. As ondas correm devagar
           demais para alguém ver acontecer, e é essa a intenção. */}
-      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" />
+      <CalcadaoWaves className="absolute inset-x-0 top-0" />
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[48rem] sm:text-left">
           <Reveal>
@@ -43,7 +43,7 @@ export default function Mecanismo() {
           {mecanismo.pilares.map((pilar, i) => (
             <Reveal as="li" key={pilar.n} atraso={i * 80}>
               <CardSpot className="grid gap-4 p-6 text-left sm:grid-cols-[auto_1fr] sm:items-start sm:gap-8 sm:p-9">
-                <span className="placar text-[2.5rem] leading-none text-fraco sm:text-[4rem]">
+                <span className="placar text-[2.5rem] leading-none text-areia/60 sm:text-[4rem]">
                   {pilar.n}
                 </span>
                 <div>
@@ -66,7 +66,7 @@ export default function Mecanismo() {
         </Reveal>
       </div>
 
-      <CalcadaoWaves className="absolute inset-x-0 bottom-0 text-ink" />
+      <CalcadaoWaves className="absolute inset-x-0 bottom-0" />
     </section>
   );
 }

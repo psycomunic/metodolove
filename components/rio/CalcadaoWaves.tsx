@@ -1,70 +1,75 @@
+import { useId } from "react";
+
 /**
- * As ondas do calçadão de Copacabana.
+ * As ondas do calçadão de Copacabana, do Burle Marx.
  *
- * O desenho do Burle Marx é uma onda contínua de amplitude constante, não uma
- * senoide de livro: cada meia-onda é uma curva cúbica cheia, e as faixas
- * correm paralelas com amplitudes ligeiramente diferentes, o que dá o
- * movimento de água que o padrão tem no chão.
+ * O padrão real é preto e branco chapado, em faixas largas que serpenteiam
+ * com transições curtas e cristas longas: não é uma senoide, é um "S"
+ * esticado. Aqui a onda é um traço grosso (a faixa "preta" do calçadão) em
+ * areia translúcida sobre o navy, com a faixa "branca" sendo o próprio fundo.
  *
- * Aqui ela é só traço em branco translúcido, nunca preenchimento: o calçadão
- * é preto e branco chapado, e chapado numa página navy viraria zebra.
- *
- * O laço: oito ladrilhos idênticos numa fila e uma translação de -50%, que
- * equivale a exatamente quatro ladrilhos. A emenda nunca aparece.
+ * Três linhas de onda por ladrilho, empilhadas com deslocamento de meio
+ * período, exatamente como no chão. O ladrilho tem 240 de largura; a fila de
+ * 12 ladrilhos anda -50% (seis ladrilhos) em 60 s e a emenda nunca aparece.
  */
 
-/* Um ladrilho: 480 de largura, quatro meias-ondas por linha (período de 120).
-   Os controles em `c` relativos garantem tangente contínua na emenda. */
-function linha(y: number, a: number) {
-  const sobe = `c 15,${-a} 45,${-a} 60,0`;
-  const desce = `c 15,${a} 45,${a} 60,0`;
-  return `M0,${y} ${sobe} ${desce} ${sobe} ${desce} ${sobe} ${desce} ${sobe} ${desce}`;
-}
+const ONDA =
+  "M-60,30 C-26,30 -34,90 0,90 C34,90 26,30 60,30 C94,30 86,90 120,90 C154,90 146,30 180,30 C214,30 206,90 240,90 C274,90 266,30 300,30";
 
-const LINHAS: [number, number][] = [
-  [10, 5],
-  [21, 6.5],
-  [33, 6.5],
-  [44, 5],
-];
-
-function Ladrilho() {
+function Ladrilho({
+  altura,
+  grosso,
+  id,
+}: {
+  altura: number;
+  grosso: number;
+  id: string;
+}) {
   return (
     <svg
-      width="480"
-      height="54"
-      viewBox="0 0 480 54"
+      width="240"
+      height={altura}
+      viewBox={`0 ${60 - altura / 2} 240 ${altura}`}
       aria-hidden="true"
       className="block shrink-0"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
+      strokeWidth={grosso}
     >
-      {LINHAS.map(([y, a]) => (
-        <path key={y} d={linha(y, a)} />
-      ))}
+      <g id={id}>
+        <path d={ONDA} transform="translate(0,-60)" />
+        <path d={ONDA} />
+        <path d={ONDA} transform="translate(0,60)" />
+        <path d={ONDA} transform="translate(0,120)" />
+      </g>
     </svg>
   );
 }
 
 export default function CalcadaoWaves({
   className = "",
-  opacidade = 0.07,
+  opacidade = 0.22,
+  altura = 64,
+  grosso = 30,
 }: {
   className?: string;
-  /** 6 a 8% como divisor; 5% quando é textura de seção inteira. */
+  /** 0.14–0.2 como divisor; 0.08–0.1 quando é textura de seção inteira. */
   opacidade?: number;
+  /** Altura da faixa em px. 64 é o divisor; 240+ para textura de fundo. */
+  altura?: number;
+  /** Espessura da faixa "preta". 24 é a proporção do calçadão. */
+  grosso?: number;
 }) {
+  const id = useId().replace(/:/g, "");
   return (
     <div
       aria-hidden="true"
-      className={`pointer-events-none overflow-hidden ${className}`}
-      style={{ opacity: opacidade }}
+      className={`pointer-events-none overflow-hidden text-areia ${className}`}
+      style={{ opacity: opacidade, height: altura }}
     >
       <div className="ondas-correm">
-        {Array.from({ length: 8 }, (_, i) => (
-          <Ladrilho key={i} />
+        {Array.from({ length: 12 }, (_, i) => (
+          <Ladrilho key={i} altura={altura} grosso={grosso} id={`${id}-${i}`} />
         ))}
       </div>
     </div>

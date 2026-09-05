@@ -17,7 +17,7 @@ import { Botao, Manchete } from "./ui";
  */
 export default function CtaFinal() {
   return (
-    <section className="relative isolate overflow-hidden border-t border-line px-5 pt-20 pb-40 sm:px-8 sm:pt-32 sm:pb-56 lg:pt-40 lg:pb-64">
+    <section className="relative isolate overflow-hidden border-t border-fio-areia px-5 pt-20 pb-40 sm:px-8 sm:pt-32 sm:pb-56 lg:pt-40 lg:pb-64">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute bottom-[-30%] left-1/2 h-[26rem] w-[30rem] -translate-x-1/2 rounded-full opacity-[0.2] sm:h-[44rem] sm:w-[68rem]"

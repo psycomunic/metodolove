@@ -23,7 +23,7 @@ export default function Modulos() {
   return (
     <section
       id="modulos"
-      className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[50rem] sm:text-left">
@@ -41,8 +41,8 @@ export default function Modulos() {
         <ul className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {modulos.itens.map((item, i) => (
             <Reveal as="li" key={item.n} atraso={(i % 3) * 80}>
-              <CardSpot className="flex h-full flex-col p-6 text-left sm:p-7">
-                <p className="mono text-[0.8125rem] text-mute sm:text-[0.66rem]">
+              <CardSpot className="flex h-full flex-col rounded-2xl p-6 text-left sm:p-7">
+                <p className="mono text-[0.8125rem] text-areia sm:text-[0.66rem]">
                   Módulo {item.n}
                 </p>
                 <h3 className="display mt-3 text-[1.5rem] text-ink sm:mt-4">
@@ -62,22 +62,26 @@ export default function Modulos() {
           ))}
 
           <Reveal as="li" className="sm:col-span-2 lg:col-span-3">
-            <div className="card relative h-full overflow-hidden border-accent/45 p-6 text-left sm:p-9">
-              {/* Brilho curto no canto: dá volume ao card sem pintar área. */}
+            <div className="card relative h-full overflow-hidden rounded-2xl border-areia/35 p-6 text-left sm:p-9">
+              {/* Areia escorrendo do canto superior direito, por trás do
+                  bondinho. Aquece o card sem chapar cor nenhuma. */}
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute -top-24 -right-16 h-56 w-56 rounded-full opacity-25"
+                className="pointer-events-none absolute inset-0"
                 style={{
-                  background: "radial-gradient(circle, #4FA3FF 0%, transparent 70%)",
-                  filter: "blur(70px)",
+                  background:
+                    "linear-gradient(215deg, rgba(233,216,180,0.08) 0%, rgba(233,216,180,0.03) 32%, transparent 62%)",
                 }}
               />
               {/* O bondinho sobe no canto do card de bônus. Networking é
                   justamente sobre chegar do outro lado; o desenho diz isso sem
                   precisar de metáfora escrita. */}
-              <PaoDeAcucar className="pointer-events-none absolute right-4 bottom-0 h-32 w-44 text-ink sm:h-40 sm:w-56" />
+              <PaoDeAcucar
+                className="pointer-events-none absolute right-4 bottom-0 h-32 w-44 text-areia sm:h-40 sm:w-56"
+                opacidade={0.38}
+              />
 
-              <p className="mono relative text-[0.8125rem] text-accent sm:text-[0.66rem]">
+              <p className="mono relative text-[0.8125rem] text-areia sm:text-[0.66rem]">
                 {modulos.bonus.n}
               </p>
               <h3 className="display relative mt-3 text-[1.65rem] text-ink sm:mt-4 sm:text-[2.1rem]">

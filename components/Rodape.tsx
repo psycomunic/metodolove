@@ -1,6 +1,7 @@
 import { marca, menu } from "@/lib/content";
 import CalcadaoWaves from "./rio/CalcadaoWaves";
 import Monograma from "./rio/Monograma";
+import RelogioRio from "./rio/RelogioRio";
 
 /**
  * Rodapé.
@@ -19,18 +20,23 @@ export default function Rodape() {
   const ano = new Date().getFullYear();
 
   return (
-    <footer className="relative border-t border-line bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
-      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" opacidade={0.06} />
+    <footer className="relative border-t border-fio-areia bg-navy px-5 pt-14 pb-32 text-center sm:px-8 sm:pt-16 sm:pb-16 sm:text-left">
+      <CalcadaoWaves className="absolute inset-x-0 top-0" opacidade={0.14} />
 
       <div className="mx-auto max-w-[80rem]">
         <div className="flex flex-col gap-8 border-b border-line pb-9 sm:gap-10 sm:pb-10 md:flex-row md:items-start md:justify-between">
           <div>
-            <Monograma className="mx-auto h-14 w-auto text-ink sm:mx-0" />
+            <Monograma className="mx-auto h-16 w-auto text-areia sm:mx-0" />
             <p className="mx-auto mt-4 max-w-[24rem] text-[1rem] leading-relaxed text-mute sm:text-[0.9rem]">
               {marca.resumo}
             </p>
-            <p className="mono mt-4 text-[0.75rem] text-fraco sm:text-[0.62rem]">
-              {marca.coordenadas}
+            {/* Coordenadas e a hora de lá, como estúdio assina projeto. */}
+            <p className="mono mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[0.75rem] text-areia/70 sm:justify-start sm:text-[0.62rem]">
+              <span>{marca.coordenadas}</span>
+              <span aria-hidden="true" className="text-areia/35">
+                ·
+              </span>
+              <RelogioRio className="text-areia/55" />
             </p>
           </div>
 

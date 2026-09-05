@@ -18,7 +18,7 @@ export default function Oferta() {
   return (
     <section
       id="oferta"
-      className="relative isolate overflow-hidden border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div
         aria-hidden="true"
@@ -31,7 +31,7 @@ export default function Oferta() {
 
       {/* Só o fio de calçadão no topo. Aqui nada pode disputar o olho com o
           preço e com o botão. */}
-      <CalcadaoWaves className="absolute inset-x-0 top-0 text-ink" opacidade={0.05} />
+      <CalcadaoWaves className="absolute inset-x-0 top-0" opacidade={0.12} />
 
       <div className="mx-auto max-w-[42rem]">
         <Reveal className="text-center">
@@ -41,10 +41,16 @@ export default function Oferta() {
           </h2>
         </Reveal>
 
+        {/* Fio de areia de 2px no topo do card: marca a entrada do bloco de
+            conversão sem acrescentar mais um contorno aceso em volta dele. */}
         <Reveal
           atraso={100}
-          className="card mt-8 border-accent/45 p-6 shadow-[0_0_80px_-30px_rgba(79,163,255,0.5)] sm:mt-10 sm:p-10"
+          className="card relative mt-8 overflow-hidden border-accent/45 p-6 shadow-[0_0_80px_-30px_rgba(79,163,255,0.5)] sm:mt-10 sm:p-10"
         >
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-[2px] bg-areia/70"
+          />
           <ul className="space-y-4 text-left">
             {investimento.inclusos.map((item) => (
               <li key={item} className="flex gap-3.5">

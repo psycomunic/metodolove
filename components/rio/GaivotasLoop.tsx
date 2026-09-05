@@ -2,18 +2,17 @@
  * Gaivotas cruzando o céu do hero.
  *
  * Duas curvas por bicho e nada mais: em tamanho pequeno, qualquer detalhe a
- * mais vira borrão. A travessia leva quase um minuto, com alturas, tamanhos e
- * atrasos diferentes, para nunca lerem como uma fila.
+ * mais vira borrão.
  *
- * A regra aqui é a mesma do grão e do horizonte: quem olhar direto vê um
- * pássaro; quem não olhar não vê nada, e é assim que tem de ser numa página
- * cujo trabalho é levar ao botão.
+ * As três levam os mesmos 45 s para atravessar, com atrasos diferentes: mesma
+ * velocidade, posições diferentes, que é como um bando de verdade se comporta.
+ * O traço é areia, para pertencer ao mesmo fim de tarde do horizonte.
  */
 
 const BANDO = [
-  { topo: "18%", escala: 1, duracao: 52, atraso: 0, opacidade: 0.22 },
-  { topo: "31%", escala: 0.7, duracao: 64, atraso: -22, opacidade: 0.16 },
-  { topo: "12%", escala: 0.5, duracao: 78, atraso: -46, opacidade: 0.13 },
+  { topo: "17%", escala: 1, duracao: 45, atraso: 0, opacidade: 0.5 },
+  { topo: "29%", escala: 0.72, duracao: 45, atraso: -17, opacidade: 0.38 },
+  { topo: "11%", escala: 0.52, duracao: 45, atraso: -31, opacidade: 0.3 },
 ];
 
 export default function GaivotasLoop({ className = "" }: { className?: string }) {

@@ -15,13 +15,18 @@ export default function Mercado() {
   return (
     <section
       id="mercado"
-      className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="relative mx-auto max-w-[80rem]">
-        {/* A bola boia ao lado da manchete, só onde há coluna sobrando. */}
-        <FutevoleiBall className="pointer-events-none absolute top-0 right-0 hidden h-40 w-40 text-ink lg:block" />
+        {/* A bola boia à direita da manchete, e só onde há coluna sobrando: a
+            headline abaixo tem teto de 60% da largura justamente para os dois
+            nunca se cruzarem. */}
+        <FutevoleiBall
+          className="pointer-events-none absolute top-0 right-0 hidden h-48 w-48 lg:block"
+          opacidade={0.9}
+        />
 
-        <header className="text-center sm:max-w-[46rem] sm:text-left">
+        <header className="text-center sm:max-w-[46rem] sm:text-left lg:max-w-[60%]">
           <Reveal>
             <Olho>{mercado.olho}</Olho>
           </Reveal>
@@ -47,12 +52,12 @@ export default function Mercado() {
               atraso={i * 90}
               className="bg-card p-6 text-left sm:p-8"
             >
-              <dt className="placar text-[clamp(2.5rem,12vw,3.6rem)] text-accent">
+              <dt className="placar text-[clamp(2.5rem,12vw,3.6rem)] text-areia">
                 <Contador valor={n.valor} prefixo={n.prefixo} sufixo={n.sufixo} />
               </dt>
               <dd className="mt-3 text-[1rem] leading-[1.55] text-mute sm:mt-4 sm:text-[0.92rem]">
                 {n.rotulo}
-                <span className="mono mt-3 block text-[0.8125rem] text-fraco sm:mt-4 sm:text-[0.6rem]">
+                <span className="mono mt-3 block text-[0.8125rem] text-areia/50 sm:mt-4 sm:text-[0.6rem]">
                   {n.fonte}
                 </span>
               </dd>

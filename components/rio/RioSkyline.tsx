@@ -1,120 +1,140 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
+import { useMovimentoReduzido } from "../movimento";
 import { useParallax } from "./parallax";
 
 /**
- * A orla do Rio vista do mar.
+ * A orla do Rio, desenhada a partir das fotos e vetores clássicos do skyline.
  *
- * Não é um mapa: é a composição que a cidade tem na cabeça de quem já esteve
- * lá. Da esquerda para a direita: Pedra da Gávea (monólito de topo achatado e
- * face de pedra quase vertical do lado do mar), Morro Dois Irmãos (dois picos
- * colados, o da esquerda bem mais alto e pontiagudo), Corcovado com o Cristo
- * no cume, e Pão de Açúcar com o Morro da Urca menor à frente, ligados pelo
- * cabo do bondinho.
+ * Da esquerda para a direita: Pedra da Gávea (monólito de topo achatado),
+ * Morro Dois Irmãos (dois picos, o da esquerda mais alto), Corcovado com o
+ * Cristo Redentor no cume, Arcos da Lapa com o sol se pondo por trás,
+ * Catedral Metropolitana e os prédios do Centro, Morro da Urca na frente e o
+ * Pão de Açúcar atrás, ligados pelo cabo do bondinho, que sobe e desce sem
+ * parar. Na frente, o mar com a espuma, a faixa de areia e dois coqueiros.
  *
- * O QUE FAZ LER COMO RIO. Os morros do Rio são domos de granito: ALTOS PARA A
- * BASE QUE TÊM. A primeira versão deste desenho espalhou cada morro por 200 a
- * 300 unidades de largura e o resultado foi uma serra genérica, dessas de
- * papel de parede. Aqui cada um sobe entre 100 e 174 unidades numa base de
- * 150 a 280: é a inclinação, mais do que o contorno, que entrega a cidade.
+ * Paleta: os morros em três tons de navy (o mais distante é o mais CLARO,
+ * porque a bruma clareia o que está longe), o céu abrindo para areia no
+ * horizonte, e a luz do fim de tarde como traço de areia nas cristas.
  *
- * PROPORÇÃO DO CRISTO. A estátua tem 30 m num morro de 710 m: 4% da altura,
- * 5,4% contando o pedestal. Aqui o Corcovado sobe 172 unidades e o Cristo tem
- * 11, ou 6,5%. Um fio acima do real, porque abaixo disso ele some no traço, e
- * ainda muito longe do bonequinho de ilustração de agência.
- *
- * TRÊS CAMADAS, e a de trás é a mais CLARA. Sobre fundo escuro a perspectiva
- * atmosférica inverte: o que está longe recebe bruma e clareia. Escurecer a
- * camada de trás para "afastar" faz ela sumir no fundo.
- *
- * ENQUADRAMENTO. `xMidYMax slice` corta o excedente, e o corte muda de eixo
- * conforme a tela. No desktop, mais achatado que o viewBox, o corte é EM CIMA,
- * e sobram uns 16px de folga acima do Cristo. No celular o corte é NAS
- * LATERAIS: em 360px sobra a faixa de x=350 a x=1250. Por isso a composição
- * inteira vive entre x=300 e x=1300, e não espalhada nos 1600.
+ * Enquadramento: no desktop, viewBox de 1600 com `slice` (corta em cima, os
+ * cumes sobrevivem porque nada passa de y=24). No celular, viewBox recortado
+ * de 290 a 1370 com `meet`, para a composição inteira caber — inclusive o
+ * Pão de Açúcar, que é a primeira coisa que alguém procura.
  */
 
-const BASE = 214;
+const AREIA = "#E9D8B4";
+const LUZ = "#EFDFBB";
+const ESCURO = "#0E1F3A";
 
-/* Cristas, sem o comando inicial: cada uma é usada duas vezes, uma fechada em
-   preenchimento e outra aberta em traço de contraluz. O traço só corre pela
-   crista, nunca pela base, senão a silhueta ganha contorno de adesivo. */
+function useMovel() {
+  const [movel, setMovel] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const aplica = () => setMovel(mq.matches);
+    aplica();
+    mq.addEventListener("change", aplica);
+    return () => mq.removeEventListener("change", aplica);
+  }, []);
+  return movel;
+}
 
-const P_GAVEA = { x: 300, y: BASE };
-const D_GAVEA =
-  "C316,206 330,190 344,168 C356,150 366,124 380,104 " +
-  "C390,90 398,80 410,76 L452,74 " + // topo achatado
-  "C458,84 462,104 466,130 C469,154 470,182 470,214"; // face de pedra
+/* Cristas (sem o M inicial): usadas fechadas como massa e abertas como traço. */
+const GAVEA =
+  "C318,214 338,196 354,176 C368,158 378,140 390,126 C398,118 406,114 418,112 L452,110";
+const GAVEA_FECHA = " C458,120 462,138 466,158 C470,182 472,208 478,230 Z";
+const DOIS_IRMAOS =
+  "C486,212 500,192 512,168 C524,142 536,110 548,86 C552,78 556,74 560,70 C566,80 572,96 580,116 C588,136 596,154 606,164 C614,170 620,172 626,168 C636,160 644,148 652,136 C658,128 664,124 672,124";
+const DOIS_IRMAOS_FECHA = " C680,132 688,150 696,176 C704,200 712,220 718,230 Z";
+const CORCOVADO =
+  "C712,216 736,198 756,172 C776,146 792,112 806,80 C810,72 812,66 816,60";
+const CORCOVADO_FECHA =
+  " C820,68 824,80 830,94 C844,126 860,158 880,186 C898,210 918,224 940,230 Z";
+const PAO =
+  "C1210,200 1222,170 1236,146 C1248,124 1262,106 1280,96 C1290,91 1300,90 1310,94 C1324,102 1334,120 1342,146";
+const PAO_FECHA = " C1350,172 1356,204 1362,230 Z";
+const URCA = "C1110,212 1126,196 1144,184 C1156,176 1168,172 1182,172";
+const URCA_FECHA = " C1196,174 1208,182 1220,194 C1232,206 1242,218 1250,230 Z";
 
-const P_DOIS_IRMAOS = { x: 480, y: BASE };
-const D_DOIS_IRMAOS =
-  "C494,204 506,186 518,162 C530,138 542,104 552,80 C556,70 558,66 560,62 " + // pico maior
-  "C564,70 570,86 576,104 C582,122 590,142 598,154 C604,162 610,166 616,164 " + // sela
-  "C622,158 628,144 634,128 C640,112 646,100 654,96 " + // pico menor
-  "C662,102 670,120 678,142 C686,164 694,190 700,214";
+const CABO = "M1182,172 Q1244,140 1302,92";
 
-const P_CORCOVADO = { x: 720, y: BASE };
-const D_CORCOVADO =
-  "C744,204 768,188 792,164 C814,142 832,112 848,74 C852,62 855,50 858,42 " +
-  "C862,52 866,66 872,82 C884,116 900,150 918,176 C936,200 962,212 1000,214";
+const ARCOS = [6, 30, 54, 78, 102, 126];
 
-const P_PAO = { x: 1112, y: BASE };
-const D_PAO =
-  "C1122,196 1134,170 1150,148 C1164,128 1182,114 1200,116 " +
-  "C1218,118 1234,132 1246,152 C1260,175 1270,196 1276,214";
+const JANELAS: [number, number][] = [
+  [1073, 172],
+  [1081, 184],
+  [1119, 160],
+  [1131, 172],
+  [1125, 196],
+  [1149, 180],
+  [1054, 194],
+  [1101, 188],
+  [1158, 176],
+  [1075, 206],
+];
 
-const P_URCA = { x: 1000, y: BASE };
-const D_URCA =
-  "C1014,208 1028,196 1042,180 C1052,168 1060,160 1068,158 " +
-  "C1078,160 1086,168 1094,180 C1104,194 1114,206 1124,214";
+const LUZES: [number, number][] = [
+  [330, 3.6],
+  [412, 4.8],
+  [506, 4.1],
+  [590, 5.4],
+  [668, 3.9],
+  [742, 4.6],
+  [828, 5.1],
+  [1002, 3.7],
+  [1088, 4.4],
+  [1176, 5.6],
+  [1262, 4.0],
+  [1348, 4.9],
+];
 
-const traco = (p: { x: number; y: number }, d: string) => `M${p.x},${p.y} ${d}`;
-const massa = (p: { x: number; y: number }, d: string, fim: number) =>
-  `M${p.x},${p.y} ${d} L${fim},400 L${p.x},400 Z`;
-
-/* Linha d'água. Mesma curva no preenchimento e na espuma. */
-const COSTA =
-  "M0,250 C160,244 320,240 480,242 C640,244 800,252 960,252 " +
-  "C1120,252 1280,244 1440,242 C1500,241 1560,243 1600,246";
+function Coqueiro({
+  x,
+  y,
+  espelha = false,
+}: {
+  x: number;
+  y: number;
+  espelha?: boolean;
+}) {
+  const s = espelha ? -1 : 1;
+  return (
+    <g
+      transform={`translate(${x},${y}) scale(${s},1)`}
+      fill="none"
+      stroke="#08152A"
+      strokeLinecap="round"
+    >
+      <path strokeWidth="2.6" d="M0,0 C1,-14 3,-28 8,-40" />
+      <g strokeWidth="2.2">
+        <path d="M8,-40 C0,-44 -10,-44 -18,-38" />
+        <path d="M8,-40 C2,-48 -4,-52 -12,-52" />
+        <path d="M8,-40 C10,-50 14,-56 20,-58" />
+        <path d="M8,-40 C16,-44 24,-44 30,-38" />
+        <path d="M8,-40 C14,-36 20,-30 22,-24" />
+        <path d="M8,-40 C2,-34 -2,-30 -4,-24" />
+      </g>
+    </g>
+  );
+}
 
 export default function RioSkyline({
-  altura = "h-[104px] sm:h-[170px] lg:h-[220px]",
+  altura = "h-[108px] sm:h-[180px] lg:h-[240px]",
   noturno = false,
   className = "",
 }: {
   altura?: string;
-  /** Versão do CTA final: luzes na orla e reflexo dos morros no mar. */
+  /** Versão do CTA final: lua no lugar do sol, janelas e luzes da orla acesas. */
   noturno?: boolean;
   className?: string;
 }) {
   const id = useId().replace(/:/g, "");
-  const { raiz, coleta } = useParallax([20, 50, 90]);
+  const movel = useMovel();
+  const reduzido = useMovimentoReduzido();
+  const { raiz, coleta } = useParallax([16, 40, 72]);
 
-  const ceu = `ceu-${id}`;
-  const areia = `areia-${id}`;
-  const reflexo = `reflexo-${id}`;
-  const icones = `icones-${id}`;
-
-  // Luzes da orla. Posições e ritmos escritos à mão: Math.random daria valores
-  // diferentes no servidor e no cliente e quebraria a hidratação.
-  const luzes: [number, number][] = [
-    [128, 3.6],
-    [214, 4.8],
-    [305, 4.1],
-    [402, 5.4],
-    [498, 3.9],
-    [596, 4.6],
-    [702, 5.1],
-    [806, 3.7],
-    [905, 4.4],
-    [1008, 5.6],
-    [1104, 4.0],
-    [1206, 4.9],
-    [1310, 3.8],
-    [1418, 5.2],
-    [1520, 4.3],
-  ];
+  const g = (n: string) => `${n}-${id}`;
 
   return (
     <div
@@ -123,138 +143,217 @@ export default function RioSkyline({
       className={`pointer-events-none w-full overflow-hidden ${altura} ${className}`}
     >
       <svg
-        viewBox="0 0 1600 260"
-        preserveAspectRatio="xMidYMax slice"
+        viewBox={movel ? "290 0 1080 300" : "0 0 1600 300"}
+        preserveAspectRatio={movel ? "xMidYMax meet" : "xMidYMax slice"}
         className="h-full w-full"
       >
         <defs>
-          {/* Céu abrindo para azul-noite na linha do horizonte. É contra ele
-              que a silhueta escura tem o que recortar. */}
-          <linearGradient id={ceu} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#06111F" stopOpacity="0" />
-            <stop offset="58%" stopColor="#0F2A55" stopOpacity="0.45" />
-            <stop offset="100%" stopColor="#0F2A55" stopOpacity="0.8" />
+          <linearGradient id={g("ceu")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#06111F" stopOpacity="0" />
+            <stop offset="0.35" stopColor="#1B2F55" stopOpacity={noturno ? 0.35 : 0.5} />
+            <stop
+              offset="0.66"
+              stopColor={noturno ? "#3A4A6E" : "#6E5F4A"}
+              stopOpacity="0.55"
+            />
+            <stop offset="0.766" stopColor={AREIA} stopOpacity={noturno ? 0.16 : 0.38} />
           </linearGradient>
-
-          <linearGradient id={areia} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#0B1A2E" />
-            <stop offset="100%" stopColor="#06111F" />
+          <radialGradient id={g("sol")} cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#F3E4C2" stopOpacity="0.55" />
+            <stop offset="1" stopColor={AREIA} stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id={g("mar")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#1C3357" />
+            <stop offset="1" stopColor="#0B1A2E" />
           </linearGradient>
-
-          {/* Reflexo: forte junto ao horizonte e some antes da areia, como
-              reflexo de verdade em água mexida. */}
-          <linearGradient id={reflexo} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.8" />
-            <stop offset="55%" stopColor="#ffffff" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+          <linearGradient id={g("areia")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor={AREIA} stopOpacity={noturno ? 0.22 : 0.34} />
+            <stop offset="1" stopColor={AREIA} stopOpacity="0.06" />
           </linearGradient>
-          <mask id={`m-${reflexo}`}>
-            <rect x="0" y="214" width="1600" height="42" fill={`url(#${reflexo})`} />
-          </mask>
+          <linearGradient id={g("m1")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#2E4874" />
+            <stop offset="1" stopColor="#1C3054" />
+          </linearGradient>
+          <linearGradient id={g("m2")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#172B4D" />
+            <stop offset="1" stopColor={ESCURO} />
+          </linearGradient>
+          <linearGradient id={g("m3")} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#0F2140" />
+            <stop offset="1" stopColor="#08152A" />
+          </linearGradient>
         </defs>
 
-        <rect x="0" y="0" width="1600" height="260" fill={`url(#${ceu})`} />
+        {/* céu */}
+        <rect width="1600" height="230" fill={`url(#${g("ceu")})`} />
 
-        {/* -------- camada 1: serra distante -------- */}
-        <g ref={coleta(0)} opacity="0.32">
+        {/* ---------- camada 1: serra distante + sol/lua ---------- */}
+        <g ref={coleta(0)}>
           <path
-            fill="#16294A"
-            d="M0,400 L0,206 C60,200 110,182 160,164 C214,144 264,132 316,140
-               C368,148 414,172 464,182 C520,193 574,182 628,172
-               C688,161 744,158 800,168 C860,179 912,198 968,202
-               C1024,206 1080,196 1136,184 C1196,171 1258,166 1318,176
-               C1382,187 1444,206 1508,214 C1540,218 1572,219 1600,219
-               L1600,400 Z"
+            fill={`url(#${g("m1")})`}
+            d="M0,230 L0,178 C50,170 90,156 140,150 C200,143 240,156 290,150 C340,144 370,128 420,126 C470,124 500,140 550,150 C600,160 640,152 690,140 C740,128 780,124 830,134 C880,144 920,164 970,170 C1020,176 1070,168 1120,162 C1170,156 1220,162 1270,170 C1330,180 1390,190 1450,194 C1510,198 1560,200 1600,202 L1600,230 Z"
           />
+          {noturno ? (
+            <>
+              <circle cx="640" cy="52" r="26" fill={`url(#${g("sol")})`} />
+              <circle cx="640" cy="52" r="9" fill="#F3E4C2" fillOpacity="0.9" />
+              <circle cx="644" cy="49" r="7.5" fill="#0B1A2E" />
+            </>
+          ) : (
+            <>
+              <circle cx="928" cy="208" r="70" fill={`url(#${g("sol")})`} />
+              <circle cx="928" cy="208" r="36" fill="#F3E4C2" fillOpacity="0.9" />
+            </>
+          )}
         </g>
 
-        {/* -------- camada 2: os cartões-postais -------- */}
+        {/* ---------- camada 2: os cartões-postais ---------- */}
         <g ref={coleta(1)}>
-          <g id={icones}>
-            <g opacity="0.68" fill="#0E1F3A">
-              <path d={massa(P_GAVEA, D_GAVEA, 470)} />
-              <path d={massa(P_DOIS_IRMAOS, D_DOIS_IRMAOS, 700)} />
-              <path d={massa(P_CORCOVADO, D_CORCOVADO, 1000)} />
-              {/* Pão de Açúcar entra ANTES da Urca: a Urca é o morro da frente
-                  e precisa recortar por cima dele. */}
-              <path d={massa(P_PAO, D_PAO, 1276)} />
-              <path d={massa(P_URCA, D_URCA, 1124)} />
-            </g>
+          <path fill={`url(#${g("m2")})`} d={`M296,230 ${GAVEA}${GAVEA_FECHA}`} />
+          <path
+            fill={`url(#${g("m2")})`}
+            d={`M470,230 ${DOIS_IRMAOS}${DOIS_IRMAOS_FECHA}`}
+          />
+          <path fill={`url(#${g("m2")})`} d={`M690,230 ${CORCOVADO}${CORCOVADO_FECHA}`} />
 
-            {/* Contraluz do fim de tarde: um fio de 1px só na crista. É o que
-                separa morro de céu quando os dois são navy. */}
-            <g
-              fill="none"
-              stroke="#ffffff"
-              strokeOpacity="0.2"
-              strokeWidth="1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d={traco(P_GAVEA, D_GAVEA)} />
-              <path d={traco(P_DOIS_IRMAOS, D_DOIS_IRMAOS)} />
-              <path d={traco(P_CORCOVADO, D_CORCOVADO)} />
-              <path d={traco(P_PAO, D_PAO)} />
-              <path d={traco(P_URCA, D_URCA)} />
-              {/* Cabo do bondinho, de cume a cume. Sem ele os dois morros da
-                  direita são só dois montes; com ele, é o Rio. */}
-              <path
-                d="M1068,158 Q1134,142 1200,116"
-                strokeOpacity="0.2"
-                strokeWidth="0.9"
-              />
-            </g>
+          {/* Cristo Redentor no cume do Corcovado */}
+          <g
+            transform="translate(816,60)"
+            fill={ESCURO}
+            stroke={LUZ}
+            strokeOpacity="0.95"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          >
+            <path d="M-6,0 L-6,-11 L6,-11 L6,0 Z" />
+            <path d="M-4.5,-11 L-2.6,-33 L2.6,-33 L4.5,-11 Z" />
+            <path d="M-18,-28.5 L-2.6,-32.5 L2.6,-32.5 L18,-28.5 L18,-25.8 L2.6,-29 L-2.6,-29 L-18,-25.8 Z" />
+            <circle cx="0" cy="-36.6" r="2.3" />
+          </g>
 
-            {/* Cristo Redentor, 11 unidades num morro de 172. Traço mais aceso
-                que o das cristas: é o elemento mais reconhecível da composição
-                e o menor de todos. */}
-            <g
-              fill="#0E1F3A"
-              stroke="#ffffff"
-              strokeOpacity="0.6"
-              strokeWidth="0.8"
-              strokeLinejoin="round"
-            >
-              <path d="M855.4,42.2 L855.4,39 L860.6,39 L860.6,42.2 Z" />
-              <path d="M856.7,39 L856.7,33.6 L859.3,33.6 L859.3,39 Z" />
-              <path d="M851.2,35.8 L851.2,34.5 L864.8,34.5 L864.8,35.8 Z" />
-              <circle cx="858" cy="32.4" r="1.3" />
+          {/* Arcos da Lapa */}
+          <g transform="translate(860,230)">
+            <path fill={ESCURO} d="M0,0 L0,-44 L150,-44 L150,0 Z" />
+            <g fill="#233B63">
+              {ARCOS.map((x) => (
+                <path
+                  key={`a${x}`}
+                  d={`M${x},-28 a9,9 0 0 1 18,0 L${x + 18},-12 L${x},-12 Z`}
+                />
+              ))}
+              {ARCOS.map((x) => (
+                <path
+                  key={`b${x}`}
+                  d={`M${x},-6 a9,7 0 0 1 18,0 L${x + 18},0 L${x},0 Z`}
+                />
+              ))}
+            </g>
+            <path d="M0,-44 L150,-44" stroke={LUZ} strokeOpacity="0.55" strokeWidth="1" />
+          </g>
+
+          {/* Catedral Metropolitana e prédios do Centro */}
+          <g fill={ESCURO}>
+            <path d="M990,230 L1004,172 L1026,172 L1040,230 Z" />
+            <rect x="1048" y="184" width="16" height="46" rx="1.5" />
+            <path d="M1068,230 L1068,166 C1068,164 1070,163 1072,163 L1088,163 C1090,163 1092,164 1092,166 L1092,230 Z" />
+            <rect x="1096" y="176" width="14" height="54" rx="1.5" />
+            <path d="M1114,230 L1114,156 C1114,153 1116,152 1119,152 L1127,140 L1135,152 C1138,152 1140,153 1140,156 L1140,230 Z" />
+            <rect x="1144" y="170" width="16" height="60" rx="1.5" />
+            <path d="M1058,184 L1061,178 L1064,184 Z" />
+          </g>
+          <g fill={LUZ} fillOpacity={noturno ? 0.85 : 0.55}>
+            {JANELAS.map(([x, y]) => (
+              <rect key={`${x}-${y}`} x={x} y={y} width="2.5" height="3.5" />
+            ))}
+          </g>
+
+          {/* Pão de Açúcar atrás, Morro da Urca na frente */}
+          <path fill={`url(#${g("m2")})`} d={`M1196,230 ${PAO}${PAO_FECHA}`} />
+          <path fill={`url(#${g("m3")})`} d={`M1096,230 ${URCA}${URCA_FECHA}`} />
+
+          {/* cabo do bondinho e o bondinho subindo */}
+          <path d={CABO} fill="none" stroke={LUZ} strokeOpacity="0.75" strokeWidth="1" />
+          <g fill={ESCURO} stroke={LUZ} strokeOpacity="0.95" strokeWidth="1">
+            <g>
+              <path d="M0,0 L0,4" />
+              <rect x="-4.5" y="4" width="9" height="6" rx="1.4" />
+              {reduzido ? (
+                <animateMotion
+                  dur="1s"
+                  fill="freeze"
+                  path={CABO}
+                  keyPoints="0.3;0.3"
+                  keyTimes="0;1"
+                />
+              ) : (
+                <animateMotion
+                  dur="26s"
+                  repeatCount="indefinite"
+                  path={CABO}
+                  keyPoints="0;1;1;0;0"
+                  keyTimes="0;0.42;0.5;0.92;1"
+                  calcMode="linear"
+                />
+              )}
+            </g>
+            <g>
+              <path d="M0,0 L0,4" />
+              <rect x="-4.5" y="4" width="9" height="6" rx="1.4" />
+              {reduzido ? (
+                <animateMotion
+                  dur="1s"
+                  fill="freeze"
+                  path={CABO}
+                  keyPoints="0.7;0.7"
+                  keyTimes="0;1"
+                />
+              ) : (
+                <animateMotion
+                  dur="26s"
+                  repeatCount="indefinite"
+                  path={CABO}
+                  keyPoints="1;0;0;1;1"
+                  keyTimes="0;0.42;0.5;0.92;1"
+                  calcMode="linear"
+                />
+              )}
             </g>
           </g>
-        </g>
 
-        {/* -------- camada 3: mar e areia -------- */}
-        <g ref={coleta(2)}>
-          {/* O reflexo mora AQUI, e não na camada dos morros: precisa ficar
-              por cima do mar e por baixo da areia, senão a praia o cobre. O
-              espelho é a própria base dos morros, em y=214. */}
+          {noturno ? null : (
+            <g fill={AREIA} fillOpacity="0.1">
+              <path d="M816,60 C820,68 824,80 830,94 C844,126 860,158 880,186 C898,210 918,224 940,230 L900,230 C880,214 862,190 848,160 C836,134 826,104 816,60 Z" />
+              <path d="M1096,230 C1110,212 1126,196 1144,184 C1156,176 1168,172 1182,172 L1160,182 C1146,190 1130,208 1120,230 Z" />
+              <path d="M860,186 L1010,186 L1010,230 L860,230 Z" fillOpacity="0.05" />
+            </g>
+          )}
+          {/* luz do fim de tarde nas cristas + veios de pedra */}
+          <g fill="none" stroke={LUZ} strokeLinecap="round" strokeLinejoin="round">
+            <g strokeOpacity="0.5" strokeWidth="1.2">
+              <path d={`M296,230 ${GAVEA}`} />
+              <path d={`M470,230 ${DOIS_IRMAOS}`} />
+              <path d={`M690,230 ${CORCOVADO}`} />
+              <path d={`M1196,230 ${PAO}`} />
+              <path d={`M1096,230 ${URCA}`} />
+            </g>
+            <g strokeOpacity="0.16" strokeWidth="1">
+              <path d="M452,110 C456,140 458,170 462,200" />
+              <path d="M560,70 C562,110 566,150 572,190" />
+              <path d="M816,60 C824,100 836,140 852,180" />
+              <path d="M1306,94 C1318,124 1330,160 1340,200" />
+              <path d="M1280,96 C1270,130 1262,164 1258,200" />
+            </g>
+          </g>
+
           {noturno ? (
-            <use
-              href={`#${icones}`}
-              transform="matrix(1 0 0 -1 0 428)"
-              mask={`url(#m-${reflexo})`}
-            />
-          ) : null}
-
-          <path fill={`url(#${areia})`} d={`${COSTA} L1600,400 L0,400 Z`} />
-          {/* Arrebentação: um fio de espuma na quebra da areia. */}
-          <path
-            d={COSTA}
-            fill="none"
-            stroke="#ffffff"
-            strokeOpacity="0.1"
-            strokeWidth="1"
-          />
-
-          {noturno ? (
-            <g fill="#ffffff">
-              {luzes.map(([x, dur], i) => (
+            <g fill={LUZ}>
+              {LUZES.map(([x, dur], i) => (
                 <circle
                   key={x}
                   className="luz"
                   cx={x}
-                  cy={244 - (i % 3)}
-                  r={i % 4 === 0 ? 1.9 : 1.3}
+                  cy={226 - (i % 3)}
+                  r={i % 4 === 0 ? 1.8 : 1.2}
                   style={
                     {
                       "--duracao": `${dur}s`,
@@ -265,6 +364,45 @@ export default function RioSkyline({
               ))}
             </g>
           ) : null}
+        </g>
+
+        {/* ---------- camada 3: mar, espuma, areia e coqueiros ---------- */}
+        <g ref={coleta(2)}>
+          <rect x="0" y="230" width="1600" height="70" fill={`url(#${g("mar")})`} />
+          {noturno ? (
+            <g fill="none" stroke="#F3E4C2" strokeLinecap="round" strokeWidth="1.2">
+              <path strokeOpacity="0.35" d="M628,235 L652,235" />
+              <path strokeOpacity="0.22" d="M624,241 L656,241" />
+              <path strokeOpacity="0.12" d="M632,248 L648,248" />
+            </g>
+          ) : (
+            <g fill="none" stroke="#F3E4C2" strokeLinecap="round" strokeWidth="1.5">
+              <path strokeOpacity="0.5" d="M902,235 L954,235" />
+              <path strokeOpacity="0.35" d="M894,241 L962,241" />
+              <path strokeOpacity="0.22" d="M906,248 L950,248" />
+              <path strokeOpacity="0.12" d="M916,256 L940,256" />
+            </g>
+          )}
+          <g fill="none" stroke={AREIA} strokeWidth="1" strokeLinecap="round">
+            <path
+              strokeOpacity="0.32"
+              d="M0,234 C120,230 200,238 320,234 C440,230 520,238 640,234 C760,230 840,238 960,234 C1080,230 1160,238 1280,234 C1400,230 1480,238 1600,234"
+            />
+            <path
+              strokeOpacity="0.16"
+              d="M0,246 C100,242 180,250 300,246 C420,242 500,250 620,246 C740,242 820,250 940,246 C1060,242 1140,250 1260,246 C1380,242 1460,250 1600,246"
+            />
+            <path
+              strokeOpacity="0.08"
+              d="M0,258 C140,254 220,262 340,258 C460,254 540,262 660,258 C780,254 860,262 980,258 C1100,254 1180,262 1300,258 C1420,254 1500,262 1600,258"
+            />
+          </g>
+          <path
+            d="M0,300 L0,272 C200,268 400,276 600,272 C800,268 1000,275 1200,271 C1400,267 1520,273 1600,271 L1600,300 Z"
+            fill={`url(#${g("areia")})`}
+          />
+          <Coqueiro x={380} y={272} />
+          <Coqueiro x={1060} y={272} espelha />
         </g>
       </svg>
     </div>

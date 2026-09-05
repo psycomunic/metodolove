@@ -16,7 +16,7 @@ export default function Marquee() {
   return (
     <section
       aria-label="Pilares do método"
-      className="marquee-pai overflow-hidden border-y border-line bg-navy py-5 sm:py-7"
+      className="marquee-pai overflow-hidden border-y border-fio-areia bg-navy py-5 sm:py-7"
     >
       <div className="marquee">
         {fita.map((pilar, i) => (

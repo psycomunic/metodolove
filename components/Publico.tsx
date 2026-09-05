@@ -14,7 +14,7 @@ export default function Publico() {
   return (
     <section
       id="filtro"
-      className="border-t border-line bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[46rem] sm:text-left">

@@ -22,15 +22,16 @@ export default function Dor() {
   return (
     <section
       id="dor"
-      className="relative isolate overflow-hidden border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
-      {/* A quadra fica atrás da seção que fala da aula que desanda. Textura,
-          não ilustração: 8% e recortada pela direita. */}
+      {/* A quadra é uma FAIXA na borda direita, não um fundo atrás dos cards:
+          textura por baixo de texto foi o que o cliente reprovou. Só entra em
+          telas largas o bastante para haver margem sobrando. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[-10%] -z-10 hidden h-[28rem] w-[34rem] -translate-y-1/2 text-ink lg:block"
+        className="pointer-events-none absolute top-1/2 right-[-14rem] -z-10 hidden h-[30rem] w-[30rem] -translate-y-1/2 text-areia xl:block"
       >
-        <RedeFutevolei />
+        <RedeFutevolei opacidade={0.12} />
       </div>
       <div className="mx-auto grid max-w-[80rem] gap-10 sm:gap-14 lg:grid-cols-[0.92fr_1.08fr] lg:items-start lg:gap-20">
         <header className="text-center sm:text-left lg:sticky lg:top-28 lg:self-start">
@@ -56,9 +57,9 @@ export default function Dor() {
           {dor.itens.map((item, i) => (
             <Reveal as="li" key={item.titulo} atraso={i * 70}>
               <CardSpot className="p-6 text-left sm:p-9">
-                <p className="mono text-[0.8125rem] text-mute sm:text-[0.7rem]">
+                <p className="mono text-[0.8125rem] text-areia sm:text-[0.7rem]">
                   {String(i + 1).padStart(2, "0")}
-                  <span className="text-fraco">/{total}</span>
+                  <span className="text-areia/45">/{total}</span>
                 </p>
                 <h3 className="display mt-3 text-[1.5rem] text-ink sm:mt-4 sm:text-[1.85rem]">
                   {item.titulo}

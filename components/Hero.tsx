@@ -20,11 +20,24 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
  * A altura desconta a barra de urgência e a pílula da nav, que estão no fluxo
  * acima: 100svh cheios empurrariam o CTA para fora da primeira dobra.
  *
- * O RIO. O horizonte fica na BASE da seção, atrás de tudo, e o sol se pondo é
- * um disco de azul-claro logo acima da linha dos morros. Gaivotas cruzam o céu
- * em quase um minuto. Nada disso pode competir com a manchete: se o olho for
- * para o horizonte antes de ir para o título, está forte demais.
+ * O RIO. O horizonte é o elemento de identidade da página inteira e fica na
+ * base da seção, acima da foto e abaixo do texto. Gaivotas cruzam o céu em
+ * 45 s. O sol se pondo vem dentro do próprio horizonte, com disco e reflexo na
+ * água: não há mais nenhum sol de gradiente por aqui.
+ *
+ * ALTURA DO HORIZONTE. Não é fixa, e não pode ser. O desenho usa
+ * `xMidYMax slice`, que ancora a base e corta o excedente EM CIMA quando a
+ * tela é mais achatada que o viewBox de 1600x300. Com 240px fixos num monitor
+ * de 1440, o corte come 30px e decapita o Cristo, que é o ponto mais alto do
+ * desenho. A regra que resolve é manter a altura acima de 17,4% da largura,
+ * e é isso que o clamp abaixo faz, dos 1280px para cima.
  */
+
+/**
+ * 200px no mínimo, 18,5% da largura no meio, 360px no teto. Ver a nota sobre
+ * enquadramento acima: abaixo de 17,4% da largura, o recorte come o Cristo.
+ */
+const ALTURA_HORIZONTE = "h-[108px] sm:h-[clamp(200px,18.5vw,360px)]";
 export default function Hero() {
   return (
     <section id="topo" className="relative isolate overflow-hidden">
@@ -44,27 +57,33 @@ export default function Hero() {
             filter: "blur(140px)",
           }}
         />
-        {/* Sol se pondo, logo acima da linha dos morros. Disco baixo e largo:
-            sol alto no céu leria como mais um blob de gradiente. */}
-        <div
-          className="absolute bottom-[6rem] left-1/2 h-[16rem] w-[26rem] -translate-x-1/2 rounded-full opacity-[0.1] sm:bottom-[9rem] sm:h-[24rem] sm:w-[42rem]"
-          style={{
-            background: "radial-gradient(circle, #4FA3FF 0%, transparent 68%)",
-            filter: "blur(60px)",
-          }}
-        />
       </div>
 
       {/* Gaivotas: três, em alturas e ritmos diferentes, para nunca lerem como
           uma fila. */}
-      <GaivotasLoop className="-z-10 text-ink" />
+      <GaivotasLoop className="-z-10 text-areia" />
 
       {/* Horizonte, colado na base da seção. */}
       {/* Acima da foto (-z-5 contra -z-10), e não atrás dela: atrás, a metade
           direita da orla ficava escondida e o Corcovado era cortado ao meio
           pela borda da imagem. À frente, o horizonte cruza justamente o terço
           de baixo da foto, que já está desbotado no navy. */}
-      <RioSkyline className="absolute inset-x-0 bottom-0 -z-[5]" />
+      <RioSkyline
+        altura={ALTURA_HORIZONTE}
+        className="absolute inset-x-0 bottom-0 -z-[5]"
+      />
+
+      {/* Alvo do Cristo, para o rótulo aparecer no hover.
+
+          Fica FORA do horizonte e depois do conteúdo, com z positivo: o
+          horizonte está em -z-5, atrás da coluna de texto, e um alvo lá embaixo
+          nunca receberia o ponteiro. A posição espelha o desenho: o Cristo está
+          a 51% da largura e a 80% da altura da faixa, acima da base dela. */}
+      <div className="group absolute bottom-[86px] left-[51%] z-20 hidden h-14 w-14 -translate-x-1/2 lg:bottom-[clamp(192px,14.8vw,288px)] lg:block">
+        <span className="mono pointer-events-none absolute bottom-full left-1/2 mb-1 -translate-x-1/2 rounded-full border border-fio-areia bg-void/92 px-3 py-1.5 text-[0.6rem] whitespace-nowrap text-areia opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+          Corcovado · 710 m
+        </span>
+      </div>
 
       {/* ---------- foto, celular ----------
           Faixa de 52vh no topo, cor real, fundindo no navy pela base.
@@ -103,7 +122,9 @@ export default function Hero() {
               navy: véu colorido em cima de foto é justamente o que o cliente
               reprovou. */}
           <div className="absolute inset-0 bg-gradient-to-r from-void via-black/40 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-void to-transparent" />
+          {/* Metade de baixo apagando no navy: é onde o horizonte passa, e ele
+              precisa de fundo liso para a crista não brigar com o ombro dele. */}
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-void via-void/85 to-transparent" />
         </div>
       </div>
 
@@ -158,8 +179,8 @@ export default function Hero() {
 
         {/* ---------- placar ----------
             2x2 no celular, fila única no desktop. */}
-        <Reveal atraso={320} className="mt-12 w-full lg:mt-20">
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 border-t border-line pt-7 sm:flex sm:flex-wrap sm:items-end sm:gap-x-16">
+        <Reveal atraso={320} className="mt-12 w-full lg:mt-24">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 sm:flex sm:flex-wrap sm:items-end sm:gap-x-16">
             {hero.stats.map((stat) => (
               <div key={stat.rotulo}>
                 <dt className="sr-only">{stat.rotulo}</dt>

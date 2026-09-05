@@ -29,18 +29,24 @@ export default function Autor() {
     <section
       id="charllove"
       ref={raiz}
-      className="relative isolate overflow-hidden border-t border-line px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
+      {/* Faixa de calçadão no terço de baixo, atrás da FOTO e não do texto. */}
       <CalcadaoWaves
-        className="absolute inset-x-0 top-1/3 -z-20 text-ink"
-        opacidade={0.05}
+        className="absolute inset-x-0 bottom-0 -z-20"
+        opacidade={0.09}
+        altura={420}
       />
+
+      {/* O Cristo fica na borda direita da seção, fora da coluna de texto, que
+          por sua vez tem largura máxima para nunca alcançá-lo. Desenho em cima
+          de linha de texto foi exatamente o que o cliente reprovou. */}
       <div
         ref={coleta(0)}
         aria-hidden="true"
-        className="pointer-events-none absolute top-4 right-[-8%] -z-10 h-[22rem] w-[18rem] text-ink sm:h-[30rem] sm:w-[24rem] lg:right-[-6%] lg:h-[36rem] lg:w-[28rem]"
+        className="pointer-events-none absolute top-12 right-[-4%] -z-10 hidden lg:block lg:h-[31rem] lg:w-[20rem]"
       >
-        <CristoSilhouette opacidade={0.11} />
+        <CristoSilhouette />
       </div>
       <div className="mx-auto grid max-w-[80rem] gap-9 sm:gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-20">
         <Reveal className="lg:sticky lg:top-28">
@@ -57,7 +63,7 @@ export default function Autor() {
           </p>
         </Reveal>
 
-        <div className="text-center sm:text-left">
+        <div className="text-center sm:text-left lg:max-w-[31rem]">
           <Reveal>
             <Olho>{autor.olho}</Olho>
           </Reveal>
@@ -80,18 +86,21 @@ export default function Autor() {
           </div>
 
           <Reveal atraso={80}>
-            <blockquote className="mt-9 border-l-2 border-accent pl-5 text-left sm:mt-10 sm:pl-6">
-              <p className="display text-[clamp(1.25rem,5.5vw,1.9rem)] text-ink">
+            {/* A citação é a tese do produto em uma linha. Em areia, não em
+                branco: é a única fala do Charllove na página e merece um tom
+                próprio, sem virar mais um parágrafo. */}
+            <blockquote className="mt-9 border-l-2 border-areia/50 pl-5 text-left sm:mt-10 sm:pl-6">
+              <p className="display text-[clamp(1.25rem,5.5vw,1.9rem)] text-areia">
                 “{autor.citacao}”
               </p>
-              <cite className="mono mt-4 block text-[0.8125rem] text-mute not-italic sm:text-[0.66rem]">
+              <cite className="mono mt-4 block text-[0.8125rem] text-areia/55 not-italic sm:text-[0.66rem]">
                 {autor.nome}
               </cite>
             </blockquote>
           </Reveal>
 
           <Reveal atraso={120}>
-            <ul className="mono mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-line pt-6 text-[0.8125rem] text-fraco sm:mt-10 sm:justify-start sm:text-[0.62rem]">
+            <ul className="mono mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-t border-line pt-6 text-[0.8125rem] text-areia/65 sm:mt-10 sm:justify-start sm:text-[0.62rem]">
               {autor.credenciais.map((c, i) => (
                 <li key={c} className="flex items-center gap-3">
                   {i > 0 ? <span aria-hidden="true">·</span> : null}
@@ -100,6 +109,13 @@ export default function Autor() {
               ))}
             </ul>
           </Reveal>
+
+          {/* Celular: o Cristo entra DEPOIS do texto, centralizado, como
+              fechamento da seção. Atrás dos parágrafos ele só atrapalharia a
+              leitura numa coluna de 350px. */}
+          <div aria-hidden="true" className="mt-10 h-48 w-full lg:hidden">
+            <CristoSilhouette opacidade={0.55} />
+          </div>
         </div>
       </div>
     </section>

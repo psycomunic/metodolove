@@ -9,6 +9,9 @@
  * fonte já está carregada, e converter cinco letras em contorno engorda o
  * bundle sem ganho nenhum. O favicon, que não tem fonte, é a marca sem texto,
  * em `app/icon.svg`.
+ *
+ * O traço é AREIA fixa e o lettering herda a cor de quem o usa: os dois têm
+ * papéis diferentes, e o morro é o único que carrega a cor da praia.
  */
 export default function Monograma({
   className = "",
@@ -48,7 +51,7 @@ export default function Monograma({
            C128,75 137,64 150,58 C165,51 181,54 191,64
            C200,73 205,80 208,88
            L234,88"
-        stroke="currentColor"
+        stroke="#E9D8B4"
         strokeWidth="3.2"
         strokeLinecap="round"
         strokeLinejoin="round"

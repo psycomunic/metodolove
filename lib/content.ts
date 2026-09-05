@@ -99,7 +99,7 @@ export const pilares = [
   "nascido no rio",
   "areia todo dia",
   "leitura de jogo",
-  "copacabana 1965",
+  "copacabana, 1965",
   "do racha ao circuito",
   "paixão vira profissão",
 ];
@@ -185,8 +185,7 @@ export const mercado = {
   ],
   texto:
     "Todo mês abre arena nova, e toda arena precisa de professor. Mas arena não quer “o cara que joga bem”. Arena quer quem segura turma, fideliza aluno e cuida do próprio nome. É isso que o Método LLOVE forma.",
-  origem:
-    "O futevôlei nasceu em Copacabana, em 1965. O método nasceu na mesma areia.",
+  origem: "O futevôlei nasceu em Copacabana, em 1965. O método nasceu na mesma areia.",
 };
 
 /* ------------------------------------------------------------------ */
