@@ -304,10 +304,10 @@ export const autor = {
   linhaDestaque: "até lá",
   nome: "Charllove",
   paragrafos: [
-    "Charllove começou onde muito professor de futevôlei sonha começar: no campo, jogando futebol profissional até os 23. Aprendeu cedo o que é treinar com método, cobrar rendimento e viver de esporte, e viu isso acabar cedo, como acaba pra quase todo mundo.",
-    "Quando o futebol acabou, foi vender. Reserva. Honda. Ficou entre os melhores vendedores do país nos dois lugares. Não porque era o mais falante, mas porque aprendeu a ouvir, criar confiança e fechar sem empurrar. É essa parte que faz diferença na hora de cobrar por uma aula.",
-    "Depois da pandemia veio a virada: trabalhar com o que ama. Começou dando aula como quase todo mundo começa, no improviso, na marra. Só que juntou as duas vidas: o atleta que sabe treinar e o vendedor que sabe atender. Fundou a GR7, depois a Deca 7 e o CTP 10. Três escolas do zero.",
-    "O Método LLOVE é tudo isso organizado em 6 módulos pra você não precisar errar anos pra chegar onde ele chegou.",
+    "Charllove jogou futebol profissional até os 23. Aprendeu cedo o que é treinar com método e viver de esporte, e viu isso acabar cedo, como acaba pra quase todo mundo.",
+    "Depois foi vender: Reserva, Honda, entre os melhores do país nos dois lugares. Ali aprendeu a ouvir, criar confiança e fechar sem empurrar. É o que faz diferença na hora de cobrar por uma aula.",
+    "Na pandemia veio a virada: viver do que ama. Juntou o atleta que sabe treinar com o vendedor que sabe atender e fundou a GR7, a Deca 7 e o CTP 10. Três escolas do zero.",
+    "O Método LLOVE é tudo isso em 6 módulos, pra você não precisar errar anos pra chegar lá.",
   ],
   // Frase dele, da Aula 0.1. É a tese do produto inteiro em uma linha.
   citacao:

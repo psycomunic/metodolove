@@ -94,10 +94,10 @@ export function Botao({
 /**
  * Rótulo mono de seção.
  *
- * A cor vem de `--color-rotulo`, que a classe `.claro` remapeia: areia nas
- * seções escuras, terracota forte nas claras. É o mesmo componente nas duas
- * famílias, sem uma linha de condicional, e é por isso que a cor tem de vir
- * de token e nunca de hex escrito aqui.
+ * Em AREIA, não em cinza: é o rótulo que abre toda seção da página, e é a
+ * peça que mais aquece o navy de uma vez só. O cliente reclamou de "muito
+ * preto e azul", e é aqui que a terceira cor entra sem tocar em manchete,
+ * corpo de texto ou botão.
  *
  * 13px no celular, que é o piso de legibilidade para caixa alta com tracking
  * largo; encolhe no desktop, onde ele é metadado ao lado de uma manchete
@@ -117,12 +117,12 @@ export function Olho({
   // desktop, e essa peça acompanha sem precisar saber onde está.
   return (
     <p
-      className={`mono text-[0.8125rem] leading-[1.9] text-rotulo sm:text-[0.7rem] ${className}`}
+      className={`mono text-[0.8125rem] leading-[1.9] text-areia/85 sm:text-[0.7rem] ${className}`}
     >
       <span>{children}</span>
       {vivo ? (
-        <span className="ml-3 inline-flex items-center gap-2 rounded-full border border-rotulo/35 px-3 py-0.5 align-middle text-rotulo">
-          <span className="dot-vivo block h-1.5 w-1.5 rounded-full bg-rotulo" />
+        <span className="ml-3 inline-flex items-center gap-2 rounded-full border border-areia/30 px-3 py-0.5 align-middle text-areia">
+          <span className="dot-vivo block h-1.5 w-1.5 rounded-full bg-areia" />
           {vivo}
         </span>
       ) : null}

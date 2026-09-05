@@ -22,14 +22,14 @@ export default function Dor() {
   return (
     <section
       id="dor"
-      className="claro relative isolate overflow-hidden bg-creme px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+      className="relative isolate overflow-hidden border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       {/* A quadra é uma FAIXA na borda direita, não um fundo atrás dos cards:
           textura por baixo de texto foi o que o cliente reprovou. Só entra em
           telas largas o bastante para haver margem sobrando. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[-14rem] -z-10 hidden h-[30rem] w-[30rem] -translate-y-1/2 text-areia-quente xl:block"
+        className="pointer-events-none absolute top-1/2 right-[-14rem] -z-10 hidden h-[30rem] w-[30rem] -translate-y-1/2 text-areia xl:block"
       >
         <RedeFutevolei opacidade={0.12} />
       </div>
@@ -57,11 +57,9 @@ export default function Dor() {
           {dor.itens.map((item, i) => (
             <Reveal as="li" key={item.titulo} atraso={i * 70}>
               <CardSpot className="p-6 text-left sm:p-9">
-                {/* Dourado puro sobre creme não passa em AA num rótulo de
-                    13px. A versão escurecida abaixo passa e mantém o calor. */}
-                <p className="mono text-[0.8125rem] text-[#9A6F24] sm:text-[0.7rem]">
+                <p className="mono text-[0.8125rem] text-areia sm:text-[0.7rem]">
                   {String(i + 1).padStart(2, "0")}
-                  <span className="text-[#9A6F24]/45">/{total}</span>
+                  <span className="text-areia/45">/{total}</span>
                 </p>
                 <h3 className="display mt-3 text-[1.5rem] text-ink sm:mt-4 sm:text-[1.85rem]">
                   {item.titulo}

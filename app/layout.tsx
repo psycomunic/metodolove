@@ -147,7 +147,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(dadosFaq) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Grão de filme sobre a página inteira. Fixo e sem eventos: é papel,
+            não camada de conteúdo. */}
+        <div className="grao-global" aria-hidden="true" />
+      </body>
     </html>
   );
 }

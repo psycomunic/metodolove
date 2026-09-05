@@ -12,7 +12,10 @@ import { Check, Manchete, Olho, Xis } from "./ui";
  */
 export default function Publico() {
   return (
-    <section id="filtro" className="claro bg-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32">
+    <section
+      id="filtro"
+      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+    >
       <div className="mx-auto max-w-[80rem]">
         <header className="text-center sm:max-w-[46rem] sm:text-left">
           <Reveal>
@@ -34,13 +37,13 @@ export default function Publico() {
 
         <div className="mt-10 grid gap-4 sm:mt-14 lg:grid-cols-2">
           <Reveal className="card p-6 text-left sm:p-9">
-            <h3 className="mono text-[0.8125rem] text-fundo-verde sm:text-[0.7rem]">
+            <h3 className="mono text-[0.8125rem] text-accent sm:text-[0.7rem]">
               É pra você se…
             </h3>
             <ul className="mt-5 space-y-4 sm:mt-6">
               {publico.eh.map((item) => (
                 <li key={item} className="flex gap-3.5">
-                  <Check className="mt-1 h-5 w-5 text-fundo-verde" />
+                  <Check className="mt-1 h-5 w-5 text-accent" />
                   <span className="text-[1rem] leading-[1.55] text-ink">{item}</span>
                 </li>
               ))}
@@ -48,13 +51,13 @@ export default function Publico() {
           </Reveal>
 
           <Reveal atraso={90} className="card border-dashed p-6 text-left sm:p-9">
-            <h3 className="mono text-[0.8125rem] text-terracota-forte sm:text-[0.7rem]">
+            <h3 className="mono text-[0.8125rem] text-fraco sm:text-[0.7rem]">
               Não é pra você se…
             </h3>
             <ul className="mt-5 space-y-4 sm:mt-6">
               {publico.naoEh.map((item) => (
                 <li key={item} className="flex gap-3.5">
-                  <Xis className="mt-1 h-5 w-5 text-terracota-forte" />
+                  <Xis className="mt-1 h-5 w-5 text-fraco" />
                   <span className="text-[1rem] leading-[1.55] text-mute">{item}</span>
                 </li>
               ))}

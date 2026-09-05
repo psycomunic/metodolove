@@ -15,7 +15,10 @@ import { Manchete, Olho } from "./ui";
  */
 export default function Faq() {
   return (
-    <section id="duvidas" className="claro bg-creme px-5 py-16 sm:px-8 sm:py-28 lg:py-32">
+    <section
+      id="duvidas"
+      className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
+    >
       <div className="mx-auto grid max-w-[80rem] gap-9 sm:gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <header className="text-center sm:text-left lg:sticky lg:top-28 lg:self-start">
           <Reveal>

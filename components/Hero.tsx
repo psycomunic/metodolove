@@ -20,12 +20,6 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
  * A altura desconta a barra de urgência e a pílula da nav, que estão no fluxo
  * acima: 100svh cheios empurrariam o CTA para fora da primeira dobra.
  *
- * O CÉU. A seção inteira é um gradiente de fim de tarde: navy no alto, onde
- * mora a manchete e o contraste precisa ser cheio, passando por #2E4874 e
- * abrindo em dourado e areia na altura do horizonte, onde encontra o próprio
- * céu desenhado dentro da skyline. É o que tira a página do "tudo navy" sem
- * clarear a área onde o texto vive.
- *
  * O RIO. O horizonte é o elemento de identidade da página inteira e fica na
  * base da seção, acima da foto e abaixo do texto. Gaivotas cruzam o céu em
  * 45 s. O sol se pondo vem dentro do próprio horizonte, com disco e reflexo na
@@ -46,14 +40,7 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
 const ALTURA_HORIZONTE = "h-[108px] sm:h-[clamp(200px,18.5vw,360px)]";
 export default function Hero() {
   return (
-    <section
-      id="topo"
-      className="escuro relative isolate overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, #06111F 0%, #0B1A2E 34%, #2E4874 68%, #6E5F4A 86%, #E9D8B4 100%)",
-      }}
-    >
+    <section id="topo" className="relative isolate overflow-hidden">
       {/* ---------- aurora ---------- */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-20">
         <div
@@ -66,7 +53,7 @@ export default function Hero() {
         <div
           className="absolute top-[6%] right-[-10%] h-[30rem] w-[30rem] rounded-full opacity-[0.22] sm:h-[52rem] sm:w-[52rem]"
           style={{
-            background: "radial-gradient(circle, #E3B86A 0%, transparent 70%)",
+            background: "radial-gradient(circle, #1E3A8A 0%, transparent 70%)",
             filter: "blur(140px)",
           }}
         />
@@ -162,17 +149,7 @@ export default function Hero() {
             </p>
           </Reveal>
 
-          <Reveal atraso={240} className="relative">
-            {/* Luz dourada atrás do CTA: o botão verde ganha um halo quente e
-                deixa de flutuar sozinho num campo navy. */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-10 left-1/2 -z-10 h-64 w-[28rem] -translate-x-1/2 rounded-full opacity-25 lg:left-56"
-              style={{
-                background: "radial-gradient(circle, #E3B86A 0%, transparent 70%)",
-                filter: "blur(70px)",
-              }}
-            />
+          <Reveal atraso={240}>
             <div className="mt-8 flex flex-col items-center gap-5 sm:mt-10 lg:flex-row lg:items-center lg:gap-6">
               <Botao href={marca.checkout} ima cheio>
                 {hero.cta}

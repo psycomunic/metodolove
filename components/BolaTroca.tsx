@@ -144,7 +144,7 @@ export default function BolaTroca({ className = "" }: { className?: string }) {
       onPointerDown={() => setTocado((t) => !t)}
       role="img"
       aria-label="Bola do Método LLOVE girando. Um facho de luz revela uma bola feita de dinheiro por baixo."
-      className={`relative aspect-square overflow-hidden rounded-full bg-[#FAFAF8] shadow-[0_22px_28px_-10px_rgba(60,40,20,0.35),0_60px_90px_-24px_rgba(60,40,20,0.32)] ${className}`}
+      className={`relative aspect-square overflow-hidden rounded-full bg-[#FAFAF8] shadow-[0_14px_24px_-10px_rgba(0,0,0,0.85),0_26px_44px_-26px_rgba(0,0,0,0.9)] ${className}`}
     >
       <video
         ref={base}
