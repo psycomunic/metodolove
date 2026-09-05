@@ -198,12 +198,20 @@ export const mecanismo = {
   linhasFim: ["e não mais um curso", "de fundamento?"],
   texto:
     "Todo curso de futevôlei ensina toque, cabeceio e shark. O Método LLOVE não é sobre o que você já sabe fazer. É sobre o que ninguém te ensinou: como transformar o que você sabe em uma aula que o aluno paga, sente e recomenda.",
-  // Vídeo ao lado da manchete. Coloque o arquivo em public/videos/ e ajuste o
-  // nome aqui; `poster` é o quadro que aparece antes do play.
+  // Vídeo ao lado da manchete.
+  //
+  // `src` VAZIO enquanto o arquivo não existe, e é isso que faz a seção cair
+  // no placeholder honesto em vez de mostrar um play que não toca. Quando o
+  // vídeo chegar: grave em public/videos/ com final `-web.mp4` (o .gitignore
+  // só versiona esse sufixo, ver o bloco dos vídeos lá) e escreva o caminho
+  // aqui. `poster` é o quadro que aparece antes do play.
   video: {
-    src: "/videos/metodo.mp4",
+    src: "",
     poster: "/HERO-DESKTOP.jpg",
     legenda: "Charllove explica o método em 2 minutos",
+    // Direção de arte que aparece escrita no lugar do vídeo enquanto ele
+    // não existe. Quem lê é o cliente, não um programador.
+    arte: "Charllove de frente para a câmera na areia, explicando o método em até 2 minutos. Som limpo, sem música por cima da voz.",
   },
   pilares: [
     {

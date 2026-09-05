@@ -147,6 +147,11 @@ comportamento em qualquer componente novo que dependa de mídia.
 
 - `public/images/og.jpg` (1200x630) — miniatura de compartilhamento. Hoje o link
   compartilhado no WhatsApp e no Instagram não tem imagem.
+- `public/videos/metodo-web.mp4` — o Charllove explicando o método, ao lado da manchete
+  do mecanismo. Enquanto não existir, `mecanismo.video.src` em `lib/content.ts` fica
+  VAZIO e a seção cai no placeholder com a direção de arte escrita. Não aponte o `src`
+  para um arquivo que ainda não está em `public/`: o play aparece, a pessoa clica e não
+  acontece nada. O sufixo `-web` não é enfeite, é o que o `.gitignore` versiona.
 - Uma versão do mockup `public/bonus-networking.webp` **com fundo transparente**. O
   arquivo atual tem fundo branco chapado e nenhum modo de mistura resolve isso sobre
   navy: multiply come o lettering creme da caixa e screen mantém o branco. Por isso o
