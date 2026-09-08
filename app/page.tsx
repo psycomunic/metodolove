@@ -28,11 +28,14 @@ import StickyCta from "@/components/StickyCta";
  * coisa que a pessoa lê antes do preço é o convite para desistir. Quem passa
  * por esse filtro e chega no botão compra com muito menos reembolso.
  *
- * Os depoimentos entram entre o autor e o filtro, e não colados na oferta,
- * justamente para não furar essa regra: prova social logo depois de quem
- * ensina, e o convite para desistir seguindo como a última coisa antes do
- * preço. Hoje a seção não aparece, porque não há depoimento real autorizado
- * ainda (ver `depoimentos` em lib/content.ts).
+ * Os depoimentos entram entre o mecanismo e os módulos, a pedido do cliente
+ * em set/2026: a pessoa acabou de entender POR QUE o método funciona, e a
+ * prova de que funcionou com outro professor chega antes da lista do que vem
+ * na caixa. Longe da oferta de propósito, para o filtro seguir sendo a última
+ * coisa que ela lê antes do preço.
+ *
+ * Hoje a seção mostra quadros vazios, porque não há depoimento real
+ * autorizado ainda (ver `depoimentos` em lib/content.ts).
  */
 export default function Home() {
   return (
@@ -46,9 +49,9 @@ export default function Home() {
         <Dor />
         <Mercado />
         <Mecanismo />
+        <Depoimentos />
         <Modulos />
         <Autor />
-        <Depoimentos />
         <Publico />
         <Oferta />
         <Faq />
