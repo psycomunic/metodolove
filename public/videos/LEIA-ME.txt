@@ -1,45 +1,111 @@
-VÍDEOS DO HERO
-==============
+VÍDEOS DA PÁGINA
+================
 
-Coloque os dois vídeos das bolas aqui, com estes nomes exatos:
+Esta pasta tem três grupos de vídeo. Dois deles ainda não existem, e é por
+isso que a página mostra quadro tracejado no lugar deles.
 
-  bola-1.mp4   → cena base, a que aparece o tempo todo
-  bola-2.mp4   → cena revelada pelo holofote que segue o cursor
+REGRA DE NOME, VALE PARA TODOS
+------------------------------
+O arquivo PRECISA terminar em  -web.mp4
 
-Enquanto os arquivos não existirem, o hero volta sozinho para o desenho com
-gradiente e foto. Nada quebra e nada fica com espaço vazio.
+O .gitignore desta pasta versiona só esse sufixo, e ignora todo o resto. Um
+arquivo chamado "depoimento-1.mp4" funciona no seu computador, some no
+deploy, e ninguém percebe até a página estar no ar.
 
-COMO EXPORTAR
--------------
-Formato:     MP4, codec H.264 (compatível com todos os navegadores)
-Resolução:   1920x1080. Não adianta mais que isso, o vídeo fica de fundo.
-Duração:     4 a 8 segundos, em laço — o corte precisa emendar sem solavanco
-Áudio:       REMOVA a faixa de áudio. O vídeo toca mudo e sem áudio ele fica
-             bem mais leve
-Peso alvo:   até 2 MB cada. Acima disso o hero demora a pintar em 4G e a
-             conversão cai
+Os arquivos brutos (sem -web) podem ficar aqui à vontade: eles são ignorados
+de propósito, para o repositório não carregar 25 MB de vídeo.
 
-Comando de referência, se você tiver ffmpeg:
 
-  ffmpeg -i entrada.mov -an -vf "scale=1920:-2" -c:v libx264 \
-         -crf 28 -preset slow -movflags +faststart bola-1.mp4
+1. BOLA DO HERO  ·  JÁ EXISTE, não mexa
+---------------------------------------
+  bola-1-web.mp4   bola-2-web.mp4
 
-  -an              remove o áudio
-  -crf 28          qualidade; suba o número para arquivo menor
+Usados em components/BolaTroca.tsx.
+
+
+2. VÍDEO DO MÉTODO  ·  FALTA
+----------------------------
+  metodo-web.mp4
+
+O Charllove explicando o método, ao lado da manchete da seção "O mecanismo".
+
+  Formato      MP4, H.264, horizontal (16:9)
+  Resolução    1280x720 basta
+  Duração      até 2 minutos
+  Áudio        MANTENHA. Aqui o áudio é o conteúdo
+  Peso alvo    até 12 MB
+
+Depois de colocar o arquivo, abra lib/content.ts, procure `mecanismo.video` e
+troque o src vazio por "/videos/metodo-web.mp4".
+
+
+3. DEPOIMENTOS  ·  FALTAM
+-------------------------
+  depoimento-1-web.mp4
+  depoimento-2-web.mp4
+  depoimento-3-web.mp4   (quantos houver, o carrossel cresce sozinho)
+
+Professores falando do que mudou na aula deles. É o carrossel entre a seção
+do Charllove e o filtro.
+
+  Formato      MP4, H.264, VERTICAL (9:16), que é como se grava no celular
+  Resolução    720x1280 basta
+  Duração      30 a 90 segundos. Passou disso, ninguém assiste até o fim
+  Áudio        MANTENHA
+  Peso alvo    até 8 MB cada
+
+CADA DEPOIMENTO PRECISA, JUNTO COM O ARQUIVO:
+  · nome do professor
+  · cidade
+  · há quanto tempo faz o método
+  · uma frase dele, que vai embaixo do vídeo
+  · AUTORIZAÇÃO DE USO DE IMAGEM por escrito, guardada fora deste
+    repositório
+
+Sem os cinco, o depoimento não entra. Depoimento sem autorização é problema
+com a pessoa; depoimento inventado é propaganda enganosa (CDC art. 37) e
+derruba conta de anúncio no Meta.
+
+O que a pessoa diz tem que ser o que aconteceu com ela. Não escreva a fala
+por ela, e não peça promessa de resultado ("agora eu cobro X", "minha agenda
+encheu"): o produto é treinamento esportivo e a página inteira evita isso.
+
+E lembre que, quando o primeiro depoimento entrar, o PREÇO SOBE. É o que a
+barra do topo da página promete.
+
+
+POSTER (o quadro parado antes do play)
+--------------------------------------
+Todo vídeo mostra um quadro parado antes de alguém clicar. Exporte um JPG do
+melhor quadro de cada vídeo, com o MESMO nome:
+
+  depoimento-1-web.jpg   metodo-web.jpg
+
+Sem poster, o card fica um retângulo preto, e ninguém clica em retângulo
+preto. Se não vier poster, dá para usar um quadro qualquer, mas fica pior.
+
+
+COMO CONVERTER, se você tiver ffmpeg
+------------------------------------
+Depoimento (vertical, com áudio):
+
+  ffmpeg -i entrada.mov -vf "scale=720:-2" -c:v libx264 -crf 26 \
+         -preset slow -c:a aac -b:a 96k -movflags +faststart \
+         depoimento-1-web.mp4
+
+Vídeo do método (horizontal, com áudio):
+
+  ffmpeg -i entrada.mov -vf "scale=1280:-2" -c:v libx264 -crf 26 \
+         -preset slow -c:a aac -b:a 128k -movflags +faststart \
+         metodo-web.mp4
+
+Poster, tirando o quadro do segundo 3:
+
+  ffmpeg -ss 3 -i depoimento-1-web.mp4 -frames:v 1 -q:v 3 \
+         depoimento-1-web.jpg
+
+  -crf 26          qualidade; suba o número para arquivo menor
   +faststart       deixa o vídeo começar a tocar antes de baixar inteiro
 
-ENQUADRAMENTO
--------------
-O título ocupa a METADE ESQUERDA da tela. Escolha (ou reenquadre) tomadas em
-que a bola e a ação fiquem do lado DIREITO — o véu azul escurece bem mais a
-esquerda para o texto ficar legível.
-
-Os dois vídeos precisam ter o MESMO enquadramento. O efeito é a mesma cena
-mudando sob o facho de luz; se a câmera estiver em posição diferente, vira um
-corte, não uma revelação. Ex.: bola-1 com a bola parada na areia, bola-2 com o
-mesmo quadro em pleno ataque.
-
-WEBM (opcional)
----------------
-Se quiser economizar mais banda, gere também bola-1.webm e bola-2.webm e troque
-o <video src> por <source> em components/HeroReveal.tsx, com o WebM antes do MP4.
+Se você não tiver ffmpeg, mande os arquivos como saíram do celular. O
+importante é que cheguem; a conversão a gente resolve depois.
