@@ -24,3 +24,10 @@ next-env.d.ts
 /public/crisnovo.png
 # Aquarela original do Rio, 1 MB. A pagina usa a derivada fundo-hero.webp.
 /public/fundo hero.jpg
+
+# Acervo bruto de fotos do Charllove: 35 MB, direto da camera do fotografo.
+# O que a pagina usa sao as derivadas em public/fotos/*.webp, 518 KB somadas,
+# geradas a 1100px de lado maior e qualidade 72. A pasta fica fora do git pelo
+# peso E pelo nome: espaco, acento e extensao maiuscula viram URL quebrada em
+# servidor Linux, que e onde isto roda.
+/public/MÉTODO LLOVE/

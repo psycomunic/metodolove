@@ -1,19 +1,23 @@
 "use client";
 
 import { autor, marca } from "@/lib/content";
+import Galeria from "./Galeria";
 import { Reveal } from "./movimento";
 import Image from "next/image";
 import { useParallax } from "./rio/parallax";
-import { Foto, Manchete, Olho } from "./ui";
+import { Manchete, Olho } from "./ui";
 
 /**
  * Quem ensina.
  *
- * A foto é ele DANDO AULA, de microfone diante da turma, na COR REAL: nada de
- * duotone, véu ou filtro. O Charllove precisa parecer uma pessoa ensinando,
- * não um recorte de identidade visual. O arquivo é quadrado e o slot é 3/4,
- * então o `cover` apara as laterais, o que ajuda: sai a caixa de som de um
- * lado e a beirada da projeção do outro, e sobra ele.
+ * A coluna da esquerda é um CARROSSEL da trajetória, e não mais uma foto
+ * sozinha. São cinco, na mesma ordem em que o texto ao lado conta a história:
+ * o pódio, o nome em banner de evento, a entrevista, a palestra e a quadra.
+ * Uma foto sozinha mostrava o professor; a fita mostra o caminho, que é
+ * exatamente o que esta seção argumenta.
+ *
+ * Todas na COR REAL: nada de duotone, véu ou filtro. O Charllove precisa
+ * parecer uma pessoa, não um recorte de identidade visual.
  *
  * A citação é a tese do produto em uma linha e por isso vem em display, não
  * em itálico de blockquote.
@@ -67,18 +71,23 @@ export default function Autor() {
       </div>
 
       <div className="mx-auto grid max-w-[80rem] gap-9 sm:gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:items-start lg:gap-16">
+        {/* A foto única virou carrossel da trajetória: uma por vez, no mesmo
+            espaço que a foto sozinha ocupava, e cada uma responde a um trecho
+            do texto ao lado. `w-full` no slide, para a fita andar de foto em
+            foto e nunca parar no meio de duas. */}
         <Reveal className="lg:sticky lg:top-28">
-          <div className="mx-auto aspect-[3/4] w-full max-w-[22rem] overflow-hidden rounded-2xl border border-line lg:max-w-none">
-            <Foto
-              src={autor.foto}
-              alt={`${autor.nome}, criador do ${marca.nome}`}
-              arte={autor.fotoArte}
-              desbota={false}
+          <div className="mx-auto w-full max-w-[22rem] lg:max-w-none">
+            <Galeria
+              fotos={autor.galeria}
+              aspecto="aspect-[3/4]"
+              largura="w-full"
+              anterior={autor.galeriaAnterior}
+              proximo={autor.galeriaProximo}
             />
+            <p className="mono mt-4 text-center text-[0.8125rem] text-mute sm:mt-5 sm:text-left sm:text-[0.7rem]">
+              {marca.instagramHandle}
+            </p>
           </div>
-          <p className="mono mt-4 text-center text-[0.8125rem] text-mute sm:mt-5 sm:text-left sm:text-[0.7rem]">
-            {marca.instagramHandle}
-          </p>
         </Reveal>
 
         <div className="text-center sm:text-left lg:max-w-[26rem]">

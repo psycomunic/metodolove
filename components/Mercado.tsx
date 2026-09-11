@@ -1,6 +1,7 @@
 import { mercado } from "@/lib/content";
 import { Contador, Reveal } from "./movimento";
 import BolaTroca from "./BolaTroca";
+import Galeria from "./Galeria";
 import { Manchete, Olho } from "./ui";
 
 /**
@@ -98,6 +99,22 @@ export default function Mercado() {
           <p className="mx-auto mt-10 max-w-[38rem] text-center text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-12 sm:text-left sm:text-[1.05rem]">
             {mercado.texto}
           </p>
+        </Reveal>
+
+        {/* A fita fecha a seção porque o número precisa virar imagem: "mais de
+            mil arenas" e "50 milhões de fãs" são grandes demais para alguém
+            sentir lendo. Aqui é quadra cheia e disputa de verdade, do acervo do
+            próprio Charllove, e não retrato dele: retrato viraria outra seção
+            sobre a pessoa, e esta é sobre o tamanho do mercado. */}
+        <Reveal atraso={160}>
+          <Galeria
+            fotos={mercado.galeria}
+            aspecto="aspect-[4/3]"
+            largura="w-[78vw] max-w-[24rem] sm:w-[20rem] lg:w-[23rem]"
+            anterior={mercado.galeriaAnterior}
+            proximo={mercado.galeriaProximo}
+            className="mt-10 sm:mt-12"
+          />
         </Reveal>
       </div>
     </section>

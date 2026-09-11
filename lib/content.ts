@@ -186,6 +186,43 @@ export const mercado = {
   texto:
     "Todo mês abre arena nova, e toda arena precisa de professor. Mas arena não quer “o cara que joga bem”. Arena quer quem segura turma, fideliza aluno e cuida do próprio nome. É isso que o Método LLOVE forma.",
   origem: "O futevôlei nasceu em Copacabana, em 1965. O método nasceu na mesma areia.",
+
+  /**
+   * Fotos do esporte acontecendo, embaixo dos números.
+   *
+   * Elas existem para o dado sair da planilha: "mais de mil arenas" e "50
+   * milhões de fãs" são números grandes demais para alguém sentir. A foto
+   * mostra o que os números descrevem, com gente na areia, e todas são do
+   * acervo do próprio Charllove, não banco de imagem.
+   *
+   * Por isso a escolha privilegia quadra CHEIA e disputa de verdade, e não
+   * retrato dele: retrato aqui viraria outra seção sobre ele, e esta seção é
+   * sobre o tamanho do mercado.
+   */
+  galeria: [
+    {
+      src: "/fotos/quadra-1-time.webp",
+      alt: "Jogadores reunidos na areia antes da partida",
+    },
+    {
+      src: "/fotos/quadra-2-jogo.webp",
+      alt: "Disputa de bola junto à rede, em partida de futevôlei na praia",
+    },
+    {
+      src: "/fotos/quadra-3-publico.webp",
+      alt: "Jogador ataca a bola com o morro e o público da praia ao fundo",
+    },
+    {
+      src: "/fotos/quadra-4-ataque.webp",
+      alt: "Jogador salta para atacar por cima da rede, na areia",
+    },
+    {
+      src: "/fotos/quadra-5-cumprimento.webp",
+      alt: "Dois jogadores se cumprimentam na rede, no fim do ponto",
+    },
+  ],
+  galeriaAnterior: "Ver foto anterior da quadra",
+  galeriaProximo: "Ver próxima foto da quadra",
 };
 
 /* ------------------------------------------------------------------ */
@@ -336,6 +373,44 @@ export const autor = {
   ],
   foto: "/charllove.jpg",
   fotoArte: "Charllove dando aula, de microfone, diante da turma",
+
+  /**
+   * A trajetória, em cinco fotos, na ordem em que o texto ao lado a conta:
+   * o atleta, o nome que virou referência, a entrevista, o professor, a
+   * quadra. Não é álbum: cada foto responde a um trecho do texto.
+   *
+   * O `alt` descreve o que está na foto, para quem usa leitor de tela, e NÃO
+   * afirma resultado nenhum. Ninguém aqui diz que ele foi campeão de coisa
+   * alguma, porque isso eu não tenho como verificar: se houver título, quem
+   * escreve é o cliente, e vai no texto da seção, não numa legenda de foto.
+   *
+   * Sem legenda visível de propósito. O texto ao lado já conta a história, e
+   * legenda em cima de legenda vira ruído.
+   */
+  galeria: [
+    {
+      src: "/fotos/trajetoria-1-podio.webp",
+      alt: "Charllove sentado no pódio, com medalha no pescoço e troféu na mão",
+    },
+    {
+      src: "/fotos/trajetoria-2-banner.webp",
+      alt: "Charllove caminhando diante de um banner de evento com a própria foto",
+    },
+    {
+      src: "/fotos/trajetoria-3-entrevista.webp",
+      alt: "Charllove dando entrevista ao microfone, ao lado de outros dois jogadores",
+    },
+    {
+      src: "/fotos/trajetoria-4-palestra.webp",
+      alt: "Charllove falando ao microfone diante de uma turma, com projeção ao fundo",
+    },
+    {
+      src: "/fotos/trajetoria-5-quadra.webp",
+      alt: "Charllove na quadra de areia, com a bola sob o braço",
+    },
+  ],
+  galeriaAnterior: "Ver foto anterior da trajetória",
+  galeriaProximo: "Ver próxima foto da trajetória",
 };
 
 /* ------------------------------------------------------------------ */
