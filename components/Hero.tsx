@@ -209,11 +209,12 @@ export default function Hero() {
           Cristo, com ele no meio do quadro. São 37 KB, então o celular baixa
           menos do que baixava recortando a imagem larga.
 
-          A faixa cresceu de 52vh para 58vh: com a barra de urgência fora do
-          topo no celular (ela desceu para junto da oferta) e a nav
-          transparente, a foto é a primeira coisa da página, e é ela que
-          precisa chegar primeiro. */}
-      <div className="relative h-[58vh] max-h-[30rem] w-full lg:hidden">
+          A faixa ficou em 48vh. Ela chegou a 58vh quando a barra de urgência
+          saiu do topo, mas aí a manchete nascia cortada pela dobra: a foto é
+          a entrada, a manchete é a promessa, e a promessa não pode precisar de
+          rolagem. Com 48vh entram o rosto dele E as três linhas da manchete
+          na primeira tela, que é o que importa. */}
+      <div className="relative h-[48vh] max-h-[25rem] w-full lg:hidden">
         <Foto
           src="/hero-mobile.webp"
           alt={`${marca.autor}, criador do ${marca.nome}`}

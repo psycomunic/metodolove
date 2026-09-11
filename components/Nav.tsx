@@ -42,10 +42,13 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", aoRolar);
   }, []);
 
+  /* No celular a pílula chega mais perto da borda (px-2 fora e px-2 dentro,
+     contra px-3 e px-3 de antes): são 8px de cada lado devolvidos, e é o que
+     empurra o botão para a direita. No sm para cima nada muda. */
   return (
-    <div className="sticky top-3 z-50 px-3 sm:top-4 sm:px-5">
+    <div className="sticky top-3 z-50 px-2 sm:top-4 sm:px-5">
       <div
-        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border px-3 py-2 transition-[background-color,border-color,backdrop-filter] duration-500 sm:gap-4 sm:px-4 ${
+        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border px-2 py-2 transition-[background-color,border-color,backdrop-filter] duration-500 sm:gap-4 sm:px-4 ${
           rolou
             ? "border-line bg-navy/70 backdrop-blur-[18px]"
             : "border-transparent bg-transparent"
@@ -74,7 +77,11 @@ export default function Nav() {
           ))}
         </nav>
 
-        <Botao href={marca.checkout} tamanho="sm" className="shrink-0">
+        <Botao
+          href={marca.checkout}
+          tamanho="xs"
+          className="shrink-0 sm:px-4 sm:py-2.5 sm:text-[0.72rem]"
+        >
           {ctaNav}
         </Botao>
       </div>

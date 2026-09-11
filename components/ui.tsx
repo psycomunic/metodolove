@@ -35,7 +35,7 @@ export function Botao({
   href: string;
   children: ReactNode;
   className?: string;
-  tamanho?: "sm" | "md" | "lg";
+  tamanho?: "xs" | "sm" | "md" | "lg";
   variante?: "primario" | "fantasma";
   ima?: boolean;
   /** Largura total no celular, teto de 420px, centralizado. */
@@ -45,12 +45,17 @@ export function Botao({
   const refIma = useIma<HTMLAnchorElement>(0.22);
   const externo = href.startsWith("http");
 
+  /* `xs` existe só para a pílula da nav. Ele NÃO é o `sm` menor: o `sm` é o
+     botão da barra fixa do rodapé no celular, que é o principal caminho de
+     compra ali e não pode encolher junto. */
   const medidas =
     tamanho === "lg"
       ? "px-6 py-4 text-[0.85rem] sm:px-11 sm:py-5 sm:text-[1rem]"
       : tamanho === "md"
         ? "px-5 py-3.5 text-[0.8rem]"
-        : "px-4 py-2.5 text-[0.72rem] gap-0";
+        : tamanho === "sm"
+          ? "px-4 py-2.5 text-[0.72rem] gap-0"
+          : "px-3.5 py-2 text-[0.64rem] tracking-[0.03em] gap-0";
 
   const largura = cheio ? "w-full max-w-[420px] sm:w-auto sm:max-w-none" : "";
 
@@ -70,10 +75,10 @@ export function Botao({
       className={`group inline-flex items-center justify-center gap-3 rounded-full font-bold tracking-[0.04em] whitespace-nowrap uppercase transition-[background-color,color,border-color,box-shadow] duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${medidas} ${largura} ${pintura} ${className}`}
     >
       <span>{children}</span>
-      {/* A seta não entra no tamanho `sm`. Ela custa 28px entre ícone e gap, e
-          é exatamente esse tanto que falta para a pílula da nav caber num
-          aparelho de 360px sem empurrar a página para o lado. */}
-      {tamanho !== "sm" ? (
+      {/* A seta não entra nos tamanhos pequenos. Ela custa 28px entre ícone e
+          gap, e é exatamente esse tanto que falta para a pílula da nav caber
+          num aparelho de 360px sem empurrar a página para o lado. */}
+      {tamanho === "lg" || tamanho === "md" ? (
         <svg
           viewBox="0 0 24 24"
           className="h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1"
