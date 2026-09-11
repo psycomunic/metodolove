@@ -40,7 +40,7 @@ export default function Home() {
   return (
     <>
       <BarraProgresso />
-      <BarraUrgencia />
+      <BarraUrgencia className="hidden border-b lg:block" />
       <Nav />
       <main>
         <Hero />
@@ -51,6 +51,7 @@ export default function Home() {
         <Modulos />
         <Autor />
         <Publico />
+        <BarraUrgencia className="border-y lg:hidden" />
         <Oferta />
         <Faq />
         <CtaFinal />

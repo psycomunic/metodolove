@@ -13,8 +13,19 @@ import { Botao } from "./ui";
  * `overflow-x: clip` e não `hidden`, que criaria um contêiner de rolagem e
  * mataria o sticky.
  *
- * Translúcida no topo, sólida ao rolar: sobre o hero ela some no fundo, e
- * sobre texto ela ganha corpo para não deixar palavra passando por baixo.
+ * TRANSPARENTE no topo, VIDRO ao rolar, e não o contrário. Antes ela já
+ * chegava com fundo e terminava quase sólida; agora sobre o hero ela não tem
+ * pílula nenhuma, só o logo e o botão flutuando, e a foto chega inteira à
+ * borda de cima. Ao sair do hero ela materializa: fundo translúcido, desfoque
+ * e o fio de 1px de volta, para não deixar palavra passando por baixo.
+ *
+ * O desfoque só existe depois que ela materializa. `backdrop-filter` ligado o
+ * tempo todo cria camada de composição na GPU mesmo quando não há nada para
+ * desfocar, e isso pesa justamente na rolagem do celular, que é onde a página
+ * precisa ser leve.
+ *
+ * Quem segura a legibilidade do logo no topo, contra o céu claro da foto, é o
+ * véu escuro no alto do hero, e não a nav. Ver `Hero`.
  *
  * No celular ela é só logo mais botão de compra. Sem hambúrguer: o menu tem
  * quatro âncoras da própria página, e numa landing de rolagem única um menu
@@ -34,8 +45,10 @@ export default function Nav() {
   return (
     <div className="sticky top-3 z-50 px-3 sm:top-4 sm:px-5">
       <div
-        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border border-line px-3 py-2 backdrop-blur-[16px] transition-colors duration-500 sm:gap-4 sm:px-4 ${
-          rolou ? "bg-navy/92" : "bg-navy/55"
+        className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border px-3 py-2 transition-[background-color,border-color,backdrop-filter] duration-500 sm:gap-4 sm:px-4 ${
+          rolou
+            ? "border-line bg-navy/70 backdrop-blur-[18px]"
+            : "border-transparent bg-transparent"
         }`}
       >
         <a href="#topo" className="shrink-0 pl-1" aria-label={marca.nome}>

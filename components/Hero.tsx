@@ -134,7 +134,20 @@ const VEU_TEXTO = {
 
 export default function Hero() {
   return (
-    <section id="topo" className="relative isolate overflow-hidden">
+    <section
+      id="topo"
+      /* A margem negativa puxa o hero PARA TRÁS da nav, só no celular.
+         Sem ela a nav transparente fica sobre o fundo chapado da página e
+         não há nada para transparecer: ela lê como barra sólida, e a foto
+         começa 55px abaixo do topo. Com ela a foto sangra até a borda de
+         cima e o logo flutua sobre a imagem, que é o que "menu transparente"
+         quer dizer.
+
+         55px é a altura que a pílula da nav ocupa no fluxo no celular
+         (py-2 mais o botão pequeno, medido no navegador). No desktop a
+         barra de urgência continua no topo e o hero segue no lugar. */
+      className="relative isolate -mt-[55px] overflow-hidden lg:mt-0"
+    >
       {/* ---------- aurora ---------- */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-20">
         <div
@@ -186,31 +199,34 @@ export default function Hero() {
       </div>
 
       {/* ---------- foto, celular ----------
-          Faixa de 52vh no topo, cor real, fundindo no navy pela base.
+          ARQUIVO PRÓPRIO, e não o mesmo do desktop com outro recorte.
 
-          `object-top` nas duas, e não mais `object-left` com recorte medido
-          em porcentagem. A arte mudou em set/2026: era um banner deitado de
-          2:1, com o Charllove à esquerda e o lettering MÉTODO LLOVE à
-          direita, e virou um retrato EM PÉ (736x1093) com ele centralizado e
-          uma montagem do Rio atrás, com o Cristo dourado à direita. Some a
-          faixa creme do lettering, que era o que os recortes antigos fugiam,
-          e entra um problema novo: numa caixa mais larga que alta, o `cover`
-          de um retrato corta em cima e embaixo, e centralizado ele decepava o
-          alto da cabeça. Ancorar no topo mantém rosto e tronco, que é o que a
-          foto tem para dizer.
+          A foto do desktop é DEITADA (1468x1093) com o Charllove encostado na
+          direita. Numa faixa de celular, que é mais larga do que alta, o
+          `cover` apara as laterais, e qualquer recorte dela ou cortava ele ou
+          o empurrava para o canto. `hero-mobile.webp` é um retrato 3:4 tirado
+          da mesma arte, ancorado à direita: pega o Charllove inteiro E o
+          Cristo, com ele no meio do quadro. São 37 KB, então o celular baixa
+          menos do que baixava recortando a imagem larga.
 
-          O Cristo do fundo fica inteiro até cerca de 1200px de altura de
-          tela: daí para cima a coluna fica mais alta que a proporção da foto,
-          o `cover` passa a aparar as laterais e o braço direito dele começa a
-          sair do quadro. Não vale corrigir com deslocamento horizontal, que
-          empurraria o Charllove para debaixo da manchete. */}
-      <div className="relative h-[52vh] max-h-[26rem] w-full lg:hidden">
+          A faixa cresceu de 52vh para 58vh: com a barra de urgência fora do
+          topo no celular (ela desceu para junto da oferta) e a nav
+          transparente, a foto é a primeira coisa da página, e é ela que
+          precisa chegar primeiro. */}
+      <div className="relative h-[58vh] max-h-[30rem] w-full lg:hidden">
         <Foto
-          src="/HERO-DESKTOP.jpg"
+          src="/hero-mobile.webp"
           alt={`${marca.autor}, criador do ${marca.nome}`}
           arte={hero.fotoArte}
           prioridade
-          className="[&_img]:object-right"
+          className="[&_img]:object-center"
+        />
+        {/* Véu no alto, só no celular: a nav ficou transparente e o topo desta
+            foto é céu claro, onde o logo claro sumiria. Preto, nunca colorido,
+            que é a regra para escurecimento sobre foto. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/55 via-black/20 to-transparent"
         />
       </div>
 
@@ -248,7 +264,7 @@ export default function Hero() {
             linhas={hero.linhas}
             destaque={hero.linhaDestaque}
             flui
-            className="mt-6 text-[clamp(2.5rem,11vw,3.5rem)] text-ink sm:mt-7 sm:text-[clamp(2.5rem,min(7.4vw,9vh),6.5rem)]"
+            className="mt-5 text-[clamp(2.75rem,12.5vw,4rem)] text-ink sm:mt-7 sm:text-[clamp(2.5rem,min(7.4vw,9vh),6.5rem)]"
           />
 
           <Reveal atraso={160}>
