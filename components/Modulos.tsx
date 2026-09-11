@@ -1,4 +1,5 @@
 import { modulos } from "@/lib/content";
+import Depoimentos from "./Depoimentos";
 import { Reveal } from "./movimento";
 import PaoDeAcucar from "./rio/PaoDeAcucar";
 import { CardSpot, Manchete, Olho } from "./ui";
@@ -26,17 +27,29 @@ export default function Modulos() {
       className="border-t border-fio-areia bg-navy px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-[80rem]">
-        <header className="text-center sm:max-w-[50rem] sm:text-left">
-          <Reveal>
-            <Olho>{modulos.olho}</Olho>
-          </Reveal>
-          <Manchete
-            linhas={modulos.linhas}
-            destaque={modulos.linhaDestaque}
-            flui
-            className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
-          />
-        </header>
+        {/* A manchete ocupava a metade esquerda e a direita ficava vazia. A
+            fita de depoimentos preenche esse vão: a prova de que o método
+            funcionou com outro professor fica lado a lado com a lista do que
+            ele ensina, e a pessoa lê as duas coisas de uma vez.
+
+            `lg:items-center` e não `items-start`: a fita é mais alta que a
+            manchete, e alinhada pelo topo deixaria um buraco embaixo do texto
+            do tamanho de meia coluna. */}
+        <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
+          <header className="text-center sm:max-w-[50rem] sm:text-left">
+            <Reveal>
+              <Olho>{modulos.olho}</Olho>
+            </Reveal>
+            <Manchete
+              linhas={modulos.linhas}
+              destaque={modulos.linhaDestaque}
+              flui
+              className="mt-5 text-[clamp(2rem,8.5vw,2.75rem)] text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
+            />
+          </header>
+
+          <Depoimentos className="text-left" />
+        </div>
 
         <ul className="mt-10 grid gap-4 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
           {modulos.itens.map((item, i) => (

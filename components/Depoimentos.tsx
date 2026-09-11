@@ -3,17 +3,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { depoimentos, depoimentosSecao, type Depoimento } from "@/lib/content";
 import { Reveal, useMovimentoReduzido } from "./movimento";
-import { Manchete, Olho } from "./ui";
 
 /**
  * Carrossel de depoimentos em vídeo.
  *
- * DUAS COLUNAS no desktop, texto à esquerda e fita à direita, como a seção do
- * mecanismo. Empilhado, o card 9:16 empurrava o "filtro" para quase uma tela
- * inteira abaixo da manchete, e a fita chegava sem o texto que a explica.
- * Abaixo de lg vira uma coluna só, porque duas não cabem em 360px.
+ * NÃO É UMA SEÇÃO, é um bloco de coluna. Ele mora na metade direita do
+ * cabeçalho da seção de módulos, preenchendo o vazio que sobrava ao lado
+ * daquela manchete. Por isso não tem `<section>`, não tem fundo, não tem
+ * padding de seção e não tem manchete própria: quem dá o título àquela altura
+ * da página é o texto ao lado, e duas manchetes lado a lado deixariam o olho
+ * sem saber qual das duas é a promessa. O cabeçalho daqui é um rótulo em mono
+ * e uma linha de apoio.
  *
- * SEM DEPOIMENTO, a fita mostra QUADROS VAZIOS e a seção troca de manchete.
+ * O `className` que ele recebe é o posicionamento na grade de quem o hospeda.
+ * Ele não escolhe onde fica.
+ *
+ * SEM DEPOIMENTO, a fita mostra QUADROS VAZIOS e o bloco troca de título.
  * Hoje `depoimentos` em lib/content.ts está vazio de propósito, e a barra de
  * urgência do topo vende exatamente essa ausência ("quando entrarem os
  * depoimentos, o preço sobe"). Um card com nome inventado "só para
@@ -203,7 +208,7 @@ function Seta({
   );
 }
 
-export default function Depoimentos() {
+export default function Depoimentos({ className = "" }: { className?: string }) {
   /* Só vídeo entra na fita. Um card de texto no meio de vídeos lê como o
      vídeo que não carregou. */
   const itens = depoimentos.filter(
@@ -271,84 +276,67 @@ export default function Depoimentos() {
   const copy = vazia ? depoimentosSecao.vazio : depoimentosSecao;
 
   return (
-    <section
-      id="depoimentos"
-      className="border-t border-fio-areia px-5 py-16 sm:px-8 sm:py-28 lg:py-32"
-    >
-      {/* `lg:items-center` e não `items-start`: a fita é bem mais alta que o
-          texto, e alinhada pelo topo ela deixaria um buraco embaixo da
-          manchete do tamanho de meia coluna. */}
-      <div className="mx-auto grid max-w-[80rem] gap-10 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16">
-        <header className="text-center sm:max-w-[46rem] sm:text-left">
-          <Reveal>
-            <Olho>{copy.olho}</Olho>
-          </Reveal>
-          <Manchete
-            linhas={copy.linhas}
-            destaque={copy.linhaDestaque}
-            fim={copy.linhasFim}
-            umaLinha
-            className="mt-5 text-ink sm:mt-6 sm:text-[clamp(2.25rem,5.4vw,4rem)]"
-          />
-          <Reveal atraso={140}>
-            <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mx-0 sm:mt-7">
-              {copy.texto}
-            </p>
-          </Reveal>
-        </header>
+    <div id="depoimentos" className={className}>
+      {/* Cabeçalho curto: rótulo em mono e uma linha. A manchete desta altura
+          da página é a da seção de módulos, ao lado. Duas manchetes lado a
+          lado e o olho não sabe qual das duas é a promessa. */}
+      <Reveal>
+        <p className="mono text-[0.8125rem] text-areia sm:text-[0.7rem]">{copy.titulo}</p>
+      </Reveal>
+      <Reveal atraso={90}>
+        <p className="mt-4 max-w-[34rem] text-[1rem] leading-[1.6] text-mute sm:text-[0.95rem]">
+          {copy.texto}
+        </p>
+      </Reveal>
 
-        <Reveal atraso={200}>
-          {/* A margem de cima é só do empilhado. Em duas colunas o `gap` do
-              grid já separa, e um `mt` aqui empurraria a fita para fora do
-              alinhamento com o texto ao lado. */}
-          <div className="mt-0 sm:mt-4 lg:mt-0">
-            {/* `-mx-5` e o padding de volta: a fita sangra até a borda da tela
-                no celular, senão o card seguinte fica escondido e ninguém
-                descobre que dá para arrastar. Some no lg, onde a fita passa a
-                viver dentro da própria coluna. */}
-            <ul
-              ref={fita}
-              className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
-            >
-              {vazia
-                ? Array.from({ length: depoimentosSecao.vazio.quadros }, (_, i) => (
-                    <QuadroVazio key={i} n={i + 1} />
-                  ))
-                : itens.map((item) => {
-                    const id = `${item.nome}-${item.video.src}`;
-                    return (
-                      <CardDepoimento
-                        key={id}
-                        item={item}
-                        ativo={tocandoId === id}
-                        aoTocar={() => setTocandoId(id)}
-                        aoParar={() => parar(id)}
-                      />
-                    );
-                  })}
-            </ul>
+      <Reveal atraso={160}>
+        <div className="mt-7 sm:mt-8">
+          {/* `-mx-5` e o padding de volta: a fita sangra até a borda da tela
+              no celular, senão o card seguinte fica escondido e ninguém
+              descobre que dá para arrastar. Some no sm, onde a fita passa a
+              viver dentro da própria coluna. */}
+          <ul
+            ref={fita}
+            className="-mx-5 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+          >
+            {vazia
+              ? Array.from({ length: depoimentosSecao.vazio.quadros }, (_, i) => (
+                  <QuadroVazio key={i} n={i + 1} />
+                ))
+              : itens.map((item) => {
+                  const id = `${item.nome}-${item.video.src}`;
+                  return (
+                    <CardDepoimento
+                      key={id}
+                      item={item}
+                      ativo={tocandoId === id}
+                      aoTocar={() => setTocandoId(id)}
+                      aoParar={() => parar(id)}
+                    />
+                  );
+                })}
+          </ul>
 
-            {/* As setas são conforto de desktop. No celular o dedo arrasta, e
-                uma seta ali só rouba espaço do card. */}
-            {!vazia && itens.length > 1 ? (
-              <div className="mt-6 hidden justify-end gap-3 sm:flex">
-                <Seta
-                  sentido="anterior"
-                  rotulo={depoimentosSecao.anterior}
-                  ativa={temAntes}
-                  aoClicar={() => empurra(-1)}
-                />
-                <Seta
-                  sentido="proximo"
-                  rotulo={depoimentosSecao.proximo}
-                  ativa={temDepois}
-                  aoClicar={() => empurra(1)}
-                />
-              </div>
-            ) : null}
-          </div>
-        </Reveal>
-      </div>
-    </section>
+          {/* As setas são conforto de desktop. No celular o dedo arrasta, e
+              uma seta ali só rouba espaço do card. */}
+          {!vazia && itens.length > 1 ? (
+            <div className="mt-6 hidden justify-end gap-3 sm:flex">
+              <Seta
+                sentido="anterior"
+                rotulo={depoimentosSecao.anterior}
+                ativa={temAntes}
+                aoClicar={() => empurra(-1)}
+              />
+              <Seta
+                sentido="proximo"
+                rotulo={depoimentosSecao.proximo}
+                ativa={temDepois}
+                aoClicar={() => empurra(1)}
+              />
+            </div>
+          ) : null}
+        </div>
+      </Reveal>
+    </div>
   );
 }

@@ -542,34 +542,36 @@ export const depoimentos: Depoimento[] = [];
  * print forjado, e a manchete aqui precisa dizer que são professores reais
  * falando, com o rosto na tela.
  */
+/**
+ * Cabeçalho da fita de depoimentos.
+ *
+ * Textos CURTOS de propósito: a fita mora na coluna direita da seção de
+ * módulos, ao lado da manchete de lá. Uma segunda manchete grande naquele
+ * espaço brigaria com a primeira, e duas manchetes lado a lado é o jeito mais
+ * rápido de o olho não saber qual das duas é a promessa da seção.
+ */
 export const depoimentosSecao = {
-  olho: "Quem já fez",
-  linhas: ["Professores que"],
-  linhaDestaque: "aplicaram",
-  linhasFim: ["o método."],
+  titulo: "Quem já fez",
   texto:
-    "Cada vídeo aqui foi gravado pelo próprio professor, com autorização de uso. Nenhum é ator, nenhum foi escrito por nós.",
+    "Cada vídeo foi gravado pelo próprio professor, com autorização de uso. Nenhum é ator.",
   /** Rótulo do controle de rolagem, lido por leitor de tela. */
   anterior: "Ver depoimento anterior",
   proximo: "Ver próximo depoimento",
 
   /**
-   * O que a seção mostra ENQUANTO não há depoimento, que é hoje.
+   * O que a fita mostra ENQUANTO não há depoimento, que é hoje.
    *
-   * Manchete e texto próprios, e não os de cima: "professores que aplicaram o
-   * método" com três quadros vazios embaixo seria uma frase falsa com a prova
-   * da falsidade logo abaixo dela. Aqui a seção diz o que ela é, e diz a mesma
-   * coisa que a barra de urgência do topo, que é o que sustenta o preço.
+   * Título e texto próprios, e não os de cima: "quem já fez" sobre três
+   * quadros vazios seria uma frase falsa com a prova da falsidade logo
+   * abaixo dela. Aqui a peça diz o que ela é, e diz a mesma coisa que a barra
+   * de urgência do topo, que é o que sustenta o preço.
    *
    * Nenhum nome, nenhuma aspa, nenhum rosto: o quadro vazio é vazio mesmo.
    */
   vazio: {
-    olho: "Depoimentos",
-    linhas: ["Os primeiros"],
-    linhaDestaque: "ainda",
-    linhasFim: ["vão ser gravados."],
+    titulo: "Depoimentos, em breve",
     texto:
-      "O curso é novo e nenhum professor terminou a formação ainda. Quando os primeiros depoimentos entrarem aqui, o preço sobe. Enquanto esses quadros estiverem vazios, é porque não há nada real para mostrar, e nós não vamos inventar.",
+      "O curso é novo e nenhum professor terminou a formação ainda. Quando os primeiros entrarem aqui, o preço sobe. Não vamos inventar depoimento para encher esse espaço.",
     /** Direção de arte de cada quadro, para quem for gravar. */
     arte: "Professor falando do que mudou na aula dele. Celular na vertical, som limpo, sem roteiro nosso.",
     /** Quantos quadros vazios a fita mostra. Três dão a leitura de carrossel. */

@@ -1,7 +1,6 @@
 import Autor from "@/components/Autor";
 import BarraUrgencia from "@/components/BarraUrgencia";
 import CtaFinal from "@/components/CtaFinal";
-import Depoimentos from "@/components/Depoimentos";
 import Dor from "@/components/Dor";
 import Faq from "@/components/Faq";
 import Hero from "@/components/Hero";
@@ -49,7 +48,6 @@ export default function Home() {
         <Dor />
         <Mercado />
         <Mecanismo />
-        <Depoimentos />
         <Modulos />
         <Autor />
         <Publico />
