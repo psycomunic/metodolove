@@ -143,10 +143,11 @@ export default function Hero() {
          cima e o logo flutua sobre a imagem, que é o que "menu transparente"
          quer dizer.
 
-         55px é a altura que a pílula da nav ocupa no fluxo no celular
-         (py-2 mais o botão pequeno, medido no navegador). No desktop a
-         barra de urgência continua no topo e o hero segue no lugar. */
-      className="relative isolate -mt-[55px] overflow-hidden lg:mt-0"
+         `-mt-14` casa com o `h-14` que a nav tem abaixo do lg: a altura dela
+         é FIXA justamente para as duas medidas não poderem divergir quando
+         alguém mexer no tamanho do logo ou do botão. No desktop a barra de
+         urgência continua no topo e o hero segue no lugar. */
+      className="relative isolate -mt-14 overflow-hidden lg:mt-0"
     >
       {/* ---------- aurora ---------- */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-20">
@@ -303,17 +304,33 @@ export default function Hero() {
         </div>
 
         {/* ---------- placar ----------
-            2x2 no celular, fila única no desktop. */}
-        <Reveal atraso={320} className="mt-12 w-full lg:mt-[clamp(1.5rem,5vh,6rem)]">
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-7 sm:flex sm:flex-wrap sm:items-end sm:gap-x-16">
+            LISTA no celular, fila única no desktop.
+
+            Era grade de duas colunas, e são TRÊS números: o terceiro sobrava
+            sozinho numa segunda linha, encostado à esquerda, e a peça lia
+            como grade quebrada em vez de placar. Três colunas também não
+            servem: a 360px cada uma fica com 82px de texto útil, e "BÔNUS
+            NETWORKING" em mono de 13px (o piso da página) não cabe sem
+            quebrar feio.
+
+            Em lista, o número fica numa coluna de largura fixa e o rótulo
+            corre ao lado com a linha inteira. Alinha os três pela mesma
+            guia, aceita rótulo comprido sem quebrar, e o fio de 1px entre
+            eles é a mesma linguagem do resto da página. Ocupa menos altura do
+            que a grade órfã ocupava. */}
+        <Reveal
+          atraso={320}
+          className="mt-9 w-full sm:mt-12 lg:mt-[clamp(1.5rem,5vh,6rem)]"
+        >
+          <dl className="flex flex-col divide-y divide-line sm:flex-row sm:flex-wrap sm:items-end sm:gap-x-16 sm:divide-y-0">
             {hero.stats.map((stat) => (
-              <div key={stat.rotulo}>
+              <div key={stat.rotulo} className="py-3 first:pt-0 last:pb-0 sm:py-0">
                 <dt className="sr-only">{stat.rotulo}</dt>
-                <dd>
-                  <span className="placar block text-[clamp(2.25rem,12vw,3rem)] text-ink sm:text-[2.9rem]">
+                <dd className="flex items-baseline gap-4 sm:block">
+                  <span className="placar w-[3.1rem] shrink-0 text-[2.3rem] text-ink sm:w-auto sm:text-[2.9rem]">
                     {stat.valor}
                   </span>
-                  <span className="mono mt-1.5 block text-[0.8125rem] text-mute sm:text-[0.66rem]">
+                  <span className="mono text-[0.8125rem] text-mute sm:mt-1.5 sm:block sm:text-[0.66rem]">
                     {stat.rotulo}
                   </span>
                 </dd>

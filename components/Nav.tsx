@@ -44,9 +44,16 @@ export default function Nav() {
 
   /* No celular a pílula chega mais perto da borda (px-2 fora e px-2 dentro,
      contra px-3 e px-3 de antes): são 8px de cada lado devolvidos, e é o que
-     empurra o botão para a direita. No sm para cima nada muda. */
+     empurra o botão para a direita. No sm para cima nada muda.
+  
+     A ALTURA É FIXA em h-14 abaixo do lg, e não sobra do conteúdo. O hero é
+     puxado para trás desta barra por margem negativa, e as duas medidas
+     precisam bater: com altura automática, mexer no tamanho do logo ou do
+     botão mudava a altura da nav e a margem do hero passava a errar, ora
+     deixando um fio do fundo aparecer, ora comendo o topo da foto. Com h-14
+     dos dois lados, o hero usa -mt-14 e elas não têm como divergir. */
   return (
-    <div className="sticky top-3 z-50 px-2 sm:top-4 sm:px-5">
+    <div className="sticky top-3 z-50 flex h-14 items-center px-2 sm:top-4 sm:px-5 lg:block lg:h-auto">
       <div
         className={`mx-auto flex max-w-[60rem] items-center justify-between gap-3 rounded-full border px-2 py-2 transition-[background-color,border-color,backdrop-filter] duration-500 sm:gap-4 sm:px-4 ${
           rolou
@@ -61,7 +68,7 @@ export default function Nav() {
             alt={marca.nome}
             width={360}
             height={64}
-            className="h-5 w-auto sm:h-7"
+            className="h-6 w-auto sm:h-8"
           />
         </a>
 

@@ -90,9 +90,15 @@ export default function Mercado() {
 
         {/* Celular: a bola entra DEPOIS dos números, centralizada. Ao lado da
             manchete numa coluna de 350px ela não caberia sem espremer o
-            título. */}
-        <Reveal atraso={80} className="mt-10 flex justify-center lg:hidden">
-          <BolaTroca className="h-40 w-40" />
+            título.
+
+            GRANDE aqui, e não miniatura. Ela é o único objeto tridimensional
+            da página e carrega a marca no gomo; a 160px virava ícone perdido
+            entre dois blocos de texto. Em `vw` ela cresce com o aparelho, com
+            teto de 22rem para não virar pôster no tablet, e sangra 5 do
+            padrão da seção de cada lado para encostar nas bordas. */}
+        <Reveal atraso={80} className="-mx-5 mt-12 flex justify-center sm:mx-0 lg:hidden">
+          <BolaTroca className="h-[78vw] max-h-[22rem] w-[78vw] max-w-[22rem]" />
         </Reveal>
 
         <Reveal atraso={120}>
