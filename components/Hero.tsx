@@ -58,7 +58,11 @@ export default function Hero() {
           direita da orla ficava escondida e o Corcovado era cortado ao meio
           pela borda da imagem. À frente, o horizonte cruza justamente o terço
           de baixo da foto, que já está desbotado no navy. */}
-      <AquarelaRio prioridade className="absolute inset-x-0 bottom-0 -z-[5]" />
+      <AquarelaRio
+        prioridade
+        recuaNasPontas
+        className="absolute inset-x-0 bottom-0 -z-[5]"
+      />
 
       {/* Alvo do Cristo, para o rótulo aparecer no hover.
 

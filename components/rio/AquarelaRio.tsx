@@ -29,6 +29,12 @@ import Image from "next/image";
  * que a opacidade fica em 0,3: a 0,42 a linha de preço do hero já começava a
  * sumir dentro das palmeiras.
  *
+ * Baixar a opacidade, porém, não resolvia o problema real, que era de FORMA e
+ * não de intensidade: a faixa cobria a altura inteira da copy, e a 0,3 já
+ * lia como véu. A correção veio das máscaras abaixo, que tiram a aquarela de
+ * onde há texto em vez de apagá-la por igual. Apagar por igual só deixaria a
+ * arte do cliente fraca em todo lugar e suja onde importa.
+ *
  * A imagem é sempre `w-full`, nunca com largura mínima. Assim ela nunca é
  * recortada, e a posição de qualquer ponto do desenho (o Corcovado, por
  * exemplo) pode ser calculada em porcentagem da própria faixa.
@@ -37,29 +43,64 @@ import Image from "next/image";
 const MARCA_DAGUA =
   "invert(1) sepia(1) hue-rotate(176deg) saturate(2.6) brightness(0.92) contrast(1.05)";
 
-/* O desenho ocupa a faixa central do arquivo: há margem branca em cima e nas
-   pontas. Como o branco vira preto e o preto some no screen, a máscara só
-   precisa suavizar o topo, para a aquarela nascer do navy em vez de começar
-   numa linha. */
-const MASCARA =
-  "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.45) 18%, #000 46%, #000 100%)";
+/**
+ * VERTICAL. A rampa antiga chegava a 45% de alpha em 18% da altura e fechava
+ * em 46%: a aquarela ganhava corpo já na primeira quarta parte da faixa, bem
+ * onde moram o subtítulo, o botão e a linha de preço do hero. Com `screen`
+ * ela CLAREIA o navy, então o que se via era um véu azul por cima da copy, e
+ * não um horizonte.
+ *
+ * Agora o topo é invisível de verdade até 32% e o desenho só toma corpo no
+ * terço de baixo. É o que faz a aquarela ler como horizonte nascendo do navy,
+ * que era a intenção desde o começo.
+ */
+const MASCARA_V =
+  "linear-gradient(to bottom, transparent 0%, transparent 32%, rgba(0,0,0,0.14) 54%, rgba(0,0,0,0.48) 73%, rgba(0,0,0,0.86) 89%, #000 100%)";
+
+/**
+ * HORIZONTAL, e só onde quem usa pede (`recuaNasPontas`).
+ *
+ * No hero a coluna de texto ocupa a esquerda e a foto do Charllove a direita.
+ * A aquarela em força cheia atravessava as duas: à esquerda comia o contraste
+ * da copy, à direita jogava prédio e mata por cima do ombro dele. A faixa
+ * fica forte no MIOLO, que é o vão entre o texto e a foto, e recua nas duas
+ * pontas.
+ *
+ * No CTA final o texto é centralizado, então lá não entra: recuar as pontas
+ * ali deixaria a aquarela justamente atrás da manchete e do botão.
+ */
+const MASCARA_H =
+  "linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.55) 24%, #000 45%, #000 70%, rgba(0,0,0,0.42) 100%)";
+
+const MASCARA_CHEIA = "linear-gradient(#000 0 0)";
 
 export default function AquarelaRio({
   className = "",
   opacidade = 0.3,
   prioridade = false,
+  recuaNasPontas = false,
 }: {
   className?: string;
   opacidade?: number;
   prioridade?: boolean;
+  /** Enfraquece as duas pontas da faixa. Ver MASCARA_H. */
+  recuaNasPontas?: boolean;
 }) {
+  /* As duas máscaras se multiplicam: `intersect` mantém o menor alpha dos
+     dois gradientes em cada ponto. Sem o composite, a segunda apenas somaria
+     e a faixa ficaria MAIS visível, que é o oposto do que se quer aqui.
+     `source-in` é o nome do mesmo composite no prefixo -webkit. */
+  const mascaras = `${MASCARA_V}, ${recuaNasPontas ? MASCARA_H : MASCARA_CHEIA}`;
+
   return (
     <div
       aria-hidden="true"
       className={`pointer-events-none overflow-hidden ${className}`}
       style={{
-        WebkitMaskImage: MASCARA,
-        maskImage: MASCARA,
+        WebkitMaskImage: mascaras,
+        maskImage: mascaras,
+        WebkitMaskComposite: "source-in",
+        maskComposite: "intersect",
       }}
     >
       <Image
