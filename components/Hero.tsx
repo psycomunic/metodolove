@@ -88,11 +88,18 @@ export default function Hero() {
           em porcentagem. A arte mudou em set/2026: era um banner deitado de
           2:1, com o Charllove à esquerda e o lettering MÉTODO LLOVE à
           direita, e virou um retrato EM PÉ (736x1093) com ele centralizado e
-          o mar atrás. Some a faixa creme do lettering, que era o que os
-          recortes antigos fugiam, e entra um problema novo: numa caixa mais
-          larga que alta, o `cover` de um retrato corta em cima e embaixo, e
-          centralizado ele decepava o alto da cabeça. Ancorar no topo mantém
-          rosto e tronco, que é o que a foto tem para dizer. */}
+          uma montagem do Rio atrás, com o Cristo dourado à direita. Some a
+          faixa creme do lettering, que era o que os recortes antigos fugiam,
+          e entra um problema novo: numa caixa mais larga que alta, o `cover`
+          de um retrato corta em cima e embaixo, e centralizado ele decepava o
+          alto da cabeça. Ancorar no topo mantém rosto e tronco, que é o que a
+          foto tem para dizer.
+
+          O Cristo do fundo fica inteiro até cerca de 1200px de altura de
+          tela: daí para cima a coluna fica mais alta que a proporção da foto,
+          o `cover` passa a aparar as laterais e o braço direito dele começa a
+          sair do quadro. Não vale corrigir com deslocamento horizontal, que
+          empurraria o Charllove para debaixo da manchete. */}
       <div className="relative h-[52vh] max-h-[26rem] w-full lg:hidden">
         <Foto
           src="/HERO-DESKTOP.jpg"
