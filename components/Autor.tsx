@@ -9,9 +9,11 @@ import { Foto, Manchete, Olho } from "./ui";
 /**
  * Quem ensina.
  *
- * A foto é a colagem do percurso dele, na COR REAL: nada de duotone, véu ou
- * filtro. O Charllove precisa parecer uma pessoa numa quadra, não um recorte
- * de identidade visual.
+ * A foto é ele DANDO AULA, de microfone diante da turma, na COR REAL: nada de
+ * duotone, véu ou filtro. O Charllove precisa parecer uma pessoa ensinando,
+ * não um recorte de identidade visual. O arquivo é quadrado e o slot é 3/4,
+ * então o `cover` apara as laterais, o que ajuda: sai a caixa de som de um
+ * lado e a beirada da projeção do outro, e sobra ele.
  *
  * A citação é a tese do produto em uma linha e por isso vem em display, não
  * em itálico de blockquote.

@@ -84,23 +84,29 @@ export default function Hero() {
       {/* ---------- foto, celular ----------
           Faixa de 52vh no topo, cor real, fundindo no navy pela base.
 
-          `object-left` nas duas: a arte original é um banner de 2:1 com o
-          Charllove à esquerda e o símbolo mais o lettering MÉTODO LLOVE à
-          direita. Qualquer recorte que passe de ~46% da largura traz junto a
-          faixa creme do lettering, que sobre navy lê como mancha. */}
+          `object-top` nas duas, e não mais `object-left` com recorte medido
+          em porcentagem. A arte mudou em set/2026: era um banner deitado de
+          2:1, com o Charllove à esquerda e o lettering MÉTODO LLOVE à
+          direita, e virou um retrato EM PÉ (736x1093) com ele centralizado e
+          o mar atrás. Some a faixa creme do lettering, que era o que os
+          recortes antigos fugiam, e entra um problema novo: numa caixa mais
+          larga que alta, o `cover` de um retrato corta em cima e embaixo, e
+          centralizado ele decepava o alto da cabeça. Ancorar no topo mantém
+          rosto e tronco, que é o que a foto tem para dizer. */}
       <div className="relative h-[52vh] max-h-[26rem] w-full lg:hidden">
         <Foto
           src="/HERO-DESKTOP.jpg"
           alt={`${marca.autor}, criador do ${marca.nome}`}
           arte={hero.fotoArte}
           prioridade
-          className="[&_img]:object-left"
+          className="[&_img]:object-top"
         />
       </div>
 
       {/* ---------- foto, desktop ----------
-          Metade direita. object-position 10% foi medido na arte: o Charllove
-          ocupa de 12% a 36% da largura do banner original. */}
+          Metade direita. O retrato em pé cai bem melhor aqui do que o banner
+          deitado caía: a coluna é alta e estreita, que é a forma da foto.
+          Ancorado no topo pelo mesmo motivo do celular. */}
       <div
         aria-hidden="true"
         className="absolute inset-y-0 right-0 -z-10 hidden w-[46%] lg:block"
@@ -112,7 +118,7 @@ export default function Hero() {
             arte={hero.fotoArte}
             prioridade
             desbota={false}
-            className="[&_img]:object-[4%_center]"
+            className="[&_img]:object-top"
           />
           {/* Escurecimento NEUTRO, só onde a manchete fura a foto. Preto e não
               navy: véu colorido em cima de foto é justamente o que o cliente

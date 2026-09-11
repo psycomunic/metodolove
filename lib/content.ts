@@ -334,8 +334,8 @@ export const autor = {
     "Deca 7",
     "CTP 10",
   ],
-  foto: "/colagem-charllove.png",
-  fotoArte: "Colagem do percurso do Charllove",
+  foto: "/charllove.jpg",
+  fotoArte: "Charllove dando aula, de microfone, diante da turma",
 };
 
 /* ------------------------------------------------------------------ */
