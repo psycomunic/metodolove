@@ -20,6 +20,22 @@ import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
  * A altura desconta a barra de urgência e a pílula da nav, que estão no fluxo
  * acima: 100svh cheios empurrariam o CTA para fora da primeira dobra.
  *
+ * TUDO CABE NA PRIMEIRA DOBRA, e é por isso que a manchete e os espaços
+ * daqui são medidos em `vh` e não só em `vw`. `min-h` sozinho garantia que a
+ * seção FOSSE alta, não que o conteúdo COUBESSE: numa tela de 900px o placar
+ * e a linha de preço caíam abaixo do corte, porque o corpo do texto só
+ * respondia à largura da janela.
+ *
+ * A manchete usa `min(7.4vw, 9vh)`: manda quem for menor, largura ou altura.
+ * Em monitor alto ela continua no tamanho cheio; em notebook baixo ela encolhe
+ * sozinha e leva junto os espaços, que também são `clamp` com `vh`. O piso de
+ * cada `clamp` existe para a manchete nunca virar letra miúda numa janela
+ * muito baixa: a partir dali é melhor a página rolar do que ficar ilegível.
+ *
+ * Isto vale do `lg` para cima. No celular a foto ocupa 52vh no topo e o texto
+ * vem abaixo dela, então a dobra não comporta os dois, e é o certo: ali a
+ * pessoa rola.
+ *
  * O RIO. O horizonte é o elemento de identidade da página e fica na base da
  * seção, acima da foto e abaixo do texto. Agora é a AQUARELA do cliente,
  * entrando como marca d'água azul (ver AquarelaRio), e não mais a silhueta
@@ -106,7 +122,7 @@ export default function Hero() {
           alt={`${marca.autor}, criador do ${marca.nome}`}
           arte={hero.fotoArte}
           prioridade
-          className="[&_img]:object-top"
+          className="[&_img]:object-right"
         />
       </div>
 
@@ -125,7 +141,7 @@ export default function Hero() {
             arte={hero.fotoArte}
             prioridade
             desbota={false}
-            className="[&_img]:object-top"
+            className="[&_img]:object-right"
           />
           {/* Escurecimento NEUTRO, só onde a manchete fura a foto. Preto e não
               navy: véu colorido em cima de foto é justamente o que o cliente
@@ -138,7 +154,7 @@ export default function Hero() {
       </div>
 
       {/* ---------- conteúdo ---------- */}
-      <div className="mx-auto flex w-full max-w-[80rem] flex-col items-center px-5 pt-10 pb-14 text-center sm:px-8 lg:min-h-[calc(100svh-7rem)] lg:items-start lg:justify-center lg:pt-20 lg:pb-16 lg:text-left">
+      <div className="mx-auto flex w-full max-w-[80rem] flex-col items-center px-5 pt-10 pb-14 text-center sm:px-8 lg:min-h-[calc(100svh-7rem)] lg:items-start lg:justify-center lg:pt-[clamp(2rem,5vh,5rem)] lg:pb-[clamp(2rem,4vh,4rem)] lg:text-left">
         <div className="w-full lg:max-w-[54rem]">
           <Reveal>
             <Olho vivo={hero.selo}>{hero.olho}</Olho>
@@ -149,17 +165,17 @@ export default function Hero() {
             linhas={hero.linhas}
             destaque={hero.linhaDestaque}
             flui
-            className="mt-6 text-[clamp(2.5rem,11vw,3.5rem)] text-ink sm:mt-7 sm:text-[clamp(3rem,7.4vw,6.5rem)]"
+            className="mt-6 text-[clamp(2.5rem,11vw,3.5rem)] text-ink sm:mt-7 sm:text-[clamp(2.5rem,min(7.4vw,9vh),6.5rem)]"
           />
 
           <Reveal atraso={160}>
-            <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mt-8 sm:text-[1.08rem] lg:mx-0">
+            <p className="mx-auto mt-6 max-w-[38rem] text-[1rem] leading-[1.6] text-mute sm:mt-[clamp(1rem,2.6vh,2rem)] sm:text-[1.08rem] lg:mx-0">
               {hero.subtitulo}
             </p>
           </Reveal>
 
           <Reveal atraso={240}>
-            <div className="mt-8 flex flex-col items-center gap-5 sm:mt-10 lg:flex-row lg:items-center lg:gap-6">
+            <div className="mt-8 flex flex-col items-center gap-5 sm:mt-[clamp(1.25rem,3.4vh,2.5rem)] lg:flex-row lg:items-center lg:gap-6">
               <Botao href={marca.checkout} ima cheio>
                 {hero.cta}
               </Botao>
@@ -188,7 +204,7 @@ export default function Hero() {
 
         {/* ---------- placar ----------
             2x2 no celular, fila única no desktop. */}
-        <Reveal atraso={320} className="mt-12 w-full lg:mt-24">
+        <Reveal atraso={320} className="mt-12 w-full lg:mt-[clamp(1.5rem,5vh,6rem)]">
           <dl className="grid grid-cols-2 gap-x-6 gap-y-7 sm:flex sm:flex-wrap sm:items-end sm:gap-x-16">
             {hero.stats.map((stat) => (
               <div key={stat.rotulo}>
