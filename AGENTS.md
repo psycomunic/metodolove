@@ -74,6 +74,7 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
    Quem NÃO deve avançar não usa `.card`: a coluna "não é pra você" do filtro
    é `bg-void` chapado com borda tracejada, mais escura que a seção, para
    afundar. Ver `components/Publico.tsx`.
+
 6. **Emenda entre seções é um fio de 1px.** Nada de troca brusca de fundo,
    elipse ou onda.
 7. **O estado escondido das animações mora no CSS, atrás da classe `.js`.**
@@ -93,11 +94,22 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
     (curta, cabe em uma linha) ou `flui` (longa, corre natural em até três
     linhas). Corpo com piso de 16px, label mono com piso de 13px.
 
-12. **O Rio é textura, não ilustração.** Toda peça de `components/rio/` é
-    navy sobre navy com contorno em branco translúcido, e movimento lento
-    demais para alguém ver acontecer. Se um desenho da cidade disputar o
-    olho com a manchete ou com o botão, ele está forte demais. Verde não
-    entra em nenhum deles.
+12. **O Rio é textura, não ilustração.** As peças DESENHADAS de
+    `components/rio/` são navy sobre navy com contorno em branco translúcido,
+    movimento lento demais para alguém ver acontecer, e sem verde nenhum. Se
+    um desenho da cidade disputar o olho com a manchete ou com o botão, ele
+    está forte demais.
+
+    **A aquarela é a exceção, a pedido do cliente em set/2026.**
+    `AquarelaRio` mostra a arte na cor original dele (mata verde, flores
+    rosa, areia, mar), e não mais em azul chapado. Ou seja: existe verde na
+    página fora do botão de compra. O que segura o botão como ponto mais
+    quente da tela é a distância entre os dois: o verde do CTA é vivo
+    (`#22c55e`) e fica no meio da copy; o da mata é escuro, dessaturado, a
+    0,3 de opacidade e confinado à faixa de horizonte pelas máscaras. Por
+    isso `saturate` fica em 1,15: a 1,6 a mata começa a competir. Se algum
+    dia essa faixa parecer brigar com o botão, o número a mexer é esse,
+    antes de qualquer outro.
 
 **Nunca use travessão (—) em texto da página.** O cliente reprovou em set/2026: é um
 dos tells mais denunciados de texto escrito por IA. Reescreva a frase com ponto, vírgula

@@ -40,8 +40,25 @@ import Image from "next/image";
  * exemplo) pode ser calculada em porcentagem da própria faixa.
  */
 
-const MARCA_DAGUA =
-  "invert(1) sepia(1) hue-rotate(176deg) saturate(2.6) brightness(0.92) contrast(1.05)";
+/**
+ * A CORREÇÃO DE COR, e por que ela é só um `hue-rotate` depois do `invert`.
+ *
+ * `invert(1)` resolve o fundo branco, mas inverte a arte junto: a mata verde
+ * vira magenta e as flores rosa viram ciano. A cadeia antiga escondia isso
+ * empurrando TUDO para um azul só (`sepia` + `saturate 2.6`), e o preço era a
+ * aquarela do cliente virar monocromática.
+ *
+ * `hue-rotate(180deg)` desfaz justamente a rotação de matiz que o `invert`
+ * causou, e devolve a cor original: mata verde, flores rosa, areia, mar azul.
+ * A inversão de LUMINÂNCIA continua de pé, que é o que interessa, porque é
+ * ela que faz o branco virar preto e sumir no `screen`. Preto sob
+ * `hue-rotate` continua preto, então o fundo segue desaparecendo.
+ *
+ * `saturate` fica em 1,15 e não mais alto: a 1,6 o verde da mata começa a
+ * competir com o botão de compra, que é a única coisa da página que pode ser
+ * o ponto mais quente da tela.
+ */
+const MARCA_DAGUA = "invert(1) hue-rotate(180deg) saturate(1.15) contrast(1.05)";
 
 /**
  * VERTICAL. A rampa antiga chegava a 45% de alpha em 18% da altura e fechava
