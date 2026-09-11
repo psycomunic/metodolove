@@ -20,6 +20,18 @@
  * ============================================================
  */
 
+/**
+ * Começo do rótulo do botão que amplia uma foto. A galeria junta a descrição
+ * da própria foto no fim, para o leitor de tela anunciar O QUE vai abrir, e
+ * não só "abrir imagem".
+ *
+ * É TEXTO, e não função que monta a frase. As seções que hospedam galeria
+ * rodam no servidor, e função não atravessa a fronteira para um componente de
+ * cliente: o build quebra na hora de pré-renderizar a home. Quem junta as
+ * duas partes é a galeria, já do lado do cliente.
+ */
+export const ampliarFoto = "Ampliar a foto:";
+
 export const marca = {
   nome: "Método LLOVE",
   nomeCurto: "LLOVE",
@@ -223,6 +235,7 @@ export const mercado = {
   ],
   galeriaAnterior: "Ver foto anterior da quadra",
   galeriaProximo: "Ver próxima foto da quadra",
+  galeriaFechar: "Fechar a foto",
 };
 
 /* ------------------------------------------------------------------ */
@@ -411,6 +424,7 @@ export const autor = {
   ],
   galeriaAnterior: "Ver foto anterior da trajetória",
   galeriaProximo: "Ver próxima foto da trajetória",
+  galeriaFechar: "Fechar a foto",
 };
 
 /* ------------------------------------------------------------------ */

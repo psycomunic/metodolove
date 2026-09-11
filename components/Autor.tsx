@@ -1,6 +1,6 @@
 "use client";
 
-import { autor, marca } from "@/lib/content";
+import { ampliarFoto, autor, marca } from "@/lib/content";
 import Galeria from "./Galeria";
 import { Reveal } from "./movimento";
 import Image from "next/image";
@@ -83,6 +83,8 @@ export default function Autor() {
               largura="w-full"
               anterior={autor.galeriaAnterior}
               proximo={autor.galeriaProximo}
+              ampliar={ampliarFoto}
+              fechar={autor.galeriaFechar}
             />
             <p className="mono mt-4 text-center text-[0.8125rem] text-mute sm:mt-5 sm:text-left sm:text-[0.7rem]">
               {marca.instagramHandle}

@@ -1,4 +1,4 @@
-import { mercado } from "@/lib/content";
+import { ampliarFoto, mercado } from "@/lib/content";
 import { Contador, Reveal } from "./movimento";
 import BolaTroca from "./BolaTroca";
 import Galeria from "./Galeria";
@@ -113,6 +113,8 @@ export default function Mercado() {
             largura="w-[78vw] max-w-[24rem] sm:w-[20rem] lg:w-[23rem]"
             anterior={mercado.galeriaAnterior}
             proximo={mercado.galeriaProximo}
+            ampliar={ampliarFoto}
+            fechar={mercado.galeriaFechar}
             className="mt-10 sm:mt-12"
           />
         </Reveal>
