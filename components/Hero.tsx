@@ -219,7 +219,7 @@ export default function Hero() {
           alt={`${marca.autor}, criador do ${marca.nome}`}
           arte={hero.fotoArte}
           prioridade
-          className="[&_img]:object-center"
+          className="[&_img]:object-top"
         />
         {/* Véu no alto, só no celular: a nav ficou transparente e o topo desta
             foto é céu claro, onde o logo claro sumiria. Preto, nunca colorido,
