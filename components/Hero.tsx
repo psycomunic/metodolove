@@ -5,6 +5,94 @@ import AquarelaRio from "./rio/AquarelaRio";
 import { Botao, Foto, LinhaPreco, Manchete, Olho } from "./ui";
 
 /**
+ * COMO A FOTO SOME NO FUNDO, no desktop.
+ *
+ * Antes era um véu de cor por cima: `from-void via-black/40 to-transparent`,
+ * três paradas numa rampa reta. Duas coisas denunciavam a emenda. A rampa
+ * reta faz o olho enxergar exatamente onde a cor começa a mudar, porque a
+ * derivada é constante e a nossa visão lê justamente a variação. E o véu
+ * levava o tom da foto junto: ele não apagava a imagem, pintava por cima
+ * dela.
+ *
+ * Agora quem some é a IMAGEM, por `mask-image`, e não a cor. A máscara
+ * recorta opacidade e não encosta no matiz, então a foto chega ao fim com a
+ * cor real dela, do mesmo jeito que a `Foto` de ui.tsx já fazia na base.
+ *
+ * As paradas seguem uma curva em S (devagar, rápido no meio, devagar de
+ * novo). Numa rampa reta a transição tem começo e fim visíveis; com o S ela
+ * nasce e morre sem aresta, que é o que se lê como esfumaçado. São muitas
+ * paradas de propósito: poucas produzem faixas, o banding.
+ *
+ * A coluna da foto também ficou mais larga (58% contra 46%). Não é para a
+ * foto aparecer mais, é para a dissolução ter ONDE acontecer: em 46% ela
+ * tinha que sumir em pouco mais de um terço da tela e, por mais suave que
+ * fosse a curva, acabava espremida. Como o recorte está ancorado à direita,
+ * alargar só acrescenta imagem do lado que vai ser dissolvido; o Charllove
+ * não se move.
+ */
+const DISSOLVE_ESQUERDA = `linear-gradient(to right,
+  transparent 0%,
+  rgba(0,0,0,0.008) 8%,
+  rgba(0,0,0,0.035) 16%,
+  rgba(0,0,0,0.085) 24%,
+  rgba(0,0,0,0.16) 32%,
+  rgba(0,0,0,0.26) 40%,
+  rgba(0,0,0,0.38) 48%,
+  rgba(0,0,0,0.52) 56%,
+  rgba(0,0,0,0.66) 64%,
+  rgba(0,0,0,0.78) 72%,
+  rgba(0,0,0,0.88) 80%,
+  rgba(0,0,0,0.95) 88%,
+  rgba(0,0,0,0.99) 94%,
+  #000 100%)`;
+
+/* Mesma curva, agora subindo: é onde a aquarela do Rio passa, e ela precisa
+   de fundo liso para a crista não brigar com o ombro dele. */
+const DISSOLVE_BASE = `linear-gradient(to top,
+  transparent 0%,
+  rgba(0,0,0,0.02) 6%,
+  rgba(0,0,0,0.07) 12%,
+  rgba(0,0,0,0.16) 18%,
+  rgba(0,0,0,0.3) 25%,
+  rgba(0,0,0,0.46) 32%,
+  rgba(0,0,0,0.62) 39%,
+  rgba(0,0,0,0.76) 46%,
+  rgba(0,0,0,0.87) 53%,
+  rgba(0,0,0,0.95) 60%,
+  #000 68%)`;
+
+/* As duas se multiplicam: `intersect` fica com o MENOR alpha dos dois em cada
+   ponto, então o canto de baixo à esquerda some pelos dois motivos. Sem o
+   composite elas somariam e o canto ficaria mais opaco, não menos. */
+const FOTO_DESKTOP = {
+  WebkitMaskImage: `${DISSOLVE_ESQUERDA}, ${DISSOLVE_BASE}`,
+  maskImage: `${DISSOLVE_ESQUERDA}, ${DISSOLVE_BASE}`,
+  WebkitMaskComposite: "source-in",
+  maskComposite: "intersect",
+} as const;
+
+/**
+ * Escurecimento sob a manchete.
+ *
+ * Continua PRETO, nunca colorido: véu de cor em cima de foto é o que o
+ * cliente reprovou. Ficou bem mais fraco que antes porque agora ele divide o
+ * trabalho com a máscara, que já tirou quase toda a imagem desse lado. Ele
+ * está DENTRO do container mascarado, então esmaece junto com a foto em vez
+ * de virar uma mancha escura sobrando no navy.
+ */
+const VEU_TEXTO = {
+  background: `linear-gradient(to right,
+    rgba(0,0,0,0.5) 0%,
+    rgba(0,0,0,0.42) 10%,
+    rgba(0,0,0,0.32) 20%,
+    rgba(0,0,0,0.22) 30%,
+    rgba(0,0,0,0.13) 40%,
+    rgba(0,0,0,0.06) 50%,
+    rgba(0,0,0,0.02) 60%,
+    transparent 70%)`,
+} as const;
+
+/**
  * Hero.
  *
  * Duas montagens diferentes, e não uma só que "responde":
@@ -132,7 +220,8 @@ export default function Hero() {
           Ancorado no topo pelo mesmo motivo do celular. */}
       <div
         aria-hidden="true"
-        className="absolute inset-y-0 right-0 -z-10 hidden w-[46%] lg:block"
+        className="absolute inset-y-0 right-0 -z-10 hidden w-[58%] lg:block"
+        style={FOTO_DESKTOP}
       >
         <div className="relative h-full w-full">
           <Foto
@@ -143,13 +232,7 @@ export default function Hero() {
             desbota={false}
             className="[&_img]:object-right"
           />
-          {/* Escurecimento NEUTRO, só onde a manchete fura a foto. Preto e não
-              navy: véu colorido em cima de foto é justamente o que o cliente
-              reprovou. */}
-          <div className="absolute inset-0 bg-gradient-to-r from-void via-black/40 to-transparent" />
-          {/* Metade de baixo apagando no navy: é onde o horizonte passa, e ele
-              precisa de fundo liso para a crista não brigar com o ombro dele. */}
-          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-void via-void/85 to-transparent" />
+          <div className="absolute inset-0" style={VEU_TEXTO} />
         </div>
       </div>
 
