@@ -51,7 +51,8 @@ escolha. Estas regras não podem ser quebradas sem refazer aquele documento:
 1. **ZERO laranja**, e o verde é **só do botão de compra**. Nada de verde em
    texto, ícone, borda, número, glow ou fundo. Teste: se algo verde na tela
    não for clicável e não levar ao checkout, é bug. O destaque de leitura é o
-   azul `--accent` (#4FA3FF).
+   azul `--accent` (#4FA3FF). Uma exceção só, e o cliente pediu: a mata da
+   aquarela do Rio. Ver a invariante 12.
 2. **Uma palavra destacada por manchete, nunca duas.** Com duas o olho não
    sabe qual é a promessa e o destaque vira zebra.
 3. **Nenhum botão diz "entrar".** A página não tem login nem área de aluno:
@@ -122,20 +123,25 @@ Caixa alta sempre com `letter-spacing` (classe `.mono`). Nunca use emoji como í
 
 ## Conteúdo sensível
 
-**Depoimentos.** O carrossel de vídeo é `components/Depoimentos.tsx`, entre o autor e o
-filtro. Ele tem DOIS estados, e os dois são estados de produção:
+**Depoimentos.** O carrossel de vídeo é `components/Depoimentos.tsx`. Ele NÃO é uma
+seção: é um bloco que mora na metade direita do cabeçalho de `Modulos.tsx`, preenchendo
+o vazio ao lado daquela manchete. Por isso não tem `<section>`, fundo, padding de seção
+nem manchete própria, só um rótulo em mono e uma linha: duas manchetes lado a lado
+deixariam o olho sem saber qual das duas é a promessa. O posicionamento vem por
+`className` de quem o hospeda.
 
-- Com `depoimentos` preenchido: a fita de vídeos, manchete "professores que aplicaram o
-  método", setas no desktop.
+Ele tem DOIS estados, e os dois são de produção:
+
+- Com `depoimentos` preenchido: a fita de vídeos, título "Quem já fez", setas no desktop.
 - Com a lista vazia, que é hoje: três quadros tracejados, sem nome, sem aspa e sem play,
-  e manchete própria dizendo que os primeiros ainda vão ser gravados. Mesmo desenho de
+  e título próprio dizendo que os primeiros ainda vão ser gravados. Mesmo desenho de
   placeholder da `Foto` em `ui.tsx` e do vídeo do método.
 
 O estado vazio não é falha nem pendência: é o mesmo argumento da barra de urgência do
 topo ("quando entrarem os depoimentos, o preço sobe"), agora visível na altura da página
-onde a pessoa procuraria prova social. A manchete do estado vazio é separada de propósito;
-"professores que aplicaram o método" com três quadros vazios embaixo seria uma frase falsa
-com a prova da falsidade logo abaixo dela.
+onde a pessoa procuraria prova social. O título do estado vazio é separado de propósito;
+"quem já fez" sobre três quadros vazios seria uma frase falsa com a prova da falsidade
+logo abaixo dela.
 
 Não preencha com exemplos inventados, nem "só para visualizar". Depoimento fabricado é
 propaganda enganosa (CDC art. 37) e derruba conta no Meta Ads. Para conferir a fita cheia
