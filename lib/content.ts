@@ -252,13 +252,13 @@ export const mecanismo = {
    * Vídeo ao lado da manchete: um Short do YouTube, VERTICAL.
    *
    * `youtubeId` vazio faz a peça cair no placeholder honesto. O link de
-   * Shorts (youtube.com/shorts/ID) NÃO embeda; o que entra aqui é só o ID,
-   * e o componente monta a URL de embed.
+   * Shorts (youtube.com/shorts/ID) NÃO embeda; o que entra aqui é só o ID, e
+   * o componente monta a URL de embed.
    *
-   * As capas são quadros do próprio vídeo, guardados em public/: a vertical
-   * é o quadro cheio, a horizontal é o mesmo quadro centrado sobre ele mesmo
-   * desfocado. Servi-las daqui, e não do i.ytimg.com, é o que faz a página
-   * não tocar em nenhum servidor do Google antes de a pessoa clicar.
+   * A CAPA é arte do cliente, 16:9, com logo e chamada. Ela é servida daqui
+   * e não do i.ytimg.com: é o que faz a página não tocar em nenhum servidor
+   * do Google antes de a pessoa clicar. O original em PNG tem 1,3 MB e fica
+   * fora do git; o que a página usa é o WebP de 70 KB.
    *
    * >>> AJUSTAR: a legenda era "Charllove explica o método em 2 minutos".
    * Troquei pelo título do próprio vídeo porque não consigo verificar nem
@@ -268,8 +268,7 @@ export const mecanismo = {
    */
   video: {
     youtubeId: "yySJ10SGspA",
-    capaVertical: "/metodo-capa-vertical.webp",
-    capaHorizontal: "/metodo-capa-horizontal.webp",
+    capa: "/metodo-capa.webp",
     legenda: "Conheça o Método LLOVE",
     fechar: "Fechar o vídeo",
     // Direção de arte, usada só se `youtubeId` ficar vazio.

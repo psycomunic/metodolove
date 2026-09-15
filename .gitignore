@@ -31,3 +31,7 @@ next-env.d.ts
 # peso E pelo nome: espaco, acento e extensao maiuscula viram URL quebrada em
 # servidor Linux, que e onde isto roda.
 /public/MÉTODO LLOVE/
+
+# Original da capa do video: 1,3 MB em PNG. A pagina usa metodo-capa.webp,
+# 70 KB, que E versionado.
+/public/thumb.png

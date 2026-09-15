@@ -6,74 +6,41 @@ import { mecanismo } from "@/lib/content";
 /**
  * Vídeo do método, ao lado da manchete do mecanismo.
  *
- * O VÍDEO É VERTICAL (um Short do YouTube), e a seção é de duas colunas. Daí
- * as duas formas:
+ * UM CARTÃO 16:9 EM TODA TELA, e o play SEMPRE abre em modal. Não é o que
+ * esta peça fazia: ela tinha cartão 9:16 no celular, com o vídeo tocando ali
+ * dentro, porque a capa era um quadro do próprio vídeo, que é vertical.
  *
- * · Celular: o cartão é 9:16, do tamanho do vídeo, e o play acontece ALI
- *   mesmo. Abrir modal num aparelho onde o cartão já ocupa a tela inteira
- *   seria trocar seis por meia dúzia.
- * · Desktop: o cartão é 16:9, para caber ao lado da manchete sem espremer o
- *   texto, e o play abre em MODAL. Um 9:16 dentro de um 16:9 daria uma tira
- *   de 190px de largura no meio de um cartão de 600px; no modal ele usa a
- *   altura da janela e fica grande de verdade.
+ * O que mudou foi a capa. O cliente entregou arte 16:9 com logo e chamada, e
+ * arte deitada não cabe num cartão em pé sem cortar o lettering ou cortar
+ * ele. Aí a decisão vira uma só: o cartão segue a forma da CAPA, e o vídeo
+ * segue a forma dele no modal, onde usa a altura da janela e fica grande de
+ * verdade. Tocar um 9:16 dentro de um cartão 16:9 daria uma tira estreita no
+ * meio, com tarja preta dos dois lados.
  *
- * NADA DO YOUTUBE ANTES DO CLIQUE. O cartão é uma FACHADA: capa própria,
- * servida daqui, mais o botão. O iframe só é criado quando alguém clica.
- * Isso vale ~1 MB de script de terceiro e os cookies que o player planta só
- * por existir na página, num site que precisa de Lighthouse alto no 4G. A
- * capa é um quadro do próprio vídeo, guardado em public/, então nem a
- * miniatura vai buscar nada no Google.
+ * NADA DO YOUTUBE ANTES DO CLIQUE. O cartão é uma FACHADA: a capa é servida
+ * daqui, e o iframe só é criado quando alguém clica. Isso vale cerca de 1 MB
+ * de script de terceiro e os cookies que o player planta só por existir na
+ * página, num site que precisa de Lighthouse alto no 4G.
  *
- * DEPOIS do clique, o que dá para conter foi contido: domínio
+ * DEPOIS do clique, o que dava para conter foi contido: domínio
  * `youtube-nocookie`, `rel=0` para as sugestões do fim ficarem no mesmo
  * canal, `modestbranding` e `color=white`. O logo do YouTube no canto da
- * barra de controle NÃO tem como sair: é condição de uso do embed. Quem quer
- * player sem marca nenhuma precisa hospedar o arquivo.
+ * barra de controle NÃO tem como sair: é condição de uso do embed.
  *
  * O botão é AZUL, não verde: verde na página é só o botão de compra
  * (invariante 1). Um play verde disputaria o ponto mais quente da tela com o
  * checkout e levaria o clique para o lugar errado.
  */
-
-/** Abaixo de lg o play é no próprio cartão; de lg para cima, em modal. */
-function useEhCelular() {
-  const [movel, setMovel] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
-    const aplica = () => setMovel(mq.matches);
-    aplica();
-    mq.addEventListener("change", aplica);
-    return () => mq.removeEventListener("change", aplica);
-  }, []);
-  return movel;
-}
-
-function Player({ src, titulo }: { src: string; titulo: string }) {
-  return (
-    <iframe
-      src={src}
-      title={titulo}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerPolicy="strict-origin-when-cross-origin"
-      allowFullScreen
-      className="h-full w-full border-0"
-    />
-  );
-}
-
 export default function VideoMetodo({ className = "" }: { className?: string }) {
   const { video } = mecanismo;
-  const celular = useEhCelular();
-  const [tocando, setTocando] = useState(false);
+  const [aberto, setAberto] = useState(false);
   const fechar = useRef<HTMLButtonElement>(null);
 
-  const emModal = tocando && !celular;
-
   useEffect(() => {
-    if (!emModal) return;
+    if (!aberto) return;
     fechar.current?.focus();
     const tecla = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setTocando(false);
+      if (e.key === "Escape") setAberto(false);
     };
     window.addEventListener("keydown", tecla);
     /* Trava a rolagem do fundo: sem isso a página corre atrás do vídeo aberto
@@ -84,9 +51,9 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
       window.removeEventListener("keydown", tecla);
       document.body.style.overflow = antes;
     };
-  }, [emModal]);
+  }, [aberto]);
 
-  const moldura = `relative mx-auto w-full max-w-[22rem] overflow-hidden rounded-2xl bg-card aspect-[9/16] lg:aspect-video lg:max-w-none ${className}`;
+  const moldura = `relative mx-auto aspect-video w-full max-w-[40rem] overflow-hidden rounded-2xl bg-card lg:max-w-none ${className}`;
 
   /* Sem vídeo configurado, a peça cai no placeholder honesto, igual à `Foto`
      de ui.tsx: um play que não toca é pior do que assumir que o vídeo não
@@ -122,67 +89,64 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
       <div
         className={`${moldura} border border-line shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]`}
       >
-        {tocando && celular ? (
-          <Player src={src} titulo={video.legenda} />
-        ) : (
-          <button
-            type="button"
-            onClick={() => setTocando(true)}
-            aria-label={`Assistir: ${video.legenda}`}
-            className="group absolute inset-0 flex flex-col items-center justify-center gap-4"
-          >
-            {/* A capa é uma imagem de verdade, não fundo de CSS, para o
-                navegador poder priorizá-la e para o `alt` existir. Duas
-                versões: a vertical é o quadro cheio, a horizontal é o mesmo
-                quadro centrado sobre ele mesmo desfocado, que é como Short
-                aparece em tela larga sem tarja preta. */}
-            <picture>
-              <source
-                media="(min-width: 1024px)"
-                srcSet={video.capaHorizontal}
-                width={1280}
-                height={720}
-              />
-              <img
-                src={video.capaVertical}
-                alt=""
-                width={720}
-                height={1280}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </picture>
-            <span className="absolute inset-0 bg-void/35 transition-colors duration-300 group-hover:bg-void/20" />
-            <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-accent text-void shadow-[0_0_40px_rgba(79,163,255,0.45)] transition-transform duration-300 group-hover:scale-105">
-              <svg
-                viewBox="0 0 24 24"
-                className="ml-1 h-8 w-8"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-            <span className="mono relative max-w-[16rem] text-[0.7rem] tracking-[0.12em] text-ink/85 uppercase">
-              {video.legenda}
-            </span>
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => setAberto(true)}
+          aria-label={`Assistir: ${video.legenda}`}
+          className="group absolute inset-0 block w-full cursor-pointer"
+        >
+          {/* A capa é imagem de verdade, não fundo de CSS: assim o navegador
+              pode priorizá-la e ela entra no cálculo de layout. O `alt` fica
+              vazio porque a chamada já está desenhada dentro da arte e o
+              botão tem `aria-label`: repetir viraria eco no leitor de tela. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={video.capa}
+            alt=""
+            width={1920}
+            height={1080}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          {/* Véu leve, só para o botão ter contraste sobre qualquer ponto da
+              arte. Preto, nunca colorido: é a regra para escurecimento sobre
+              imagem. */}
+          <span className="absolute inset-0 bg-void/10 transition-colors duration-300 group-hover:bg-transparent" />
+          {/* O botão NÃO fica no centro, e essa é a única regra de posição
+              que esta peça tem: a arte do cliente traz a chamada "Aperte o
+              Play" na metade esquerda, e um círculo centralizado cai em cima
+              do lettering. Aqui ele fica embaixo da frase, no canto de baixo
+              à esquerda, onde a arte é campo escuro: em vez de cobrir o
+              texto, ele vira o botão que o texto está mandando apertar.
+
+              O cartão inteiro continua clicável. O círculo é afordância e
+              alvo de foco, não o único lugar que aceita o clique. */}
+          <span className="absolute bottom-[7%] left-[7%] flex h-14 w-14 items-center justify-center rounded-full bg-accent text-void shadow-[0_0_40px_rgba(79,163,255,0.45)] transition-transform duration-300 group-hover:scale-110 sm:h-16 sm:w-16">
+            <svg
+              viewBox="0 0 24 24"
+              className="ml-0.5 h-6 w-6 sm:ml-1 sm:h-7 sm:w-7"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </button>
       </div>
 
-      {emModal ? (
+      {aberto ? (
         <div
           role="dialog"
           aria-modal="true"
           aria-label={video.legenda}
-          onClick={() => setTocando(false)}
+          onClick={() => setAberto(false)}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-void/95 p-4 backdrop-blur-sm sm:p-8"
         >
           <button
             ref={fechar}
             type="button"
-            onClick={() => setTocando(false)}
+            onClick={() => setAberto(false)}
             aria-label={video.fechar}
-            className="absolute top-6 right-6 flex h-11 w-11 items-center justify-center rounded-full border border-line-forte text-ink transition-colors duration-300 hover:border-accent hover:text-accent"
+            className="absolute top-4 right-4 flex h-11 w-11 items-center justify-center rounded-full border border-line-forte text-ink transition-colors duration-300 hover:border-accent hover:text-accent sm:top-6 sm:right-6"
           >
             <svg
               viewBox="0 0 24 24"
@@ -197,14 +161,22 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
             </svg>
           </button>
 
-          {/* O modal respeita a forma do vídeo: 9:16 dimensionado pela ALTURA
-              da janela, e não pela largura. Pela largura ele estouraria para
-              fora da tela numa janela baixa. */}
+          {/* O vídeo é 9:16. A largura sai do MENOR entre a largura
+              disponível e o que cabe em 86% da altura da janela: só com a
+              altura ele estouraria para fora da tela num celular deitado, e
+              só com a largura ficaria minúsculo num monitor largo. */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="aspect-[9/16] h-[86vh] max-h-[86vh] w-auto max-w-full overflow-hidden rounded-2xl border border-line bg-void"
+            className="aspect-[9/16] w-full max-w-[calc(86vh*9/16)] overflow-hidden rounded-2xl border border-line bg-void"
           >
-            <Player src={src} titulo={video.legenda} />
+            <iframe
+              src={src}
+              title={video.legenda}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              className="h-full w-full border-0"
+            />
           </div>
         </div>
       ) : null}
