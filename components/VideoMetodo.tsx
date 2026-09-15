@@ -111,16 +111,18 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
               arte. Preto, nunca colorido: é a regra para escurecimento sobre
               imagem. */}
           <span className="absolute inset-0 bg-void/10 transition-colors duration-300 group-hover:bg-transparent" />
-          {/* O botão NÃO fica no centro, e essa é a única regra de posição
-              que esta peça tem: a arte do cliente traz a chamada "Aperte o
-              Play" na metade esquerda, e um círculo centralizado cai em cima
-              do lettering. Aqui ele fica embaixo da frase, no canto de baixo
-              à esquerda, onde a arte é campo escuro: em vez de cobrir o
-              texto, ele vira o botão que o texto está mandando apertar.
+          {/* Centralizado, a pedido do cliente em set/2026.
+
+              Fica o registro de que ele cai em cima da palavra "Play" da
+              arte: a chamada "Aperte o Play" vive na metade esquerda e o
+              centro do cartão passa bem por cima dela. Cheguei a deixar o
+              botão embaixo da frase, onde a arte é campo escuro, e o cliente
+              preferiu no meio. Se um dia a arte mudar e a chamada sair do
+              caminho, isto aqui deixa de ser um problema.
 
               O cartão inteiro continua clicável. O círculo é afordância e
               alvo de foco, não o único lugar que aceita o clique. */}
-          <span className="absolute bottom-[7%] left-[7%] flex h-14 w-14 items-center justify-center rounded-full bg-accent text-void shadow-[0_0_40px_rgba(79,163,255,0.45)] transition-transform duration-300 group-hover:scale-110 sm:h-16 sm:w-16">
+          <span className="absolute top-1/2 left-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-void shadow-[0_0_40px_rgba(79,163,255,0.45)] transition-transform duration-300 group-hover:scale-110 sm:h-16 sm:w-16">
             <svg
               viewBox="0 0 24 24"
               className="ml-0.5 h-6 w-6 sm:ml-1 sm:h-7 sm:w-7"
