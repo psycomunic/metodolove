@@ -248,20 +248,32 @@ export const mecanismo = {
   linhasFim: ["e não mais um curso", "de fundamento?"],
   texto:
     "Todo curso de futevôlei ensina toque, cabeceio e shark. O Método LLOVE não é sobre o que você já sabe fazer. É sobre o que ninguém te ensinou: como transformar o que você sabe em uma aula que o aluno paga, sente e recomenda.",
-  // Vídeo ao lado da manchete.
-  //
-  // `src` VAZIO enquanto o arquivo não existe, e é isso que faz a seção cair
-  // no placeholder honesto em vez de mostrar um play que não toca. Quando o
-  // vídeo chegar: grave em public/videos/ com final `-web.mp4` (o .gitignore
-  // só versiona esse sufixo, ver o bloco dos vídeos lá) e escreva o caminho
-  // aqui. `poster` é o quadro que aparece antes do play.
+  /**
+   * Vídeo ao lado da manchete: um Short do YouTube, VERTICAL.
+   *
+   * `youtubeId` vazio faz a peça cair no placeholder honesto. O link de
+   * Shorts (youtube.com/shorts/ID) NÃO embeda; o que entra aqui é só o ID,
+   * e o componente monta a URL de embed.
+   *
+   * As capas são quadros do próprio vídeo, guardados em public/: a vertical
+   * é o quadro cheio, a horizontal é o mesmo quadro centrado sobre ele mesmo
+   * desfocado. Servi-las daqui, e não do i.ytimg.com, é o que faz a página
+   * não tocar em nenhum servidor do Google antes de a pessoa clicar.
+   *
+   * >>> AJUSTAR: a legenda era "Charllove explica o método em 2 minutos".
+   * Troquei pelo título do próprio vídeo porque não consigo verificar nem
+   * quem aparece nele nem a duração, e as duas coisas eram afirmação na
+   * página. Se for o Charllove mesmo, e se o tempo bater, devolva a frase
+   * antiga: ela vende melhor do que esta.
+   */
   video: {
-    src: "",
-    poster: "/HERO-DESKTOP.jpg",
-    legenda: "Charllove explica o método em 2 minutos",
-    // Direção de arte que aparece escrita no lugar do vídeo enquanto ele
-    // não existe. Quem lê é o cliente, não um programador.
-    arte: "Charllove de frente para a câmera na areia, explicando o método em até 2 minutos. Som limpo, sem música por cima da voz.",
+    youtubeId: "yySJ10SGspA",
+    capaVertical: "/metodo-capa-vertical.webp",
+    capaHorizontal: "/metodo-capa-horizontal.webp",
+    legenda: "Conheça o Método LLOVE",
+    fechar: "Fechar o vídeo",
+    // Direção de arte, usada só se `youtubeId` ficar vazio.
+    arte: "Professor falando do que muda na aula dele. Celular na vertical, som limpo.",
   },
   pilares: [
     {
