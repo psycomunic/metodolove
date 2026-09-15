@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { mecanismo } from "@/lib/content";
+import PlayerYouTube from "./PlayerYouTube";
 
 /**
  * Vídeo do método, ao lado da manchete do mecanismo.
@@ -22,10 +23,9 @@ import { mecanismo } from "@/lib/content";
  * de script de terceiro e os cookies que o player planta só por existir na
  * página, num site que precisa de Lighthouse alto no 4G.
  *
- * DEPOIS do clique, o que dava para conter foi contido: domínio
- * `youtube-nocookie`, `rel=0` para as sugestões do fim ficarem no mesmo
- * canal, `modestbranding` e `color=white`. O logo do YouTube no canto da
- * barra de controle NÃO tem como sair: é condição de uso do embed.
+ * DEPOIS do clique, quem toca é `PlayerYouTube`, que apaga a moldura do
+ * YouTube (título, nome do canal e logo "Shorts") por recorte e desenha play
+ * e tempo próprios. O porquê de cada número está lá.
  *
  * O botão é AZUL, não verde: verde na página é só o botão de compra
  * (invariante 1). Um play verde disputaria o ponto mais quente da tela com o
@@ -81,8 +81,6 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
       </div>
     );
   }
-
-  const src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}?autoplay=1&playsinline=1&rel=0&modestbranding=1&color=white`;
 
   return (
     <>
@@ -171,13 +169,11 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
             onClick={(e) => e.stopPropagation()}
             className="aspect-[9/16] w-full max-w-[calc(86vh*9/16)] overflow-hidden rounded-2xl border border-line bg-void"
           >
-            <iframe
-              src={src}
-              title={video.legenda}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="h-full w-full border-0"
+            <PlayerYouTube
+              videoId={video.youtubeId}
+              titulo={video.legenda}
+              rotuloPlay={video.play}
+              rotuloPausa={video.pausa}
             />
           </div>
         </div>

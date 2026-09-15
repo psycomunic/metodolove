@@ -271,6 +271,8 @@ export const mecanismo = {
     capa: "/metodo-capa.webp",
     legenda: "Conheça o Método LLOVE",
     fechar: "Fechar o vídeo",
+    play: "Tocar o vídeo",
+    pausa: "Pausar o vídeo",
     // Direção de arte, usada só se `youtubeId` ficar vazio.
     arte: "Professor falando do que muda na aula dele. Celular na vertical, som limpo.",
   },
