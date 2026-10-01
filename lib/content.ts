@@ -121,7 +121,7 @@ export const pilares = [
 /* ------------------------------------------------------------------ */
 export const dor = {
   olho: "Onde o professor trava",
-  linhas: ["Ninguém trava por", "falta de bola. Trava", "por falta de"],
+  linhas: ["Ninguém trava por falta de treino, trava", "por falta de"],
   linhaDestaque: "método.",
   texto:
     "Dá pra jogar muito bem e dar uma aula ruim. São duas habilidades diferentes, e a segunda quase nunca foi ensinada a você.",
@@ -129,7 +129,7 @@ export const dor = {
     {
       titulo: "A aula que desanda",
       texto:
-        "Você chega na quadra, dá um “vamo aquecer aí”, solta um toque, um cabeceio, um joguinho no final… e vai embora sem saber se ensinou alguma coisa. O aluno também não sabe. E aluno que não sente evolução não renova.",
+        "Você chega na quadra, dá um “vamo aquecer”, monta os exercícios, faz os fundamentos e um joguinho no final. Você vai embora sem saber se ensinou e o aluno também não sabe se aprendeu. Com o tempo ele percebe que é sempre a mesma coisa, e você acaba perdendo o aluno.",
     },
     {
       titulo: "A turma desnivelada",
@@ -137,7 +137,7 @@ export const dor = {
         "Na mesma hora tem o cara que joga há 5 anos e a menina que nunca tocou na bola. Você tenta agradar os dois e acaba entediando um e assustando o outro. Semana que vem, um deles some, e você fica achando que foi o horário.",
     },
     {
-      titulo: "Só o jogador, sem o professor",
+      titulo: "Só saber jogar não adianta, tem que ensinar com método.",
       texto:
         "Você joga bem. Todo mundo sabe. Mas saber fazer não é saber ensinar. Quando o aluno pergunta “por que minha bola não sobe?”, você responde “tenta de novo”. Funciona uma vez. Na terceira, ele vai pra outro professor.",
     },
@@ -247,7 +247,7 @@ export const mecanismo = {
   linhaDestaque: "método,",
   linhasFim: ["e não mais um curso", "de fundamento?"],
   texto:
-    "Todo curso de futevôlei ensina toque, cabeceio e shark. O Método LLOVE não é sobre o que você já sabe fazer. É sobre o que ninguém te ensinou: como transformar o que você sabe em uma aula que o aluno paga, sente e recomenda.",
+    "Todo curso de futevôlei ensina fundamento, ataque e marcação. O Método LLOVE não é sobre o que você já sabe fazer. É sobre o que ninguém te ensinou: como transformar o que você sabe em uma aula que o aluno paga, sente e recomenda.",
   /**
    * Vídeo ao lado da manchete: um Short do YouTube, VERTICAL.
    *
