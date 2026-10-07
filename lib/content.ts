@@ -594,10 +594,24 @@ export const menu = [
  * crie a seção; até lá, não preencha nada "só para visualizar".
  */
 export type Depoimento = {
-  nome: string;
-  local: string;
-  tempo: string;
-  texto: string;
+  /**
+   * Identificação, TODA OPCIONAL.
+   *
+   * O vídeo é a prova; a ficha embaixo dele é cortesia. Quando o professor
+   * não quer o nome na página, ou quando o cliente ainda não levantou os
+   * dados, o card entra só com o vídeo e a legenda some inteira, em vez de
+   * ficar com um "·" solto ou um campo inventado. Depoimento com dado
+   * chutado é pior do que depoimento sem dado nenhum.
+   *
+   * `rotulo` é só para leitor de tela, no botão de play. Sem nome, ele vira
+   * "Assistir depoimento", que é o certo: anunciar "assistir o depoimento
+   * de undefined" é pior do que não anunciar nome.
+   */
+  nome?: string;
+  local?: string;
+  tempo?: string;
+  texto?: string;
+  rotulo?: string;
   foto?: string;
   /**
    * Depoimento em vídeo, que é o formato que o carrossel mostra. Sem `video`,
@@ -635,7 +649,18 @@ export type Depoimento = {
  * E quando o primeiro entrar aqui, o preço sobe: é o que `urgencia` promete
  * lá em cima, e essa promessa é o argumento da página inteira.
  */
-export const depoimentos: Depoimento[] = [];
+export const depoimentos: Depoimento[] = [
+  {
+    // Sem nome, cidade nem legenda: o cliente pediu assim, e o vídeo fala por
+    // si. Se um dia quiser creditar, é só preencher `nome`, `local` e
+    // `tempo`, que a ficha volta a aparecer embaixo do vídeo.
+    rotulo: "Assistir o depoimento de um professor formado pelo método",
+    video: {
+      src: "/videos/depoimento-1-web.mp4",
+      poster: "/videos/depoimento-1-web.jpg",
+    },
+  },
+];
 
 /**
  * Cabeçalho do carrossel. Só aparece quando existe depoimento de verdade.

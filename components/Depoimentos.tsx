@@ -106,7 +106,7 @@ function CardDepoimento({
             <button
               type="button"
               onClick={play}
-              aria-label={`Assistir o depoimento de ${item.nome}`}
+              aria-label={item.rotulo ?? `Assistir o depoimento de ${item.nome}`}
               className="group absolute inset-0 flex items-center justify-center bg-void/30 transition-colors hover:bg-void/10"
             >
               {/* Azul, nunca verde: verde na página é só o botão de compra. */}
@@ -124,12 +124,21 @@ function CardDepoimento({
           ) : null}
         </div>
 
-        <figcaption className="flex flex-col gap-2 p-5">
-          <p className="text-[0.95rem] leading-[1.55] text-ink">{item.texto}</p>
-          <p className="mono text-[0.8125rem] text-mute sm:text-[0.68rem]">
-            {item.nome} · {item.local} · {item.tempo}
-          </p>
-        </figcaption>
+        {/* A ficha só existe quando há o que pôr nela. Sem nome, cidade e
+            tempo, o rodapé inteiro sai: card com "·" solto ou campo vazio
+            parece defeito, e o vídeo já é a prova. */}
+        {item.texto || item.nome ? (
+          <figcaption className="flex flex-col gap-2 p-5">
+            {item.texto ? (
+              <p className="text-[0.95rem] leading-[1.55] text-ink">{item.texto}</p>
+            ) : null}
+            {item.nome ? (
+              <p className="mono text-[0.8125rem] text-mute sm:text-[0.68rem]">
+                {[item.nome, item.local, item.tempo].filter(Boolean).join(" · ")}
+              </p>
+            ) : null}
+          </figcaption>
+        ) : null}
       </figure>
     </li>
   );
@@ -304,7 +313,7 @@ export default function Depoimentos({ className = "" }: { className?: string }) 
                   <QuadroVazio key={i} n={i + 1} />
                 ))
               : itens.map((item) => {
-                  const id = `${item.nome}-${item.video.src}`;
+                  const id = item.video.src;
                   return (
                     <CardDepoimento
                       key={id}
