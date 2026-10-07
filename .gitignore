@@ -35,3 +35,9 @@ next-env.d.ts
 # Original da capa do video: 1,3 MB em PNG. A pagina usa metodo-capa.webp,
 # 70 KB, que E versionado.
 /public/thumb.png
+
+# Originais dos depoimentos, direto do celular: dezenas de MB em HEVC, que
+# Chrome e Firefox nao tocam. A pagina usa as derivadas -web.mp4 geradas por
+# ffmpeg, versionadas em public/videos/.
+/public/*.MOV
+/public/*.mov
