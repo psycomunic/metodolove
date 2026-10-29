@@ -92,7 +92,7 @@ const dadosCurso = {
   },
   offers: {
     "@type": "Offer",
-    price: "297.90",
+    price: "347.90",
     priceCurrency: "BRL",
     category: "Paid",
     availability: "https://schema.org/InStock",

@@ -49,11 +49,22 @@ export const marca = {
   coordenadas: "Rio de Janeiro · 22°58'S 43°11'W",
 };
 
+/**
+ * O PARCELAMENTO NÃO É O PREÇO DIVIDIDO POR 12. Quem define a parcela é o
+ * gateway, não esta página: no preço anterior, 12x de R$ 30,81 davam R$
+ * 369,72 para um produto de R$ 297,90, ou seja 24,1% de acréscimo.
+ *
+ * `parcelasValor` abaixo foi calculado mantendo esse mesmo acréscimo sobre o
+ * preço novo. É ESTIMATIVA, e precisa ser conferida no checkout da Kiwify
+ * antes de valer: número de parcela que não bate com o que aparece depois do
+ * clique é exatamente o tipo de furo que esta página inteira se propõe a não
+ * ter.
+ */
 export const oferta = {
   precoCheio: "R$ 597,00", // >>> AJUSTAR: valor de ancoragem
-  preco: "R$ 297,90",
+  preco: "R$ 347,90",
   parcelasQtd: "12x",
-  parcelasValor: "R$ 30,81",
+  parcelasValor: "R$ 35,98", // >>> AJUSTAR: confira no checkout da Kiwify
   garantiaDias: 7,
   acesso: "12 meses de acesso",
 };
@@ -68,7 +79,7 @@ export const oferta = {
  * que essa copy tem de diferente.
  */
 export const urgencia =
-  "Sem contador falso aqui. O preço é R$ 297,90 porque o curso é novo. Quando entrarem os depoimentos dos primeiros professores, ele sobe.";
+  "Sem contador falso aqui. O preço é R$ 347,90 porque o curso é novo. Quando entrarem os depoimentos dos primeiros professores, ele sobe.";
 
 /* ------------------------------------------------------------------ */
 /*  HERO                                                               */
@@ -560,7 +571,7 @@ export const ctaFinal = {
     "A areia vai continuar crescendo. Arena nova vai continuar abrindo. A pergunta é se, daqui a um ano, você vai ser o professor que a cidade conhece pelo nome ou o cara que ainda improvisa. O Charllove levou anos e três escolas pra organizar isso. Você leva um fim de semana.",
   cta: "Garantir minha vaga agora",
   microcopy:
-    "12x de R$ 30,81 ou R$ 297,90 à vista · 7 dias de garantia · 12 meses de acesso",
+    "12x de R$ 35,98 ou R$ 347,90 à vista · 7 dias de garantia · 12 meses de acesso",
 };
 
 /* ------------------------------------------------------------------ */

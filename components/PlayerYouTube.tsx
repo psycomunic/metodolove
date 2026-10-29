@@ -138,13 +138,24 @@ export default function PlayerYouTube({
     });
 
     /* REDE DE SEGURANÇA. Este player depende de um script de terceiro, e
-       script de terceiro falha: bloqueador, rede ruim, mudança na API. Se em
-       7 segundos ele não tiver ficado pronto, a peça cai no embed simples,
-       que traz a moldura do YouTube de volta mas TOCA. Vídeo com a marca do
-       canal é chato; play que não faz nada quebra a confiança da página
-       inteira, e essa troca não vale. */
+       script de terceiro falha: bloqueador, rede ruim, mudança na API,
+       autoplay barrado dentro de iframe. Se em 7 segundos ele não estiver
+       TOCANDO DE VERDADE, a peça cai no embed simples, que traz a moldura do
+       YouTube de volta mas funciona. Vídeo com a marca do canal é chato;
+       play que não faz nada quebra a confiança da página inteira, e essa
+       troca não vale.
+
+       A checagem é por DURAÇÃO, e não só pela existência do player, e isso é
+       o que importa aqui: o modo de falha que eu não conseguia testar na
+       máquina (o player nasce, o iframe aparece e nada toca) deixava
+       `player.current` preenchido, então a rede antiga não pegava e a pessoa
+       ficava olhando um retângulo preto. Duração zero depois de 7 segundos
+       significa que o player não chegou a carregar o vídeo. */
     const desistencia = window.setTimeout(() => {
-      if (vivo && !player.current) setFalhou(true);
+      if (!vivo) return;
+      const p = player.current;
+      const pronto = p?.getDuration && p.getDuration() > 0;
+      if (!pronto) setFalhou(true);
     }, 7000);
 
     return () => {
