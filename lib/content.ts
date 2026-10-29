@@ -278,6 +278,20 @@ export const mecanismo = {
    * antiga: ela vende melhor do que esta.
    */
   video: {
+    /**
+     * ARQUIVO LOCAL tem precedência sobre o YouTube, e é o caminho bom.
+     *
+     * Preenchendo `arquivo` com um caminho de public/videos/, o play abre um
+     * player nativo do navegador: barra de tempo embaixo, nenhuma marca de
+     * canal, nenhum script de terceiro e nada que possa falhar por
+     * bloqueador ou mudança de API. O `youtubeId` fica aqui só como reserva,
+     * e só entra em cena se `arquivo` estiver vazio.
+     *
+     * O nome precisa terminar em `-web.mp4`, que é o sufixo que o .gitignore
+     * versiona, e o formato precisa ser H.264: arquivo de iPhone vem em HEVC,
+     * que o Chrome e o Firefox não tocam.
+     */
+    arquivo: "",
     youtubeId: "yySJ10SGspA",
     capa: "/metodo-capa.webp",
     legenda: "Conheça o Método LLOVE",

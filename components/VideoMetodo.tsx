@@ -18,6 +18,13 @@ import PlayerYouTube from "./PlayerYouTube";
  * verdade. Tocar um 9:16 dentro de um cartão 16:9 daria uma tira estreita no
  * meio, com tarja preta dos dois lados.
  *
+ * DOIS MOTORES, e o ARQUIVO LOCAL tem precedência. Se `mecanismo.video.arquivo`
+ * estiver preenchido, o play abre um `<video>` nativo, sem YouTube nenhum:
+ * sem nome de canal, sem logo, sem script de terceiro, sem depender de API
+ * que pode falhar. É o caminho que sempre funcionou e o que eu recomendo.
+ * Só na ausência dele a peça cai no player do YouTube, que existe para o caso
+ * de o vídeo morar lá.
+ *
  * NADA DO YOUTUBE ANTES DO CLIQUE. O cartão é uma FACHADA: a capa é servida
  * daqui, e o iframe só é criado quando alguém clica. Isso vale cerca de 1 MB
  * de script de terceiro e os cookies que o player planta só por existir na
@@ -59,7 +66,7 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
      de ui.tsx: um play que não toca é pior do que assumir que o vídeo não
      está pronto. A pessoa clica, não acontece nada, e a página perde a
      confiança que ela precisa ter para chegar no botão de compra. */
-  if (!video.youtubeId) {
+  if (!video.arquivo && !video.youtubeId) {
     return (
       <div
         className={`${moldura} flex flex-col items-center justify-center gap-4 border border-dashed border-line-forte p-6 text-center`}
@@ -169,12 +176,26 @@ export default function VideoMetodo({ className = "" }: { className?: string }) 
             onClick={(e) => e.stopPropagation()}
             className="aspect-[9/16] w-full max-w-[calc(86vh*9/16)] overflow-hidden rounded-2xl border border-line bg-void"
           >
-            <PlayerYouTube
-              videoId={video.youtubeId}
-              titulo={video.legenda}
-              rotuloPlay={video.play}
-              rotuloPausa={video.pausa}
-            />
+            {video.arquivo ? (
+              /* Player nativo: controles do próprio navegador, com a barra de
+                 tempo embaixo e nenhuma marca de terceiro. `autoPlay` vale
+                 porque o modal só existe depois de um clique da pessoa. */
+              <video
+                src={video.arquivo}
+                poster={video.capa}
+                controls
+                autoPlay
+                playsInline
+                className="h-full w-full bg-void object-contain"
+              />
+            ) : (
+              <PlayerYouTube
+                videoId={video.youtubeId}
+                titulo={video.legenda}
+                rotuloPlay={video.play}
+                rotuloPausa={video.pausa}
+              />
+            )}
           </div>
         </div>
       ) : null}
