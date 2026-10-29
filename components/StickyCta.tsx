@@ -54,7 +54,7 @@ export default function StickyCta() {
           <span className="placar block text-[1.15rem] text-ink">
             {oferta.parcelasQtd} {oferta.parcelasValor}
           </span>
-          {/* Só "ou R$ 347,90": a barra tem 64px e uns 146px de texto úteis
+          {/* Só "ou R$ 347,00": a barra tem 64px e uns 146px de texto úteis
               num aparelho de 360px, e "à vista" não cabe a 13px sem espremer
               o rótulo abaixo do piso de legibilidade. */}
           <span className="mono text-[0.8125rem] text-mute">ou {oferta.preco}</span>

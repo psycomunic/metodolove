@@ -69,6 +69,23 @@ export default function Oferta() {
             </p>
             <p className="mt-2 text-[1rem] text-mute">ou {oferta.preco} à vista</p>
 
+            {/* CUPOM. O código em mono, que é a face dos metadados desta
+                página, e a ressalva junto: cupom anunciado que não aplica no
+                checkout perde a venda no último clique, e é o próprio
+                briefing que manda escrever a condição. */}
+            {oferta.cupom ? (
+              <p className="mono mt-4 text-[0.8125rem] leading-[1.7] text-areia sm:text-[0.66rem]">
+                Cupom{" "}
+                <span className="rounded border border-areia/40 px-2 py-1 text-ink">
+                  {oferta.cupom.codigo}
+                </span>{" "}
+                <span className="text-areia/70">
+                  {oferta.cupom.percentual} e você paga {oferta.cupom.precoComCupom},{" "}
+                  {oferta.cupom.ressalva}
+                </span>
+              </p>
+            ) : null}
+
             <Botao href={marca.checkout} ima cheio className="mt-7" id="cta-oferta">
               {investimento.cta}
             </Botao>

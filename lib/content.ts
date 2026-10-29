@@ -62,9 +62,28 @@ export const marca = {
  */
 export const oferta = {
   precoCheio: "R$ 597,00", // >>> AJUSTAR: valor de ancoragem
-  preco: "R$ 347,90",
+  preco: "R$ 347,00",
   parcelasQtd: "12x",
-  parcelasValor: "R$ 35,98", // >>> AJUSTAR: confira no checkout da Kiwify
+  parcelasValor: "R$ 35,89", // >>> AJUSTAR: confira no checkout da Kiwify
+
+  /**
+   * CUPOM. 10% sobre R$ 347,00, chegando a R$ 312,30. Os dois números são do
+   * briefing e batem na conta.
+   *
+   * O texto diz "se estiver ativo e for elegível" porque é isso que o próprio
+   * briefing manda dizer: anunciar um cupom que não aplica no checkout é a
+   * forma mais rápida de perder a venda no último clique.
+   *
+   * NÃO anuncie "50% de desconto". De R$ 597,00 para R$ 347,00 são 41,9%; com
+   * o cupom, 47,7%. O briefing é explícito nisso, e número redondo inflado é
+   * justamente o que derruba anúncio no Meta.
+   */
+  cupom: {
+    codigo: "MÉTODO",
+    percentual: "10%",
+    precoComCupom: "R$ 312,30",
+    ressalva: "se o cupom estiver ativo e for elegível para sua compra",
+  },
   garantiaDias: 7,
   acesso: "12 meses de acesso",
 };
@@ -73,13 +92,23 @@ export const oferta = {
 /*  BARRA DE URGÊNCIA HONESTA                                          */
 /* ------------------------------------------------------------------ */
 /**
- * Não é contador regressivo. A escassez aqui é verdadeira e verificável: o
- * preço é de lançamento porque ainda não há depoimento nenhum na página.
- * Contador falso numa página que se vende como honesta destrói a única coisa
- * que essa copy tem de diferente.
+ * Não é contador regressivo, e continua não sendo. O que mudou foi o MOTIVO
+ * do preço.
+ *
+ * A frase antiga dizia "o preço é X porque o curso é novo, e sobe quando
+ * entrarem os depoimentos dos primeiros professores". Ela parou de ser
+ * verdade duas vezes: o primeiro depoimento já está no ar, e o preço agora é
+ * de Black Friday, não de lançamento. Frase que se desmente na mesma tela
+ * custa mais caro do que frase fraca.
+ *
+ * >>> AJUSTAR: FALTA A DATA DE FIM. "Black Friday" promete, pela própria
+ * palavra, que acaba. Enquanto não houver data definida, esta frase não a
+ * inventa; mas oferta de Black Friday que dura para sempre é escassez falsa
+ * pela porta dos fundos, que é exatamente o que esta barra existe para não
+ * fazer. Assim que a data existir, ela entra aqui.
  */
 export const urgencia =
-  "Sem contador falso aqui. O preço é R$ 347,90 porque o curso é novo. Quando entrarem os depoimentos dos primeiros professores, ele sobe.";
+  "Sem contador falso aqui. É Black Friday: de R$ 597,00 por R$ 347,00, e o cupom MÉTODO tira mais 10%.";
 
 /* ------------------------------------------------------------------ */
 /*  HERO                                                               */
@@ -108,7 +137,7 @@ export const hero = {
   ctaSecundario: "Ver o método",
   stats: [
     { valor: "6", rotulo: "módulos" },
-    { valor: "+1", rotulo: "bônus Networking" },
+    { valor: "+7", rotulo: "bônus da turma fundadora" },
     { valor: "12", rotulo: "meses de acesso" },
   ],
   fotoArte: "Charllove em quadra, sol baixo, areia visível",
@@ -387,6 +416,91 @@ export const modulos = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  BÔNUS DA TURMA FUNDADORA                                           */
+/* ------------------------------------------------------------------ */
+/**
+ * Os sete bônus da Black Friday. Textos tirados do briefing do cliente, que
+ * já os escreveu para o público; aqui eles só perderam o travessão do título,
+ * que a página não usa.
+ *
+ * TRÊS ITENS TÊM PENDÊNCIA NO PRÓPRIO BRIEFING, e por isso carregam `nota`,
+ * que aparece em letra miúda no card:
+ *
+ *   01, uniforme: estoque, tamanhos, frete e critério de ordem de compra
+ *       ainda não confirmados. O briefing manda confirmar ANTES de ativar.
+ *   06, aula extra: o vídeo AINDA NÃO FOI GRAVADO. O briefing é explícito:
+ *       não anunciar como disponível de imediato.
+ *   07, encontro: data, plataforma e regras pendentes.
+ *
+ * A `nota` existe para a página não prometer data que ninguém marcou. Quando
+ * o item for confirmado, apaga-se a nota e pronto. Enquanto isso, ela é o que
+ * separa "bônus" de "promessa".
+ *
+ * Ela é escrita PARA O VISITANTE, não como recado interno. "Em gravação,
+ * liberado assim que ficar pronto" é honesto e vende; ">>> AJUSTAR: o vídeo
+ * ainda não foi gravado" é bilhete de equipe vazando na tela do cliente.
+ *
+ * `limitado` é só do uniforme: ele é o único com quantidade de verdade, e o
+ * briefing pede destaque SEM contador fictício. O aviso é a frase, não um
+ * relógio.
+ */
+export const bonus = {
+  olho: "Black Friday · Turma Fundadora",
+  linhas: ["Sua inscrição vai"],
+  linhaDestaque: "além das aulas.",
+  texto:
+    "Ao entrar para a Turma Fundadora do Método LLOVE nesta Black Friday, você recebe ferramentas práticas para sair do improviso e começar a organizar sua trajetória profissional no futevôlei. São planos de aula, controles de gestão, ideias de conteúdo, um guia de CT e uma aula extra de captação. E ainda tem uma experiência especial com o Charllove para a turma.",
+  itens: [
+    {
+      n: "01",
+      titulo: "Uniforme Dujogo",
+      texto:
+        "Presente físico exclusivo para os 20 primeiros compradores elegíveis da Turma Fundadora.",
+      limitado: "20 primeiros compradores elegíveis",
+      nota: "Entrega sujeita a confirmação de tamanhos e frete.",
+    },
+    {
+      n: "02",
+      titulo: "Biblioteca de 10 aulas prontas",
+      texto:
+        "Dez planos de aula com objetivos, exercícios, correções e progressões para ajudar você a planejar treinos com mais segurança.",
+    },
+    {
+      n: "03",
+      titulo: "Kit Gestão do Professor",
+      texto:
+        "Planilha editável para organizar alunos, presença, mensalidades, despesas e indicadores da sua operação.",
+    },
+    {
+      n: "04",
+      titulo: "30 dias de conteúdo para professores",
+      texto:
+        "Calendário com 30 ideias de conteúdo, ganchos e chamadas para ação para fortalecer seu posicionamento e atrair alunos.",
+    },
+    {
+      n: "05",
+      titulo: "E-book Meu Primeiro CT",
+      texto:
+        "Guia prático de planejamento para quem deseja estruturar um Centro de Treinamento, da organização inicial ao lançamento.",
+    },
+    {
+      n: "06",
+      titulo: "Aula extra: primeiros 10 alunos",
+      texto:
+        "Um passo a passo para organizar abordagens, aula experimental, acompanhamento e ações de captação dos primeiros alunos.",
+      nota: "Em gravação. Liberado na área do aluno assim que ficar pronto.",
+    },
+    {
+      n: "07",
+      titulo: "Encontro fechado com o Charllove",
+      texto:
+        "Encontro coletivo de aproximadamente 1 hora com a Turma Fundadora para dúvidas, orientações e troca de experiências.",
+      nota: "Data e plataforma a confirmar com a turma.",
+    },
+  ],
+};
+
+/* ------------------------------------------------------------------ */
 /*  QUEM ENSINA                                                        */
 /* ------------------------------------------------------------------ */
 /**
@@ -513,7 +627,7 @@ export const investimento = {
   titulo: "Você leva",
   inclusos: [
     "Método LLOVE completo: 6 módulos, da postura de professor à precificação",
-    "Bônus: módulo Networking na Areia",
+    "7 bônus da Turma Fundadora, do kit de gestão ao encontro com o Charllove",
     "Aulas gravadas, assista quando e quantas vezes quiser",
     "12 meses de acesso, no celular ou computador",
     "Atualizações do método sem custo extra",
@@ -585,7 +699,7 @@ export const ctaFinal = {
     "A areia vai continuar crescendo. Arena nova vai continuar abrindo. A pergunta é se, daqui a um ano, você vai ser o professor que a cidade conhece pelo nome ou o cara que ainda improvisa. O Charllove levou anos e três escolas pra organizar isso. Você leva um fim de semana.",
   cta: "Garantir minha vaga agora",
   microcopy:
-    "12x de R$ 35,98 ou R$ 347,90 à vista · 7 dias de garantia · 12 meses de acesso",
+    "12x de R$ 35,89 ou R$ 347,00 à vista · 7 dias de garantia · 12 meses de acesso",
 };
 
 /* ------------------------------------------------------------------ */

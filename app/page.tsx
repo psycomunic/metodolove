@@ -1,4 +1,5 @@
 import Autor from "@/components/Autor";
+import Bonus from "@/components/Bonus";
 import BarraUrgencia from "@/components/BarraUrgencia";
 import CtaFinal from "@/components/CtaFinal";
 import Dor from "@/components/Dor";
@@ -49,6 +50,7 @@ export default function Home() {
         <Mercado />
         <Mecanismo />
         <Modulos />
+        <Bonus />
         <Autor />
         <Publico />
         <BarraUrgencia className="border-y lg:hidden" />
