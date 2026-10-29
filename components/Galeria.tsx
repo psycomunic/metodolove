@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useMovimentoReduzido } from "./movimento";
 import { Foto } from "./ui";
 
@@ -83,6 +84,13 @@ function Seta({
 /**
  * A foto ampliada.
  *
+ * VAI PARA O BODY, por portal, e isso não é preferência de estilo. A galeria
+ * mora dentro de um `<Reveal>`, e `.reveal` anima `opacity` e `transform`.
+ * Ancestral com `transform` faz `position: fixed` deixar de ser fixo em
+ * relação à JANELA e passar a ser fixo em relação a ele; e enquanto o reveal
+ * não dispara, o filho herda `opacity: 0` e some. Foi exatamente esse o
+ * defeito que deixou o vídeo do método invisível ao abrir.
+ *
  * `role="dialog"` com `aria-modal`, Escape fecha, as setas do teclado andam e
  * o clique no fundo fecha. O botão de fechar recebe o foco ao abrir: sem
  * isso, quem usa teclado abriria a foto e continuaria com o foco lá atrás, na
@@ -126,7 +134,9 @@ function Ampliada({
 
   const foto = fotos[indice];
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
@@ -194,7 +204,8 @@ function Ampliada({
           />
         </div>
       ) : null}
-    </div>
+    </div>,
+    document.body,
   );
 }
 

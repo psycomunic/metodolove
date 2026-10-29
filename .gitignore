@@ -41,3 +41,7 @@ next-env.d.ts
 # ffmpeg, versionadas em public/videos/.
 /public/*.MOV
 /public/*.mov
+
+# Original do video do metodo: 187 MB em 4K a 60fps. A pagina usa
+# public/videos/metodo-web.mp4, 12 MB, que E versionado.
+/vídeo método.mov
